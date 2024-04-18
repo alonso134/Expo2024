@@ -1,0 +1,25 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+.gato{
+    text-align: center;
+}
+.rectangulo1{
+    margin-left: 41%;
+    background-color: rgb(138, 137, 137);
+    width: 310px;
+    height: 40px;
+   
+}
+.promi{
+    margin-bottom: 10%;
+    display: flex;
+    
+}
+.clase{
+    width: 125px;
+    height: 80px;
+}
