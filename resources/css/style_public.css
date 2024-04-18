@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    background-color: #babababa;
 }
 
 .menu {
@@ -264,4 +264,3 @@ button:hover {
     transform: translate(-50%, -50%);
     text-align: center; /* Centro los elementos del formulario */
 }
-
