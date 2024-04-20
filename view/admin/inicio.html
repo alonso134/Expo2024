@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../resources/css/style.css">
+</head>
+<body>
+
+<header class="header">
+    
+    <div class="barra">
+        <h6>Menu<img src="../../resources/imagenes/barra.png" alt="" width="30px" height="30px"></h6>
+
+        <ul>
+            <li><a href=""><i class="bi bi-house-door ojo"></i>Inicio</a></li>
+            <li><a href=""><i class="bi bi-person ojo"></i>Estudiantes</a></li>
+            <li><a href=""><i class="bi bi-people ojo"></i>Profesores</a></li>
+            <li><a href=""><i class="bi bi-clipboard2-plus ojo"></i>Asistencia</a></li>
+            <li><a href=""><i class="bi bi-clipboard2-plus ojo"></i>Materias</a></li>
+            <li><a href=""><i class="bi bi-clipboard-data ojo"></i>Grados</a></li>
+            <li><a href=""><i class="bi bi-eye ojo"></i>Comportamiento</a></li>
+            <li><a href=""><i class="bi bi-pencil-square ojo"></i>Codigos</a></li>
+            <li><a href=""><i class="bi bi-box-arrow-left ojo"></i>Salir</a></li>
+        </ul>
+    </div>
+</header>
+    <br>
+    <br>
+    <br>
+    <div class="todo">
+
+    <br><br><br> <br>
+    <div class="gatito">
+    <div class="estu">
+        <div class="sese">
+        <h7 class="hambre"><br>Estudiantes</h7>
+        <img src="../../resources/imagenes/estu.png" alt="" class="estudia">
+        </div>
+    </div>
+    <p class="vermas"><a href="" style="color: white;">Ver Completo</a></p>
+    </div>
+
+    <div class="gatitoo">
+    <div class="estu">
+        <div class="sese">
+        <h7 class="hambre"><br>Profesores</h7>
+        <img src="../../resources/imagenes/profe.png" alt="" class="estudia">
+        </div>
+    </div>
+    <p class="vermasone"><a href="" style="color: white;">Ver Completo</a></p>
+    </div>
+
+    <div class="gatitooo">
+        <div class="estu">
+            <div class="sese">
+            <h7 class="hambre"><br>Materias</h7>
+            <img src="../../resources/imagenes/mate.png" alt="" class="estudia">
+            </div>
+        </div>
+        <p class="vermastwo"><a href="" style="color: white;">Ver Completo</a></p>
+        </div>
+</div>
+
+
+<br>
+<div class="todo">
+
+<br><br><br> <br>
+<div class="gatitouno">
+<div class="estu">
+    <div class="sese">
+    <h7 class="hambre"><br>Codigos</h7>
+    <img src="../../resources/imagenes/codi.png" alt="" class="estudia">
+    </div>
+</div>
+<p class="vermastres"><a href="" style="color: white;">Ver Completo</a></p>
+</div>
+
+<div class="gatitodos">
+<div class="estu">
+    <div class="sese">
+    <h7 class="hambre"><br>Asistencia</h7>
+    <img src="../../resources/imagenes/asis.png" alt="" class="estudia">
+    </div>
+</div>
+<p class="vermascautro"><a href="" style="color: white;">Ver Completo</a></p>
+</div>
+
+<div class="gatitotres">
+    <div class="estu">
+        <div class="sese">
+        <h7 class="hambre"><br>Conducta</h7>
+        <img src="../../resources/imagenes/compo.png" alt="" class="estudia">
+        </div>
+    </div>
+    <p class="vermascinco"><a href="" style="color: white;">Ver Completo</a></p>
+    </div>
+</div>
+
+    <p class="titulo">Resumen de Actividades</p>
+
+   <center>
+    <head>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+         
+          google.charts.load('current', {'packages':['corechart']});
+    
+          
+          google.charts.setOnLoadCallback(drawChart);
+    
+          function drawChart() {
+    
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Topping');
+            data.addColumn('number', 'Slices');
+            data.addRows([
+              ['Estudiantes', 3],
+              ['Profesores Disponible', 1],
+              ['Materias Asignadas', 1],
+              ['Codigos Puestos', 1],
+              ['Asistencias', 2]
+            ]);
+    
+            var piechart_options = {title:'Actualizaciones de lo ocurrido en este mes',
+                           width:400,
+                           height:300};
+            var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+            piechart.draw(data, piechart_options);
+    
+            var barchart_options = {title:'Actualizaciones de lo ocurrido en este mes',
+                           width:400,
+                           height:300,
+                           legend: 'none'};
+            var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+            barchart.draw(data, barchart_options);
+          }
+        </script>
+      </head>
+
+      <table class="columns">
+        <tr>
+          <td><div id="piechart_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="barchart_div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+      </table>
+    </center>
+
+    <footer>
+        <div class="socila-icons-container">
+            <a href="" class="socila-icons"></a>
+            <a href="" class="socila-icons"></a>
+            <a href="" class="socila-icons"></a>
+            <a href="" class="socila-icons"></a>
+        </div>
+        <ul class="footer-menu-container">
+            <li class="menu-item">Legal</li>
+            <li class="menu-item">Cookies</li>
+            <li class="menu-item">Cess</li>
+            <li class="menu-item">Software</li>
+        </ul>
+        <span class="copyright">2024 © - Desarrollado por el grupo de Software   </span>
+    </footer>
+
+</body>
+
+</html>
