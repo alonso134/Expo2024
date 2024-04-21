@@ -190,6 +190,10 @@ body{
   width: 310px;
   margin-top: 30px;
   margin-right: -130px;
+  transition: all 300ms;
+}
+.gatito:hover{
+  transform: scale(1.20);
 }
 .gatitoo{
   margin-left: 13%;
@@ -198,6 +202,10 @@ body{
   width: 310px;
   margin-top: 30px;
   margin-right: 55px;
+  transition: all 300ms;
+}
+.gatitoo:hover{
+  transform: scale(1.20);
 }
 .gatitooo{
   margin-left: -20px;
@@ -205,6 +213,10 @@ body{
   height: 100px;
   width: 310px;
   margin-top: 30px;
+  transition: all 300ms;
+}
+.gatitooo:hover{
+  transform: scale(1.20);
 }
 .gatitouno{
   margin-left: 140px;
@@ -213,6 +225,10 @@ body{
   width: 310px;
   margin-top: 30px;
   margin-right: 55px;
+  transition: all 300ms;
+}
+.gatitouno:hover{
+  transform: scale(1.20);
 }
 .gatitodos{
   margin-left: -20px;
@@ -221,6 +237,10 @@ body{
   width: 310px;
   margin-top: 30px;
   margin-right: 60px;
+  transition: all 300ms;
+}
+.gatitodos:hover{
+  transform: scale(1.20);
 }
 .gatitotres{
   margin-left: -20px;
@@ -230,6 +250,10 @@ body{
   margin-top: 30px;
   margin-right: 60px;
   margin-bottom: 4%;
+  transition: all 300ms;
+}
+.gatitotres:hover{
+  transform: scale(1.20);
 }
 
 .header{
@@ -293,7 +317,7 @@ body{
 
 footer{
   width: 100%;
-  position: absolute;
+  height: 195px;
   bottom: 0;
   left: 0;
   padding: 2rem 8%;
@@ -314,7 +338,7 @@ footer{
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
-.socila-icons{
+.social-icons{
   height: 50px;
   width: 50px;
   border-radius: 50px;
@@ -329,5 +353,153 @@ footer{
   background-color: black;
   filter: invert(1);
 }
+.social-icons:nth-of-type(1){
+  background-image: url(../imagenes/fa.png);
+}
+.social-icons:nth-of-type(2){
+  background-image: url(../imagenes/ins.png);
+}
+.social-icons:nth-of-type(3){
+  background-image: url(../imagenes/twitter.png);
+}
+.social-icons:nth-of-type(4){
+  background-image: url(../imagenes/tiktak.png);
+}
+.footer-menu-container{
+  list-style-type: none;
+  color: white;
+  font-size: 18px;
+}
+.menu-item{
+  margin: 1rem 1.5rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.menu-item:hover{
+  opacity: 1;
+}
+.copyright{
+  color:white ;
+  opacity: 0.3;
+  text-align: center;
+}
+.tituliestu{
+  margin-left: 130px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 20px;
+  margin-bottom: 3%;
+}
+.margenestu{
+  background-color: #284B63;
+  color: white;
+  height: 50px;
+  width: 80%;
+  margin-left: 130px;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 25px;
+}
+.marge{
+  
+  background-color: #284B63;
+  color: white;
+  height: 35px;
+  width: 80%;
+  margin-left: 130px;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 25px;
+}
+.laimgestu{
+  margin-right: 15px;
+  margin-left: 9px;
+}
+.todoasis{
+  text-align: center;
+  color: #0B2639;
+}
+.divasistencia{
+  background-color: #4EA9AE;
+  height: 120px;
+  
+}
+.asistenciaestu{
+  color: #0D0C0C;
+}
+.todogrado{
+  text-align: center;
+  color:#0B2639 ;
+  
+}
+.divgrado{
+  background-color: #4EA9AE;
+  height: 120px;
+}
 
+.gradoestu{
+  color: #0D0C0C;
+}
+.todoinscripcion{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divinscripcioin{
+  background-color: #4EA9AE;
+  height: 120px;
+}
+.divcompo{
+  background-color: #4EA9AE;
+  height: 180px;
+  width: 350px;
+  margin-left: 270px;
+}
+.insestu{
+  color: #0D0C0C;
+}
+.todoconducta{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divconducta{
+  background-color:#4EA9AE ;
+  height: 120px;
+  margin-right: -115px;
+}
+.conductaestu{
+  color: #0D0C0C;
+}
+
+.todonotas{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divnotas{
+  background-color:#4EA9AE ;
+  height: 120px;
+  margin-bottom: 2%;
+}
+.notasestu{
+  color: #0D0C0C;
+}
+.siquesi{
+  margin-left: 160px;
+  margin-bottom: 3%;
+}
+.volviste{
+  background-color: #D9D9D9;
+  margin-left: 26px;
+  width: 65px ;
+  height: 30px;
+  font-size: 20px;
+}
+.Volver{
+  color: #0D0C0C;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.divpromate{
+  margin-top: 190px;
+  margin-left: -530px;
+  margin-bottom: 4%;
+}
+.divasigasis{
+  margin-left: 310px;
+}
 	
