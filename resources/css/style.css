@@ -505,7 +505,7 @@ footer{
 
 
 .modal-header{
-  background: #03991a;
+  background: #284B63;
   color: #fff;
 }
 
@@ -571,7 +571,7 @@ form .inputField > div label{
 
 #userForm form .inputField > div label::after{
   content: "*";
-  color: red;
+  color: #4EA9AE;
 }
 
 form .inputField > div input{
@@ -580,7 +580,7 @@ form .inputField > div input{
   border: none;
   outline: none;
   background: transparent;
-  border-bottom: 2px solid rgb(26, 172, 13);
+  border-bottom: 2px solid #284B63;
 }
 
 .modal-footer .submit{
