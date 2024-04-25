@@ -8,7 +8,6 @@
 
             // Obtener los valores del formulario
             const name = document.getElementById('name').value;
-            const age = document.getElementById('age').value;
             const grade = document.getElementById('grade').value;
             const seccion = document.getElementById('seccion').value;
             const carnet = document.getElementById('carnet').value;
@@ -18,7 +17,6 @@
             newRow.innerHTML = `
                 <td>${tableBody.children.length + 1}</td>
                 <td>${name}</td>
-                <td>${age}</td>
                 <td>${grade}</td>
                 <td>${seccion}</td>
                 <td>${carnet}</td>
@@ -56,3 +54,4 @@
             }
         });
     });
+
