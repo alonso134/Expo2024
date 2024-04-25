@@ -1,197 +1,185 @@
 <!doctype html>
 <html lang="es">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Codigos</title>
-    <link rel="stylesheet" href="../../resources/css/style.css">    
+    <link rel="stylesheet" href="../../resources/css/style.css">
 
-  </head>
-  <body>
+</head>
+
+<body>
 
     <br><br><br><br>
     <div class="row" class="container-fluid">
 
 
-      <br><br>
-      <form class="col-sm-12 col-md-6" id="searchForm">
-          <div class="row">
-              <div class="col-6">
-                  <input style="border-radius:30px;" type="search" class="form-control" name="search"
-                      placeholder="Buscar" required>
-              </div>
-              <div class="col-6">
-                  <button type="submit" class="btn btn-success">
-                      <i class="bi bi-search"></i>
-                  </button>
-                  <button type="reset" class="btn btn-secondary" onclick="fillTable()">
-                      <i class="bi bi-x-square-fill"></i>
-                  </button>
-              </div>
-          </div>
-      </form>
+        <br><br>
+        <form class="col-sm-12 col-md-6" id="searchForm">
+            <div class="row">
+                <div class="col-6">
+                    <input style="border-radius:30px;" type="search" class="form-control" name="search"
+                        placeholder="Buscar" required>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button type="reset" class="btn btn-secondary" onclick="fillTable()">
+                        <i class="bi bi-x-square-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
 
 
-      <div class="col-sm-12 col-md-6 text-end">
-          <div class="col-12">
+        <div class="col-sm-12 col-md-6 text-end">
+            <div class="col-12">
 
-              <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm" style="height: 40px;"><p>Nuevo</p></button>
-          </div>
+                <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm"
+                    style="height: 40px;">
+                    <p>Nuevo</p>
+                </button>
+            </div>
 
-      </div>
+        </div>
 
-      <div class="row">
-          <div class="col-12">
-              <table class="table table-striped table-hover mt-3 text-center table-bordered">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-hover mt-3 text-center table-bordered">
 
-                  <thead>
-                      <tr>
-                          <th>ID</th>
-                          <th>Image </th>
-                          <th>Nombre</th>
-                          <th>Edad</th>
-                          <th>Grado/Seccion</th>
-                          <th>Correo Estudiante</th>
-                          <th>Numero Estudiante</th>
-                          <th>Residencia</th>
-                          <th>Registro</th>
-                          <th>Acciones</th>
-                      </tr>
-                  </thead>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image </th>
+                            <th>Nombre</th>
+                            <th>Edad</th>
+                            <th>Grado/Seccion</th>
+                            <th>Correo Estudiante</th>
+                            <th>Numero Estudiante</th>
+                            <th>Residencia</th>
+                            <th>Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
 
-                  <tbody id="data"></tbody>
+                    <tbody id="data"></tbody>
 
-              </table>
-          </div>
-      </div>
+                </table>
+            </div>
+        </div>
 
-</section>
+        </section>
 
 
-<!--Modal Form-->
-<div class="modal fade" id="userForm">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
+        <!--Modal Form-->
+        <div class="modal fade" id="userForm">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
 
-          <div class="modal-header">
-              <h4 class="modal-title">Crear Nuevo</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Agregar codigo</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-          <div class="modal-body">
+                    <div class="modal-body">
 
-              <form action="#" id="myForm">
+                        <form action="#" id="myForm">
+                            <div class="inputField">
+                                <div>
+                                    <label for="name">Nombre</label>
+                                    <input type="text" name="" id="name" required>
+                                </div>
+                                <div>
+                                    <label for="city">Grado/Seccion</label>
+                                    <input type="text" name="" id="city" required>
+                                </div>
+                                <div>
+                                    <label for="email">Correo Estudiante</label>
+                                    <input type="email" name="" id="email" required>
+                                </div>
+                                <div>
+                                    <label for="phone">Carnet Estudiante</label>
+                                    <input type="text" name="" id="phone" minlength="11" maxlength="11" required>
+                                </div>
+                            </div>
 
-                  <div class="card imgholder">
-                      <label for="imgInput" class="upload">
-                          <input type="file" name="" id="imgInput">
-                          <i class="bi bi-plus-circle-dotted"></i>
-                      </label>
-                      <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="img">
-                  </div>
+                        </form>
+                    </div>
 
-                  <div class="inputField">
-                      <div>
-                          <label for="name">Nombre</label>
-                          <input type="text" name="" id="name" required>
-                      </div>
-                      <div>
-                          <label for="age">Edad</label>
-                          <input type="number" name="" id="age" required>
-                      </div>
-                      <div>
-                          <label for="city">Grado/Seccion</label>
-                          <input type="text" name="" id="city" required>
-                      </div>
-                      <div>
-                          <label for="email">Correo Estudiante</label>
-                          <input type="email" name="" id="email" required>
-                      </div>
-                      <div>
-                          <label for="phone">Numero Estudiante</label>
-                          <input type="text" name="" id="phone" minlength="11" maxlength="11" required>
-                      </div>
-                      <div>
-                          <label for="post">Residencia</label>
-                          <input type="text" name="" id="post" required>
-                      </div>
-                      <div>
-                          <label for="sDate">Registro</label>
-                          <input type="date" name="" id="sDate" required>
-                      </div>
-                  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" form="myForm" class="btn btn-primary submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-              </form>
-          </div>
+        <!--Read Data Modal-->
+        <div class="modal fade" id="readData">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
 
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" form="myForm" class="btn btn-primary submit">Submit</button>
-          </div>
-      </div>
-  </div>
-</div>
+                    <div class="modal-header">
+                        <h4 class="modal-title"> Nuevo Registro</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-<!--Read Data Modal-->
-<div class="modal fade" id="readData">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
+                    <div class="modal-body">
 
-          <div class="modal-header">
-              <h4 class="modal-title"> Nuevo Registro</h4>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+                        <form action="#" id="myForm">
 
-          <div class="modal-body">
+                            <div class="card imgholder">
+                                <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="showImg">
+                            </div>
 
-              <form action="#" id="myForm">
+                            <div class="inputField">
+                                <div>
+                                    <label for="name">Nombre</label>
+                                    <input type="text" name="" id="showName" disabled>
+                                </div>
+                                <div>
+                                    <label for="age">Edad</label>
+                                    <input type="number" name="" id="showAge" disabled>
+                                </div>
+                                <div>
+                                    <label for="city">Grado/Seccion</label>
+                                    <input type="text" name="" id="showCity" disabled>
+                                </div>
+                                <div>
+                                    <label for="email">Correo Estudiante</label>
+                                    <input type="email" name="" id="showEmail" disabled>
+                                </div>
+                                <div>
+                                    <label for="phone">Telefono Estudiante</label>
+                                    <input type="text" name="" id="showPhone" minlength="11" maxlength="11" disabled>
+                                </div>
+                                <div>
+                                    <label for="post">Residncia</label>
+                                    <input type="text" name="" id="showPost" disabled>
+                                </div>
+                                <div>
+                                    <label for="sDate">Registro</label>
+                                    <input type="date" name="" id="showsDate" disabled>
+                                </div>
+                            </div>
 
-                  <div class="card imgholder">
-                      <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="showImg">
-                  </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                  <div class="inputField">
-                      <div>
-                          <label for="name">Nombre</label>
-                          <input type="text" name="" id="showName" disabled>
-                      </div>
-                      <div>
-                          <label for="age">Edad</label>
-                          <input type="number" name="" id="showAge" disabled>
-                      </div>
-                      <div>
-                          <label for="city">Grado/Seccion</label>
-                          <input type="text" name="" id="showCity" disabled>
-                      </div>
-                      <div>
-                          <label for="email">Correo Estudiante</label>
-                          <input type="email" name="" id="showEmail" disabled>
-                      </div>
-                      <div>
-                          <label for="phone">Telefono Estudiante</label>
-                          <input type="text" name="" id="showPhone" minlength="11" maxlength="11" disabled>
-                      </div>
-                      <div>
-                          <label for="post">Residncia</label>
-                          <input type="text" name="" id="showPost" disabled>
-                      </div>
-                      <div>
-                          <label for="sDate">Registro</label>
-                          <input type="date" name="" id="showsDate" disabled>
-                      </div>
-                  </div>
 
-              </form>
-          </div>
-      </div>
-  </div>
-</div>
-    
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="../../controladores/admin/grados.js"></script>
-    </body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script src="../../controladores/admin/grados.js"></script>
+</body>
+
 </html>
