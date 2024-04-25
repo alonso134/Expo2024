@@ -1,4 +1,3 @@
-User
 <!doctype html>
 <html lang="es">
 
@@ -67,7 +66,24 @@ User
                         </tr>
                     </thead>
 
-                    <tbody id="data"></tbody>
+                    <tbody id="data">
+                        <!-- Aquí se agregarán las filas dinámicamente -->
+                        <tr>
+                            <td>1</td>
+                            <td>Incremento de ventas</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Positivo</td>
+                            <td>POS001</td>
+                            <td>
+                                <button class="btn btn-info viewBtn">Ver</button>
+                                <button class="btn btn-warning editBtn">Editar</button>
+                                <button class="btn btn-danger deleteBtn">Eliminar</button>
+                            </td>
+                        </tr>
+                        <!-- Agrega el resto de los códigos de la misma manera -->
+                    </tbody>
 
                 </table>
             </div>
@@ -120,9 +136,8 @@ User
                                     <div>
                                         <label for="grade">Codigo</label>
                                         <select id="codigo" class="form-select" required>
-                                            <option value="">Seleccione el codigo</option>
-                                            <option value="Primero">Positivo</option>
-                                            <option value="Segundo">Negativo</option>
+                                            <option value="">Seleccione el código</option>
+                                            <!-- Opciones de códigos se agregarán dinámicamente mediante JavaScript -->
                                         </select>
                                     </div>
                                 </div>
