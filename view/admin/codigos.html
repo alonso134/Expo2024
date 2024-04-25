@@ -56,14 +56,11 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Image </th>
                             <th>Nombre</th>
                             <th>Edad</th>
-                            <th>Grado/Seccion</th>
-                            <th>Correo Estudiante</th>
-                            <th>Numero Estudiante</th>
-                            <th>Residencia</th>
-                            <th>Registro</th>
+                            <th>Grado</th>
+                            <th>Seccion</th>
+                            <th>Carnet Estudiante</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -91,44 +88,42 @@
 
                         <form action="#" id="myForm">
 
-                            <div class="card imgholder">
-                                <label for="imgInput" class="upload">
-                                    <input type="file" name="" id="imgInput">
-                                    <i class="bi bi-plus-circle-dotted"></i>
-                                </label>
-                                <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="img">
+                            <div class="card">
+
+                                <div class="inputField">
+                                    <div>
+                                        <label for="name">Nombre</label>
+                                        <input type="text" name="" id="name" required>
+                                    </div>
+                                    <div>
+                                        <label for="age">Edad</label>
+                                        <input type="number" name="" id="age" required>
+                                    </div>
+                                    <div>
+                                        <label for="city">Grado</label>
+                                        <input type="text" name="" id="grade" required>
+                                    </div>
+                                    <div>
+                                        <label for="city">Seccion</label>
+                                        <input type="text" name="" id="seccion" required>
+                                    </div>
+                                    <div>
+                                        <label for="phone">Carnet Estudiante</label>
+                                        <input type="text" name="" id="" minlength="11" maxlength="11" required>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="grade">Codigos</label>
+                                        <select id="grade" class="form-select" required>
+                                            <option value="">Seleccione el tipo de codigo</option>
+                                            <option value="Primero">Positivo</option>
+                                            <option value="Segundo">Negativo</option>
+                                        </select>
+                                </div>
+
                             </div>
 
-                            <div class="inputField">
-                                <div>
-                                    <label for="name">Nombre</label>
-                                    <input type="text" name="" id="name" required>
-                                </div>
-                                <div>
-                                    <label for="age">Edad</label>
-                                    <input type="number" name="" id="age" required>
-                                </div>
-                                <div>
-                                    <label for="city">Grado/Seccion</label>
-                                    <input type="text" name="" id="city" required>
-                                </div>
-                                <div>
-                                    <label for="email">Correo Estudiante</label>
-                                    <input type="email" name="" id="email" required>
-                                </div>
-                                <div>
-                                    <label for="phone">Numero Estudiante</label>
-                                    <input type="text" name="" id="phone" minlength="11" maxlength="11" required>
-                                </div>
-                                <div>
-                                    <label for="post">Residencia</label>
-                                    <input type="text" name="" id="post" required>
-                                </div>
-                                <div>
-                                    <label for="sDate">Registro</label>
-                                    <input type="date" name="" id="sDate" required>
-                                </div>
-                            </div>
+
 
                         </form>
                     </div>
@@ -147,17 +142,13 @@
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 class="modal-title"> Nuevo Registro</h4>
+                        <h4 class="modal-title"> Agregar código</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
 
                         <form action="#" id="myForm">
-
-                            <div class="card imgholder">
-                                <img src="./image/Profile Icon.webp" alt="" width="200" height="200" class="showImg">
-                            </div>
 
                             <div class="inputField">
                                 <div>
@@ -169,7 +160,7 @@
                                     <input type="number" name="" id="showAge" disabled>
                                 </div>
                                 <div>
-                                    <label for="city">Grado/Seccion</label>
+                                    <label for="city">Grado/Sección</label>
                                     <input type="text" name="" id="showCity" disabled>
                                 </div>
                                 <div>
@@ -177,11 +168,11 @@
                                     <input type="email" name="" id="showEmail" disabled>
                                 </div>
                                 <div>
-                                    <label for="phone">Telefono Estudiante</label>
+                                    <label for="phone">Teléfono Estudiante</label>
                                     <input type="text" name="" id="showPhone" minlength="11" maxlength="11" disabled>
                                 </div>
                                 <div>
-                                    <label for="post">Residncia</label>
+                                    <label for="post">Residencia</label>
                                     <input type="text" name="" id="showPost" disabled>
                                 </div>
                                 <div>
@@ -195,6 +186,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
