@@ -11,7 +11,7 @@ body {
 /* Establece el color de fondo terciario del cuerpo */
 .bg-body-tertiary {
     --bs-bg-opacity: 1;
-    background-color: #0D1B2A !important;
+    background-color: #284B63 !important;
 }
 
 /* Establece el color del texto del elemento de la marca de navegación */
