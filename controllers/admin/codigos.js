@@ -1,82 +1,104 @@
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('myForm');
     const tableBody = document.getElementById('data');
-    const codigoSelect = document.getElementById('codigo'); // Obtener el select de código
+    const codigoSelect = document.getElementById('codigo');
+    const tipocodigoSelect = document.getElementById('tipocodigo');
+    let editingRow = null;
+    let deletingRow = null;
 
-    // Array que contiene los códigos positivos y negativos
-    const codigosPositivos = [
-        { codigo: 'POS011', descripcion: 'Participación activa en actividades extracurriculares' },
-        { codigo: 'POS012', descripcion: 'Colaboración positiva con compañeros en proyectos escolares' },
-        { codigo: 'POS013', descripcion: 'Mejora notable en el desempeño académico' },
-        { codigo: 'POS014', descripcion: 'Actitud positiva hacia el aprendizaje' },
-        { codigo: 'POS015', descripcion: 'Contribución significativa al ambiente escolar' },
-        { codigo: 'POS016', descripcion: 'Voluntariado en actividades solidarias o comunitarias' },
-        { codigo: 'POS017', descripcion: 'Creatividad destacada en proyectos o tareas escolares' },
-        { codigo: 'POS018', descripcion: 'Respeto y tolerancia hacia los compañeros y maestros' },
-        { codigo: 'POS019', descripcion: 'Cumplimiento puntual de tareas y responsabilidades escolares' },
-        { codigo: 'POS020', descripcion: 'Liderazgo positivo dentro y fuera del aula' }
-        // Agrega el resto de los códigos positivos aquí
+    const codigosPositivosEstudiantes = [
+        { codigo: 'POS001', descripcion: 'Incremento de ventas' },
+        { codigo: 'POS002', descripcion: 'Mejora en la satisfacción del cliente' },
+        { codigo: 'POS003', descripcion: 'Reducción de costos operativos' },
+        { codigo: 'POS004', descripcion: 'Implementación exitosa de nueva tecnología' },
+        { codigo: 'POS005', descripcion: 'Aumento en la eficiencia del proceso' },
+        { codigo: 'POS006', descripcion: 'Desarrollo de nuevos productos exitosos' },
+        { codigo: 'POS007', descripcion: 'Mejora en la retención de empleados' },
+        { codigo: 'POS008', descripcion: 'Expansión exitosa a nuevos mercados' },
+        { codigo: 'POS009', descripcion: 'Incremento en la productividad del equipo' },
+        { codigo: 'POS010', descripcion: 'Obtención de reconocimientos o premios' }
     ];
 
-    const codigosNegativos = [
-        { codigo: 'NEG01', descripcion: 'Falta de respeto hacia los compañeros' },
-        { codigo: 'NEG02', descripcion: 'Comportamiento disruptivo en clase' },
-        { codigo: 'NEG03', descripcion: 'Bullying o acoso escolar' },
-        { codigo: 'NEG04', descripcion: 'Falta de participación en actividades académicas' },
-        { codigo: 'NEG05', descripcion: 'Incumplimiento de normas del colegio' },
-        { codigo: 'NEG06', descripcion: 'Ausentismo injustificado' },
-        { codigo: 'NEG07', descripcion: 'Uso inapropiado de dispositivos electrónicos en clase' },
-        { codigo: 'NEG08', descripcion: 'Falta de atención o concentración en clase' },
-        { codigo: 'NEG09', descripcion: 'Copiar en exámenes o trabajos' },
-        { codigo: 'NEG010', descripcion: 'Intimidación a otros estudiantes' }
-        // Agrega el resto de los códigos negativos aquí
+    const codigosNegativosEstudiantes = [
+        { codigo: 'NEG001', descripcion: 'Falta de respeto hacia los compañeros' },
+        { codigo: 'NEG002', descripcion: 'Comportamiento disruptivo en clase' },
+        { codigo: 'NEG003', descripcion: 'Falta de cumplimiento de reglas' },
+        { codigo: 'NEG004', descripcion: 'Falta de entrega de tareas' },
+        { codigo: 'NEG005', descripcion: 'Actitud negativa hacia el aprendizaje' },
+        { codigo: 'NEG006', descripcion: 'Falta de participación en clase' },
+        { codigo: 'NEG007', descripcion: 'Uso inapropiado de dispositivos electrónicos' },
+        { codigo: 'NEG008', descripcion: 'Violación del código de honor' },
+        { codigo: 'NEG009', descripcion: 'Incumplimiento de la política de asistencia' },
+        { codigo: 'NEG010', descripcion: 'Plagio académico' }
     ];
+
+    function obtenerDescripcion(codigo, tipoCodigo) {
+        const codigos = tipoCodigo === 'Positivo' ? codigosPositivosEstudiantes : codigosNegativosEstudiantes;
+        const codigoEncontrado = codigos.find(c => c.codigo === codigo);
+        return codigoEncontrado ? codigoEncontrado.descripcion : '';
+    }
+
+    function llenarCodigos(tipocodigo) {
+        codigoSelect.innerHTML = '<option value="">Seleccione el código</option>';
+        const codigos = tipocodigo === 'Positivo' ? codigosPositivosEstudiantes : codigosNegativosEstudiantes;
+        codigos.forEach(codigo => {
+            const option = document.createElement('option');
+            option.value = codigo.codigo;
+            option.textContent = codigo.descripcion;
+            codigoSelect.appendChild(option);
+        });
+    }
+
+    tipocodigoSelect.addEventListener('change', function () {
+        llenarCodigos(this.value);
+    });
 
     form.addEventListener('submit', function (event) {
         event.preventDefault();
 
-        // Obtener los valores del formulario
         const name = document.getElementById('name').value;
         const grade = document.getElementById('grade').value;
         const seccion = document.getElementById('seccion').value;
         const carnet = document.getElementById('carnet').value;
         const tipocodigo = document.getElementById('tipocodigo').value;
-        const codigo = codigoSelect.value; // Obtener el valor seleccionado del select de código
+        const codigo = codigoSelect.value;
 
-        // Verificar si se han completado todos los campos
         if (name && grade && seccion && carnet && tipocodigo && codigo) {
-            // Buscar la descripción del código seleccionado
-            let descripcionCodigo;
-            if (tipocodigo === 'Positivo') {
-                descripcionCodigo = codigosPositivos.find(codigoPositivo => codigoPositivo.codigo === codigo).descripcion;
-            } else if (tipocodigo === 'Negativo') {
-                descripcionCodigo = codigosNegativos.find(codigoNegativo => codigoNegativo.codigo === codigo).descripcion;
-            }
-
-            // Crear una nueva fila en la tabla con los datos del formulario
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${tableBody.children.length + 1}</td>
-                <td>${name}</td>
-                <td>${grade}</td>
-                <td>${seccion}</td>
-                <td>${carnet}</td>
-                <td>${tipocodigo}</td>
-                <td>${descripcionCodigo}</td>
-                <td class="action-column">
+            if (editingRow) {
+                editingRow.cells[1].textContent = name;
+                editingRow.cells[2].textContent = grade;
+                editingRow.cells[3].textContent = seccion;
+                editingRow.cells[4].textContent = carnet;
+                editingRow.cells[5].textContent = tipocodigo;
+                editingRow.cells[6].textContent = obtenerDescripcion(codigo, tipocodigo);
+                editingRow.cells[7].innerHTML = `
                     <button class="btn btn-info viewBtn">Ver</button>
                     <button class="btn btn-warning editBtn">Editar</button>
                     <button class="btn btn-danger deleteBtn">Eliminar</button>
-                </td>
-            `;
-    
-            // Agregar la nueva fila a la tabla
-            tableBody.appendChild(newRow);
-    
-            // Limpiar el formulario después de agregar los datos
+                `;
+                editingRow = null;
+            } else {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${tableBody.children.length + 1}</td>
+                    <td>${name}</td>
+                    <td>${grade}</td>
+                    <td>${seccion}</td>
+                    <td>${carnet}</td>
+                    <td>${tipocodigo}</td>
+                    <td>${obtenerDescripcion(codigo, tipocodigo)}</td>
+                    <td>
+                        <button class="btn btn-info viewBtn">Ver</button>
+                        <button class="btn btn-warning editBtn">Editar</button>
+                        <button class="btn btn-danger deleteBtn">Eliminar</button>
+                    </td>
+                `;
+
+                tableBody.appendChild(newRow);
+            }
+
             resetForm();
-    
-            // Cerrar el modal después de agregar los datos
+
             const modal = bootstrap.Modal.getInstance(document.getElementById('userForm'));
             modal.hide();
         } else {
@@ -84,36 +106,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Filtrar la tabla cuando se selecciona un tipo de código
-    const tipoCodigoSelect = document.getElementById('tipocodigo');
-
-    tipoCodigoSelect.addEventListener('change', function () {
-        const selectedValue = this.value;
-
-        // Limpiar las opciones del select de código
+    function resetForm() {
+        form.reset();
         codigoSelect.innerHTML = '<option value="">Seleccione el código</option>';
+    }
 
-        // Mostrar u ocultar las opciones según el tipo de código seleccionado
-        if (selectedValue === 'Positivo') {
-            codigosPositivos.forEach(function (codigo) {
-                const option = document.createElement('option');
-                option.value = codigo.codigo;
-                option.textContent = codigo.descripcion;
-                codigoSelect.appendChild(option);
-            });
-        } else if (selectedValue === 'Negativo') {
-            codigosNegativos.forEach(function (codigo) {
-                const option = document.createElement('option');
-                option.value = codigo.codigo;
-                option.textContent = codigo.descripcion;
-                codigoSelect.appendChild(option);
-            });
+    tableBody.addEventListener('click', function (event) {
+        const target = event.target;
+
+        if (target.classList.contains('viewBtn')) {
+            const row = target.closest('tr');
+            const cells = row.cells;
+            document.getElementById('detailName').textContent = cells[1].textContent;
+            document.getElementById('detailGrade').textContent = cells[2].textContent;
+            document.getElementById('detailSeccion').textContent = cells[3].textContent;
+            document.getElementById('detailCarnet').textContent = cells[4].textContent;
+            document.getElementById('detailTipoCodigo').textContent = cells[5].textContent;
+            document.getElementById('detailCodigo').textContent = cells[6].textContent;
+            const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            detailsModal.show();
+        }
+
+        if (target.classList.contains('editBtn')) {
+            const row = target.closest('tr');
+            const cells = row.cells;
+            document.getElementById('name').value = cells[1].textContent;
+            document.getElementById('grade').value = cells[2].textContent;
+            document.getElementById('seccion').value = cells[3].textContent;
+            document.getElementById('carnet').value = cells[4].textContent;
+            document.getElementById('tipocodigo').value = cells[5].textContent;
+            llenarCodigos(cells[5].textContent);
+            codigoSelect.value = cells[6].textContent;
+            editingRow = row;
+            const modal = new bootstrap.Modal(document.getElementById('userForm'));
+            modal.show();
+        }
+
+        if (target.classList.contains('deleteBtn')) {
+            const row = target.closest('tr');
+            deletingRow = row;
+            const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            confirmDeleteModal.show();
         }
     });
 
-    // Función para restablecer el formulario
-    function resetForm() {
-        form.reset();
-        codigoSelect.innerHTML = '<option value="">Seleccione el código</option>'; // Limpiar el select de código
-    }
+    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+        if (deletingRow) {
+            deletingRow.remove();
+            const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+            confirmDeleteModal.hide();
+            deletingRow = null;
+        }
+    });
+
 });
