@@ -11,6 +11,8 @@
             const grade = document.getElementById('grade').value;
             const seccion = document.getElementById('seccion').value;
             const carnet = document.getElementById('carnet').value;
+            const tipocodigo = document.getElementById('tipocodigo').value;
+            const codigo = document.getElementById('codigo').value;
 
             // Crear una nueva fila en la tabla con los datos del formulario
             const newRow = document.createElement('tr');
@@ -20,6 +22,8 @@
                 <td>${grade}</td>
                 <td>${seccion}</td>
                 <td>${carnet}</td>
+                <td>${tipocodigo}<td>
+                <td>${codigo}<td>
                 <td class="action-column">
                     <button class="btn btn-info viewBtn">Ver</button>
                     <button class="btn btn-warning editBtn">Editar</button>
