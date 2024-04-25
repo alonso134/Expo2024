@@ -5,14 +5,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Array que contiene los códigos positivos y negativos
     const codigosPositivos = [
-        { codigo: 'POS001', descripcion: 'Incremento de ventas' },
-        { codigo: 'POS002', descripcion: 'Mejora en la satisfacción del cliente' },
+        { codigo: 'POS011', descripcion: 'Participación activa en actividades extracurriculares' },
+        { codigo: 'POS012', descripcion: 'Colaboración positiva con compañeros en proyectos escolares' },
+        { codigo: 'POS013', descripcion: 'Mejora notable en el desempeño académico' },
+        { codigo: 'POS014', descripcion: 'Actitud positiva hacia el aprendizaje' },
+        { codigo: 'POS015', descripcion: 'Contribución significativa al ambiente escolar' },
+        { codigo: 'POS016', descripcion: 'Voluntariado en actividades solidarias o comunitarias' },
+        { codigo: 'POS017', descripcion: 'Creatividad destacada en proyectos o tareas escolares' },
+        { codigo: 'POS018', descripcion: 'Respeto y tolerancia hacia los compañeros y maestros' },
+        { codigo: 'POS019', descripcion: 'Cumplimiento puntual de tareas y responsabilidades escolares' },
+        { codigo: 'POS020', descripcion: 'Liderazgo positivo dentro y fuera del aula' }
         // Agrega el resto de los códigos positivos aquí
     ];
 
     const codigosNegativos = [
-        { codigo: 'NEG001', descripcion: 'Pérdida de clientes' },
-        { codigo: 'NEG002', descripcion: 'Errores en el servicio' },
+        { codigo: 'NEG01', descripcion: 'Falta de respeto hacia los compañeros' },
+        { codigo: 'NEG02', descripcion: 'Comportamiento disruptivo en clase' },
+        { codigo: 'NEG03', descripcion: 'Bullying o acoso escolar' },
+        { codigo: 'NEG04', descripcion: 'Falta de participación en actividades académicas' },
+        { codigo: 'NEG05', descripcion: 'Incumplimiento de normas del colegio' },
+        { codigo: 'NEG06', descripcion: 'Ausentismo injustificado' },
+        { codigo: 'NEG07', descripcion: 'Uso inapropiado de dispositivos electrónicos en clase' },
+        { codigo: 'NEG08', descripcion: 'Falta de atención o concentración en clase' },
+        { codigo: 'NEG09', descripcion: 'Copiar en exámenes o trabajos' },
+        { codigo: 'NEG010', descripcion: 'Intimidación a otros estudiantes' }
         // Agrega el resto de los códigos negativos aquí
     ];
 
