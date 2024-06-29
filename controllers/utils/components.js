@@ -2,7 +2,7 @@
 *   CONTROLADOR DE USO GENERAL EN TODAS LAS PÁGINAS WEB.
 */
 // Constante para establecer la ruta base del servidor.
-const SERVER_URL = 'http://localhost/Expo2024/api/';
+const SERVER_URL = 'http://localhost/EXPO2024/api/';
 
 /*
 *   Función para mostrar un mensaje de confirmación.

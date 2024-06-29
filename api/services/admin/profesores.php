@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/profesor_data.php');
+require_once('../../models/data/profesores_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -10,15 +10,15 @@ if (isset($_GET['action'])) {
     $profesor = new ProfesorData;
     // Se declara e inicializa un arreglo para guardar el resultado que retorna la API.
     $result = array('status' => 0, 'session' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'username' => null);
-    // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
+    // Se verifica si existe una sesión iniciada como profesor, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idProfesor'])) {
         $result['session'] = 1;
-        // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
+        // Se compara la acción a realizar cuando un profesor ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
                 if (!Validator::validateSearch($_POST['search'])) {
                     $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $administrador->searchRows()) {
+                } elseif ($result['dataset'] = $profesor->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -28,20 +28,20 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$profesor->setNombre($_POST['nombreAdministrador']) or
-                    !$profesor->setApellido($_POST['apellidoAdministrador']) or
-                    !$profesor->setCorreo($_POST['correoAdministrador']) or
-                    !$profesor->setAlias($_POST['aliasAdministrador']) or
-                    !$profesor->setClave($_POST['claveAdministrador'])
+                    !$profesor->setNombre($_POST['nombreProfesor']) or
+                    !$profesor->setApellido($_POST['apellidoProfesor']) or
+                    !$profesor->setCorreo($_POST['correoProfesor']) or
+                    !$profesor->setAlias($_POST['aliasProfesor']) or
+                    !$profesor->setClave($_POST['claveProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
-                } elseif ($_POST['claveAdministrador'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['claveProfesor'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($profesor->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador creado correctamente';
+                    $result['message'] = 'Profesor creado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el administrador';
+                    $result['error'] = 'Ocurrió un problema al crear el Profesor';
                 }
                 break;
             case 'readAll':
@@ -49,52 +49,52 @@ if (isset($_GET['action'])) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
-                    $result['error'] = 'No existen administradores registrados';
+                    $result['error'] = 'No existen profesores registrados';
                 }
                 break;
             case 'readOne':
-                if (!$profesor->setId($_POST['idAdministrador'])) {
-                    $result['error'] = 'Administrador incorrecto';
+                if (!$profesor->setId($_POST['idProfesor'])) {
+                    $result['error'] = 'profesor incorrecto';
                 } elseif ($result['dataset'] = $profesor->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Administrador inexistente';
+                    $result['error'] = 'Profesor inexistente';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$profesor->setId($_POST['idAdministrador']) or
-                    !$profesor->setNombre($_POST['nombreAdministrador']) or
-                    !$profesor->setApellido($_POST['apellidoAdministrador']) or
-                    !$profesor->setCorreo($_POST['correoAdministrador'])
+                    !$profesor->setId($_POST['idProfesor']) or
+                    !$profesor->setNombre($_POST['nombreProfesor']) or
+                    !$profesor->setApellido($_POST['apellidoProfesor']) or
+                    !$profesor->setCorreo($_POST['correoProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
-                } elseif ($administrador->updateRow()) {
+                } elseif ($profesor->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador modificado correctamente';
+                    $result['message'] = 'profesor modificado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el administrador';
+                    $result['error'] = 'Ocurrió un problema al modificar el profesor';
                 }
                 break;
             case 'deleteRow':
-                if ($_POST['idAdministrador'] == $_SESSION['idAdministrador']) {
+                if ($_POST['idProfesor'] == $_SESSION['idProfesor']) {
                     $result['error'] = 'No se puede eliminar a sí mismo';
-                } elseif (!$profesor->setId($_POST['idAdministrador'])) {
+                } elseif (!$profesor->setId($_POST['idProfesor'])) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($profesor->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador eliminado correctamente';
+                    $result['message'] = 'Profesor eliminado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el administrador';
+                    $result['error'] = 'Ocurrió un problema al eliminar el profesor';
                 }
                 break;
             case 'getUser':
-                if (isset($_SESSION['aliasAdministrador'])) {
+                if (isset($_SESSION['aliasProfesor'])) {
                     $result['status'] = 1;
-                    $result['username'] = $_SESSION['aliasAdministrador'];
+                    $result['username'] = $_SESSION['aliasProfesor'];
                 } else {
-                    $result['error'] = 'Alias de administrador indefinido';
+                    $result['error'] = 'Alias de profesor indefinido';
                 }
                 break;
             case 'logOut':
@@ -115,16 +115,16 @@ if (isset($_GET['action'])) {
             case 'editProfile':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$profesor->setNombre($_POST['nombreAdministrador']) or
-                    !$profesor->setApellido($_POST['apellidoAdministrador']) or
-                    !$profesor->setCorreo($_POST['correoAdministrador']) or
-                    !$profesor->setAlias($_POST['aliasAdministrador'])
+                    !$profesor->setNombre($_POST['nombreProfesor']) or
+                    !$profesor->setApellido($_POST['apellidoProfesor']) or
+                    !$profesor->setCorreo($_POST['correoProfesor']) or
+                    !$profesor->setAlias($_POST['aliasProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($profesor->editProfile()) {
                     $result['status'] = 1;
                     $result['message'] = 'Perfil modificado correctamente';
-                    $_SESSION['aliasAdministrador'] = $_POST['aliasAdministrador'];
+                    $_SESSION['aliasProfesor'] = $_POST['aliasProfesor'];
                 } else {
                     $result['error'] = 'Ocurrió un problema al modificar el perfil';
                 }
@@ -135,7 +135,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['profesor'] = 'Confirmación de contraseña diferente';
-                } elseif (!$administrador->setClave($_POST['claveNueva'])) {
+                } elseif (!$profesor->setClave($_POST['claveNueva'])) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($profesor->changePassword()) {
                     $result['status'] = 1;
@@ -148,33 +148,33 @@ if (isset($_GET['action'])) {
                 $result['error'] = 'Acción no disponible dentro de la sesión';
         }
     } else {
-        // Se compara la acción a realizar cuando el administrador no ha iniciado sesión.
+        // Se compara la acción a realizar cuando el profesor no ha iniciado sesión.
         switch ($_GET['action']) {
             case 'readUsers':
                 if ($profesor->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Debe autenticarse para ingresar';
                 } else {
-                    $result['error'] = 'Debe crear un administrador para comenzar';
+                    $result['error'] = 'Debe crear un profesor para comenzar';
                 }
                 break;
             case 'signUp':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$profesor->setNombre($_POST['nombreAdministrador']) or
-                    !$profesor->setApellido($_POST['apellidoAdministrador']) or
-                    !$profesor->setCorreo($_POST['correoAdministrador']) or
-                    !$profesor->setAlias($_POST['aliasAdministrador']) or
-                    !$profesor->setClave($_POST['claveAdministrador'])
+                    !$profesor->setNombre($_POST['nombreProfesor']) or
+                    !$profesor->setApellido($_POST['apellidoProfesor']) or
+                    !$profesor->setCorreo($_POST['correoProfesor']) or
+                    !$profesor->setAlias($_POST['aliasProfesor']) or
+                    !$profesor->setClave($_POST['claveProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
-                } elseif ($_POST['claveAdministrador'] != $_POST['confirmarClave']) {
+                } elseif ($_POST['claveProfesor'] != $_POST['confirmarClave']) {
                     $result['error'] = 'Contraseñas diferentes';
                 } elseif ($profesor->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Administrador registrado correctamente';
+                    $result['message'] = 'profesor registrado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al registrar el administrador';
+                    $result['error'] = 'Ocurrió un problema al registrar el profesor';
                 }
                 break;
             case 'logIn':

@@ -4,14 +4,14 @@
 */
 
 // Constante para completar la ruta de la API.
-const USER_API = 'services/admin/administrador.php';
+const USER_API = 'services/admin/profesores.php';
 // Constante para establecer el elemento del contenido principal.
 const MAIN = document.querySelector('main');
 MAIN.style.paddingTop = '75px';
 MAIN.style.paddingBottom = '100px';
 MAIN.classList.add('container');
 // Se establece el título de la página web.
-document.querySelector('title').textContent = 'CECSL - Dashboard';
+document.querySelector('title').textContent = 'booksadre - Dashboard';
 // Constante para establecer el elemento del título principal.
 const MAIN_TITLE = document.getElementById('mainTitle');
 MAIN_TITLE.classList.add('text-center', 'py-3');
@@ -111,7 +111,7 @@ const loadTemplate = async () => {
             `);
             // Se agrega el pie de la página web después del contenido principal.
             MAIN.insertAdjacentHTML('afterend', `
-                <footer>
+         <footer>
                     <nav class="navbar fixed-bottom bg-body-tertiary">
                         <div class="container">
                             <p><a class="nav-link" href="https://github.com/alonso134/Expo2024.git" target="_blank"><i class="bi bi-github"></i> CECSL</a></p>
