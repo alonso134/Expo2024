@@ -11,7 +11,7 @@ MAIN.style.paddingTop = '75px';
 MAIN.style.paddingBottom = '100px';
 MAIN.classList.add('container');
 // Se establece el título de la página web.
-document.querySelector('title').textContent = 'booksadre - Dashboard';
+document.querySelector('title').textContent = 'CECSL - SGE';
 // Constante para establecer el elemento del título principal.
 const MAIN_TITLE = document.getElementById('mainTitle');
 MAIN_TITLE.classList.add('text-center', 'py-3');
@@ -55,22 +55,28 @@ const loadTemplate = async () => {
                           
               
                           <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../../views/admin/Inicio.html"><i class='bx bxs-home-alt-2' ></i> Inicio</a>
+                            <a class="nav-link" aria-current="page" href="../../view/admin/Inicio.html"><i class="bi bi-house-door"></i> Inicio</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="../../views/admin/Categorias.html"><i class='bx bxs-book-bookmark' ></i> Categorías</a>
+                            <a class="nav-link" aria-current="page" href="../../view/admin/estudiantes.html"><i class="bi bi-people"></i> Estudiantes</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" ria-current="page" href="../../views/admin/Productos.html"><i class='bx bxs-pie-chart-alt-2'></i> Productos</a>
+                            <a class="nav-link" aria-current="page" href="../../view/admin/materias.html"><i class="bi bi-book"></i> Materias</a>
                           </li>
                           <li class="nav-item ">
-                          <a class="nav-link active" aria-current="page" href="../../views/admin/Pedidos.html"><i class='bx bxs-report'></i> Pedidos</a>
+                          <a class="nav-link active" aria-current="page" href="../../view/admin/codigos.html"><i class="bi bi-file-earmark-text"></i> Codigos</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="../../views/admin/Clientes.html"><i class='bx bxs-user'></i> Clientes</a>
+                           <a class="nav-link" href="../../view/admin/asistencia.html"><i class="bi bi-person-check"></i> Asistencia</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="../../views/admin/Administrador.html"><i class='bx bxs-user-plus' ></i> Administradores</a>
+                           <a class="nav-link" href="../../view/admin/Comportamiento.html"><i class="bi bi-bar-chart"></i> Comportamiento</a>
+                          </li>
+                           <li class="nav-item">
+                           <a class="nav-link" href="../../view/admin/codigos.html"><i class="bi bi-card-list"></i> Codigos</a>
+                          </li>
+                          <li class="nav-item">
+                           <a class="nav-link" href="#"><i class="bi bi-journal-text"></i> Notas</a>
                           </li>
                           <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Cuenta: <b>${DATA.username}</b></a>
@@ -102,8 +108,8 @@ const loadTemplate = async () => {
                 <header>
                     <nav class="navbar fixed-top bg-body-tertiary">
                         <div class="container">
-                            <a class="navbar-brand" href="CECSL.html">
-                                <img src="../../resources/img/logo.png" alt="inventory" width="50">
+                            <a class="navbar-brand" href="index.html">
+                                <img src="../../resources/img/CECSL.png" alt="inventory" width="50">
                             </a>
                         </div>
                     </nav>
