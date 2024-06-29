@@ -225,3 +225,42 @@ footer{
   opacity: 0.3;
   text-align: center;
 }
+
+.marge{
+  
+    background-color: #284B63;
+    color: white;
+    height: 35px;
+    width: 80%;
+    margin-left: 130px;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 25px;
+  }
+
+  .volviste{
+    background-color: #D9D9D9;
+    margin-left: 26px;
+    width: 65px ;
+    height: 30px;
+    font-size: 20px;
+  }
+
+  .Volver{
+    color: #0D0C0C;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+
+  .margenestu{
+    background-color: #284B63;
+    color: white;
+    height: 50px;
+    width: 80%;
+    margin-left: 130px;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 25px;
+  }
+
+  .laimgestu{
+    margin-right: 15px;
+    margin-left: 9px;
+  }
