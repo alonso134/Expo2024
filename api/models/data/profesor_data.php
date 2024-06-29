@@ -2,11 +2,11 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/administrador_handler.php');
+require_once('../../models/handler/profesor_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla USUARIO.
  */
-class AdministradorData extends AdministradorHandler
+class ProfesorData extends ProfesorHandler
 {
     // Atributo genérico para manejo de errores.
     private $data_error = null;
@@ -20,7 +20,7 @@ class AdministradorData extends AdministradorHandler
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador del administrador es incorrecto';
+            $this->data_error = 'El identificador del Profesor es incorrecto';
             return false;
         }
     }
