@@ -1,156 +1,166 @@
-var form = document.getElementById("myForm"),
-    imgInput = document.querySelector(".img"),
-    file = document.getElementById("imgInput"),
-    userName = document.getElementById("name"),
-    age = document.getElementById("age"),
-    city = document.getElementById("city"),
-    email = document.getElementById("email"),
-    phone = document.getElementById("phone"),
-    post = document.getElementById("post"),
-    sDate = document.getElementById("sDate"),
-    submitBtn = document.querySelector(".submit"),
-    userInfo = document.getElementById("data"),
-    modal = document.getElementById("userForm"),
-    modalTitle = document.querySelector("#userForm .modal-title"),
-    newUserBtn = document.querySelector(".newUser")
+// Constante para completar la ruta de la API.
+const GRADO_API = 'services/admin/grado.php';
+// Constante para establecer el formulario de buscar.
+const SEARCH_FORM = document.getElementById('searchForm');
+// Constantes para establecer los elementos de la tabla.
+const TABLE_BODY = document.getElementById('tableBody'),
+    ROWS_FOUND = document.getElementById('rowsFound');
+// Constantes para establecer los elementos del componente Modal.
+const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    MODAL_TITLE = document.getElementById('modalTitle');
+// Constantes para establecer los elementos del formulario de guardar.
+const SAVE_FORM = document.getElementById('saveForm'),
+    ID_GRADO = document.getElementById('idGrado'),
+    NOMBRE_GRADO = document.getElementById('nombreGrado'),
+    DESCRIPCION_GRADO= document.getElementById('seccionGrado');
 
+// Método del evento para cuando el documento ha cargado.
+document.addEventListener('DOMContentLoaded', () => {
+    // Llamada a la función para mostrar el encabezado y pie del documento.
+    loadTemplate();
+    // Se establece el título del contenido principal.
+    MAIN_TITLE.textContent = 'Gestionar Grados';
+    // Llamada a la función para llenar la tabla con los registros existentes.
+    fillTable();
+});
 
+// Método del evento para cuando se envía el formulario de buscar.
+SEARCH_FORM.addEventListener('submit', (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SEARCH_FORM);
+    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
+    fillTable(FORM);
+});
 
-let getData = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : []
+// Método del evento para cuando se envía el formulario de guardar.
+SAVE_FORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    // Se verifica la acción a realizar.
+    (ID_GRADO.value) ? action = 'updateRow' : action = 'createRow';
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SAVE_FORM);
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(GRADO_API, action, FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se cierra la caja de diálogo.
+        SAVE_MODAL.hide();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+        // Se carga nuevamente la tabla para visualizar los cambios.
+        fillTable();
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+});
 
-let isEdit = false, editId
-showInfo()
+/*
+*   Función asíncrona para llenar la tabla con los registros disponibles.
+*   Parámetros: form (objeto opcional con los datos de búsqueda).
+*   Retorno: ninguno.
+*/
+const fillTable = async (form = null) => {
+    // Se inicializa el contenido de la tabla.
+    ROWS_FOUND.textContent = '';
+    TABLE_BODY.innerHTML = '';
+    // Se verifica la acción a realizar.
+    (form) ? action = 'searchRows' : action = 'readAll';
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(GRADO_API, action, form);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros fila por fila.
+        DATA.dataset.forEach(row => {
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.nombre}</td>
+                    <td>${row.nombre_seccion}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_grado})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_grado})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+        sweetAlert(4, DATA.error, true);
+    }
+}
 
-newUserBtn.addEventListener('click', ()=> {
-    submitBtn.innerText = 'Crear',
-    modalTitle.innerText = " Nuevo Registro"
-    isEdit = false
-    imgInput.src = "./image/Profile Icon.webp"
-    form.reset()
-})
+/*
+*   Función para preparar el formulario al momento de insertar un registro.
+*   Parámetros: ninguno.
+*   Retorno: ninguno.
+*/
+const openCreate = () => {
+    // Se muestra la caja de diálogo con su título.
+    SAVE_MODAL.show();
+    MODAL_TITLE.textContent = 'Crear Grado';
+    // Se prepara el formulario.
+    SAVE_FORM.reset();
+}
 
+/*
+*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openUpdate = async (id) => {
+    // Se define una constante tipo objeto con los datos del registro seleccionado.
+    const FORM = new FormData();
+    FORM.append('idGrado', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(GRADO_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL.show();
+        MODAL_TITLE.textContent = 'Actualizar Grado';
+        // Se prepara el formulario.
+        SAVE_FORM.reset();
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_GRADO.value = ROW.id_grado;
+        NOMBRE_GRADO.value = ROW.nombre;
+        DESCRIPCION_GRADO.value = ROW.nombre_seccion;
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+}
 
-file.onchange = function(){
-    if(file.files[0].size < 1000000){  // 1MB = 1000000
-        var fileReader = new FileReader();
-
-        fileReader.onload = function(e){
-            imgUrl = e.target.result
-            imgInput.src = imgUrl
+/*
+*   Función asíncrona para eliminar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openDelete = async (id) => {
+    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
+    const RESPONSE = await confirmAction('¿Desea eliminar al grado de forma permanente?');
+    // Se verifica la respuesta del mensaje.
+    if (RESPONSE) {
+        // Se define una constante tipo objeto con los datos del registro seleccionado.
+        const FORM = new FormData();
+        FORM.append('idGrado', id);
+        // Petición para eliminar el registro seleccionado.
+        const DATA = await fetchData(GRADO_API, 'deleteRow', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            // Se muestra un mensaje de éxito.
+            await sweetAlert(1, DATA.message, true);
+            // Se carga nuevamente la tabla para visualizar los cambios.
+            fillTable();
+        } else {
+            sweetAlert(2, DATA.error, false);
         }
-
-        fileReader.readAsDataURL(file.files[0])
-    }
-    else{
-        alert("This file is too large!")
     }
 }
-
-
-function showInfo(){
-    document.querySelectorAll('.employeeDetails').forEach(info => info.remove())
-    getData.forEach((element, index) => {
-        let createElement = `<tr class="employeeDetails">
-            <td>${index+1}</td>
-            <td><img src="${element.picture}" alt="" width="50" height="50"></td>
-            <td>${element.employeeName}</td>
-            <td>${element.employeeAge}</td>
-            <td>${element.employeeCity}</td>
-            <td>${element.employeeEmail}</td>
-            <td>${element.employeePhone}</td>
-            <td>${element.employeePost}</td>
-            <td>${element.startDate}</td>
-
-
-            <td>
-                <button class="btn btn-success" onclick="readInfo('${element.picture}', '${element.employeeName}', '${element.employeeAge}', '${element.employeeCity}', '${element.employeeEmail}', '${element.employeePhone}', '${element.employeePost}', '${element.startDate}')" data-bs-toggle="modal" data-bs-target="#readData"><i class="bi bi-eye"></i></button>
-
-                <button class="btn btn-primary" onclick="editInfo(${index}, '${element.picture}', '${element.employeeName}', '${element.employeeAge}', '${element.employeeCity}', '${element.employeeEmail}', '${element.employeePhone}', '${element.employeePost}', '${element.startDate}')" data-bs-toggle="modal" data-bs-target="#userForm"><i class="bi bi-pencil-square"></i></button>
-
-                <button class="btn btn-danger" onclick="deleteInfo(${index})"><i class="bi bi-trash"></i></button>
-                            
-            </td>
-        </tr>`
-
-        userInfo.innerHTML += createElement
-    })
-}
-showInfo()
-
-
-function readInfo(pic, name, age, city, email, phone, post, sDate){
-    document.querySelector('.showImg').src = pic,
-    document.querySelector('#showName').value = name,
-    document.querySelector("#showAge").value = age,
-    document.querySelector("#showCity").value = city,
-    document.querySelector("#showEmail").value = email,
-    document.querySelector("#showPhone").value = phone,
-    document.querySelector("#showPost").value = post,
-    document.querySelector("#showsDate").value = sDate
-}
-
-
-function editInfo(index, pic, name, Age, City, Email, Phone, Post, Sdate){
-    isEdit = true
-    editId = index
-    imgInput.src = pic
-    userName.value = name
-    age.value = Age
-    city.value =City
-    email.value = Email,
-    phone.value = Phone,
-    post.value = Post,
-    sDate.value = Sdate
-
-    submitBtn.innerText = "Actualizar"
-    modalTitle.innerText = "Actualizar Alumno"
-}
-
-
-function deleteInfo(index){
-    if(confirm("Are you sure want to delete?")){
-        getData.splice(index, 1)
-        localStorage.setItem("userProfile", JSON.stringify(getData))
-        showInfo()
-    }
-}
-
-
-form.addEventListener('submit', (e)=> {
-    e.preventDefault()
-
-    const information = {
-        picture: imgInput.src == undefined ? "./image/Profile Icon.webp" : imgInput.src,
-        employeeName: userName.value,
-        employeeAge: age.value,
-        employeeCity: city.value,
-        employeeEmail: email.value,
-        employeePhone: phone.value,
-        employeePost: post.value,
-        startDate: sDate.value
-    }
-
-    if(!isEdit){
-        getData.push(information)
-    }
-    else{
-        isEdit = false
-        getData[editId] = information
-    }
-
-    localStorage.setItem('userProfile', JSON.stringify(getData))
-
-    submitBtn.innerText = "Submit"
-    modalTitle.innerHTML = "Fill The Form"
-
-    showInfo()
-
-    form.reset()
-
-    imgInput.src = "./image/Profile Icon.webp"  
-
-    // modal.style.display = "none"
-    // document.querySelector(".modal-backdrop").remove()
-
-
-})
