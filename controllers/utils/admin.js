@@ -64,17 +64,10 @@ const loadTemplate = async () => {
                             <a class="nav-link" aria-current="page" href="../../view/admin/materias.html"><i class="bi bi-book"></i> Materias</a>
                           </li>
                           <li class="nav-item ">
-                          <a class="nav-link active" aria-current="page" href="../../view/admin/codigos.html"><i class="bi bi-file-earmark-text"></i> Codigos</a>
+                          <a class="nav-link active" aria-current="page" href="../../view/admin/codigos.html"><i class="bi bi-file-earmark-text"></i> Ausencias</a>
                         </li>
                           <li class="nav-item">
-                           <a class="nav-link" href="../../view/admin/asistencia.html"><i class="bi bi-person-check"></i> Asistencia</a>
-                          </li>
-                          <li class="nav-item">
                            <a class="nav-link" href="../../view/admin/Comportamiento.html"><i class="bi bi-bar-chart"></i> Comportamiento</a>
-                          </li>
-        
-                          <li class="nav-item">
-                           <a class="nav-link" href="#"><i class="bi bi-journal-text"></i> Notas</a>
                           </li>
                           <li class="nav-item dropdown">
                               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Cuenta: <b>${DATA.username}</b></a>
