@@ -88,17 +88,19 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="hidden" id="idGrado" name="idGrado">
+
+                            
+                            <input type="hidden" id="idInscpricion" name="idInscpricion">
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreGrado" class="form-label">Grado</label>
-                                <input id="nombreGrado" type="text" name="nombreGrado" class="form-control"
-                                    required>
+                                <label for="nombreEstudiante" class="form-label">Estudiante</label>
+                                <select id="nombreEstudiante" name="nombreEstudiante" class="form-select" required>
+                                </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="seccionGrado" class="form-label">Seccion</label>
-                                <input id="seccionGrado" type="text" name="seccionGrado"
-                                    class="form-control">
-                            </div>
+                                <label for="NombreMaterias" class="form-label">Materias</label>
+                                <select id="NombreMaterias" name="NombreMaterias" class="form-select" required>
+                                </select>
+                            </div>   
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Guardar</button>

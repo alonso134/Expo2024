@@ -1,5 +1,7 @@
 // Constante para completar la ruta de la API.
 const INSCRIPCION_API = 'services/admin/inscripcion.php';
+const MATERIAS_API = 'services/admin/materias.php';
+const ESTUDIANTE_API = 'services/admin/estudiante.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
@@ -10,9 +12,7 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_GRADO = document.getElementById('idGrado'),
-    NOMBRE_GRADO = document.getElementById('nombreGrado'),
-    DESCRIPCION_GRADO= document.getElementById('seccionGrado');
+    ID_INSCRPCION = document.getElementById('idInscpricion');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,11 +39,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_GRADO.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_INSCRPCION.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(GRADO_API, action, FORM);
+    const DATA = await fetchData(INSCRIPCION_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
@@ -69,7 +69,7 @@ const fillTable = async (form = null) => {
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(GRADO_API, action, form);
+    const DATA = await fetchData(INSCRIPCION_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros fila por fila.
@@ -77,13 +77,13 @@ const fillTable = async (form = null) => {
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
+                    <td>${row.nombre_estudiante}</td>
                     <td>${row.nombre}</td>
-                    <td>${row.nombre_seccion}</td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_grado})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_inscripcion})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_grado})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_inscripcion})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -105,7 +105,7 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Crear Grado';
+    MODAL_TITLE.textContent = 'Crear inscripcion';
     // Se prepara el formulario.
     SAVE_FORM.reset();
 }
@@ -118,21 +118,21 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define una constante tipo objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idGrado', id);
+    FORM.append('idInscpricion', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(GRADO_API, 'readOne', FORM);
+    const DATA = await fetchData(INSCRIPCION_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar Grado';
+        MODAL_TITLE.textContent = 'Actualizar inscrpicion';
         // Se prepara el formulario.
         SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_GRADO.value = ROW.id_grado;
-        NOMBRE_GRADO.value = ROW.nombre;
-        DESCRIPCION_GRADO.value = ROW.nombre_seccion;
+        ID_INSCRPCION.value = ROW.id_inscripcion;
+        fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante', ROW.id_estudiante);
+        fillSelect(MATERIAS_API, 'readAll', 'NombreMaterias', ROW.id_materia);
     } else {
         sweetAlert(2, DATA.error, false);
     }
@@ -145,14 +145,14 @@ const openUpdate = async (id) => {
 */
 const openDelete = async (id) => {
     // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
-    const RESPONSE = await confirmAction('¿Desea eliminar al grado de forma permanente?');
+    const RESPONSE = await confirmAction('¿Desea eliminar la inscripcion de forma permanente?');
     // Se verifica la respuesta del mensaje.
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idGrado', id);
+        FORM.append('idInscpricion', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(GRADO_API, 'deleteRow', FORM);
+        const DATA = await fetchData(INSCRIPCION_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.
