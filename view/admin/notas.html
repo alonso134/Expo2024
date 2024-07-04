@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Notas</title>
+    <link rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../../resources/css/inicio.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <br>
+    <main>
+        <h3 id="mainTitle"></h3>
+        <div class="row">
+            <form class="col-sm-12 col-md-6" id="searchForm">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="reset" class="btn btn-secondary" onclick="fillTable()">
+                            <i class="bi bi-x-square-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-sm-12 col-md-6 text-end">
+                <button type="button" class="btn btn-primary" onclick="openCreate()">
+                    <i class="bi bi-plus-square-fill"></i>
+                </button>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <td colspan="3" id="rowsFound"></td>
+                </tr>
+                <tr>
+                    <th>ESTUDIANTE</th>
+                    <th>CODIGO</th>
+                    <th>PROFESOR</th>
+                    <th>FECHA</th>
+                    <th>DESCRIPCION</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para guardar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row g-3">
+                            <input type="hidden" id="idCodigo" name="idCodigo">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="nombreEstudiante" class="form-label">Estudiante</label>
+                                <select id="nombreEstudiante" name="nombreEstudiante" class="form-select" required></select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="TipoCodigo" class="form-label">Codigo</label>
+                                <select id="TipoCodigo" name="TipoCodigo" class="form-select" required></select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="NombreProfesor" class="form-label">Profesor</label>
+                                <select id="NombreProfesor" name="NombreProfesor" class="form-select" required></select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="FechaCodigo" class="form-label">Fecha</label>
+                                <input type="date" id="FechaCodigo" name="FechaCodigo" class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="descripcionCodigo" class="form-label">Descripcion</label>
+                                <input id="descripcionCodigo" type="text" name="descripcionCodigo" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons-container">
+            <a href="https://www.facebook.com" class="social-icons" target="_blank"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.twitter.com" class="social-icons" target="_blank"><i class="bx bxl-twitter"></i></a>
+            <a href="https://www.instagram.com" class="social-icons" target="_blank"><i class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com" class="social-icons" target="_blank"><i class="bx bxl-linkedin"></i></a>
+        </div>
+        <span class="copyright">2024 © - Desarrollado por el grupo de Software</span>
+    </footer>
+
+    <script src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script src="../../resources/js/sweetalert.min.js"></script>
+    <script src="../../controllers/utils/components.js"></script>
+    <script src="../../controllers/utils/admin.js"></script>
+    <script src="../../controllers/admin/notas.js"></script>
+</body>
+</html>
