@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Sisstema Administrativo</title>
+    <title>Sistema Administrativo</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../../resources/css/style.css">
-    <link rel="stylesheet" href="../../resources/css/style.css">
-   
 </head>
 <body>
-
     <header class="header">
-    
         <div class="barra">
             <h6>Menu<img src="../../resources/img/barra.png" alt="" width="30px" height="30px"></h6>
-    
             <ul>
                 <li><a href=""><i class="bi bi-house-door ojo"></i>Inicio</a></li>
                 <li><a href="../../view/admin/estudiantes.html"><i class="bi bi-person ojo"></i>Estudiantes</a></li>
@@ -57,9 +52,7 @@
         font-weight: bold;
       }
     </style>
-  </head>
-  <body>
-  
+
   <br><br>
   <p class="tituliestu">Pagina de Inicio</p>
   <div class="margenestu">
@@ -108,13 +101,7 @@
       </div>
     </div>
     
-    
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    
-    <br>
-    <br>
+    <br><br>
     <style>
         .search-container {
           display: flex;
@@ -149,12 +136,9 @@
           white-space: nowrap; /* Evitar que el texto se rompa */
         }
     
-      </style>
-    </head>
-    <body>
-    
+    </style>
+
     <div class="container">
-     
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -179,79 +163,55 @@
             <td>5654</td>
             <td>Miguel</td>
             <td>Perez</td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5654" value="presente" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5654" value="llegada_tarde" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5654" value="ausente" class="form-check-input"></td>
           </tr>
           <tr>
             <td>5655</td>
             <td>Armando</td>
             <td>Ando</td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5655" value="presente" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5655" value="llegada_tarde" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5655" value="ausente" class="form-check-input"></td>
           </tr>
           <tr>
             <td>5656</td>
             <td>Esteban</td>
             <td>Quito</td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
-            <td><input type="checkbox" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5656" value="presente" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5656" value="llegada_tarde" class="form-check-input"></td>
+            <td><input type="radio" name="attendance_5656" value="ausente" class="form-check-input"></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <button id="imageButton" onclick="window.location.href='pagina_destino.html'" style="background-image: url('../../resources/imagenes/btnasistencia.png'); width: 100px; height: 60px; border: none; background-size: cover;"></button>
+  
 
-
-
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-      $(document).ready(function(){
-        $('#searchInput').on('keyup', function(){
-          var searchText = $(this).val().toLowerCase();
-          $('#tableBody tr').filter(function(){
-            $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
-          });
-        });
-    
-        $('input[type="checkbox"]').on('change', function(){
-          if($(this).is(':checked')){
-            $(this).closest('tr').addClass('table-info');
-          } else {
-            $(this).closest('tr').removeClass('table-info');
-          }
-        });
-      });
-    </script>
-
-        <div class="marge">
-            <div class="volviste">
+    <div class="marge">
+        <div class="volviste">
             <a href="../../view/admin/inicio.html" class="Volver">Volver</a>
         </div>
+    </div>
 
-        <br><br><br>
-        <br><br><br>
-            <footer>
-                <div class="social-icons-container">
-                    <a href="" class="social-icons"></a>
-                    <a href="" class="social-icons"></a>
-                    <a href="" class="social-icons"></a>
-                    <a href="" class="social-icons"></a>
-                </div>
-                <ul class="footer-menu-container">
-                    <li class="menu-item">Legal</li>
-                    <li class="menu-item">Cookies</li>
-                    <li class="menu-item">Cess</li>
-                    <li class="menu-item">Software</li>
-                </ul>
-                <span class="copyright">2024 © - Desarrollado por el grupo de Software</span>
-            </footer>
-
+    <br><br><br>
+    <br><br><br>
+    <footer>
+        <div class="social-icons-container">
+            <a href="" class="social-icons"></a>
+            <a href="" class="social-icons"></a>
+        </div>
+        <ul class="footer-menu-container">
+            <li class="menu-item">Legal</li>
+            <li class="menu-item">Cookies</li>
+            <li class="menu-item">Cess</li>
+            <li class="menu-item">Software</li>
+        </ul>
+        <span class="copyright">2024 © - Desarrollado por el grupo de Software</span>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="/controllers/admin/asistencia.js"></script>
 </body>
 </html>
