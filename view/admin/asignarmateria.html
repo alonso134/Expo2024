@@ -1,38 +1,139 @@
 <!DOCTYPE html>
-<html>
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
+
 <head>
-<title>Asignar Materia</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../../resources/css/style.css">
-</head>
-<body>
+    <!-- Título del documento -->
+    <title></title>
+
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/CECSL.png">
+
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
     
-      <div class="container"><br><br>
-        <p class="jajja">Pagia de Inicio</p>
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../../resources/css/inicio.css">
+</head>
+
+<body>
+
+    <br>    
+    
+    <main>
+        <!-- Título del contenido principal -->
+        <h3 id="mainTitle"></h3>
         <div class="row">
-            <button type="button" class="btn btnm-1 botono" onclick="abrirForm(0)">Asignar Materias</button>
-            <table class="table table-bordered" id="tablaPacientes">
-                <thead>
-                    <tr class="maria">
-                        <td>ID</td>
-                        <td>Nombre</td>
-                        <td>Apellido</td>
-                        <td>Telefono Maestro</td>
-                        <td>Correo Maestro</td>
-                        <td>Materia a Asignar</td>
-                        <td>ACCIONES</td>
-                    </tr>
-                </thead>
-                <tbody id="dataPacientes" class="tbodyy">
-
-                </tbody>
-            </table>
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-6" id="searchForm">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="reset" class="btn btn-secondary" onclick="fillTable()">
+                            <i class="bi bi-x-square-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-sm-12 col-md-6 text-end">
+                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                <button type="button" class="btn btn-primary" onclick="openCreate()">
+                    <i class="bi bi-plus-square-fill"></i>
+                </button>
+            </div>
         </div>
-      </div>
-      <script src="../../controladores/admin/asignarmateria.js" type="text/javascript"></script>
-</body>
-</html>
 
+        <!-- Tabla para mostrar los registros existentes -->
+        <table class="table table-hover">
+            <!-- Encabezado de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+            <thead>
+                <tr>
+                    <td colspan="4" id="rowsFound"></td>
+                </tr>
+                <tr>
+                    <th>NOMBRE</th>
+                    <th>DESCRIPCION</th>
+                    <th>PROFESOR</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para guardar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row g-3">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idMateria" name="idMateria">
+                            <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-6">
+                                    <label for="nombreMateria" class="form-label">Materia</label>
+                                    <input id="nombreMateria" type="text" name="nombreMateria"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                            <label for="descripcionMateria" class="form-label">Descpricion</label>
+                            <input id="descripcionMateria" type="text" name="descripcionMateria"
+                                class="form-control">
+                        </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="NombreProfesor" class="form-label">Profesor</label>
+                                <select id="NombreProfesor" name="NombreProfesor" class="form-select" required>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="social-icons-container">
+            <a href="https://www.facebook.com" class="social-icons" target="_blank"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.twitter.com" class="social-icons" target="_blank"><i class="bx bxl-twitter"></i></a>
+            <a href="https://www.instagram.com" class="social-icons" target="_blank"><i class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com" class="social-icons" target="_blank"><i class="bx bxl-linkedin"></i></a>
+        </div>
+        <span class="copyright">2024 © - Desarrollado por el grupo de Software   </span>
+    </footer>
+
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio privado -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/materias.js"></script>
+</body>
+
+</html>
