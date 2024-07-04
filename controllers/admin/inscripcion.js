@@ -1,5 +1,5 @@
 // Constante para completar la ruta de la API.
-const GRADO_API = 'services/admin/grado.php';
+const INSCRIPCION_API = 'services/admin/inscripcion.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer los elementos de la tabla.
