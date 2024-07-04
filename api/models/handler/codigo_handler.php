@@ -4,22 +4,19 @@ require_once('../../helpers/database.php');
 /*
 *	Clase para manejar el comportamiento de los datos de la tabla PRODUCTO.
 */
-class ProductoHandler
+class CodigoHandler
 {
     /*
     *   Declaración de atributos para el manejo de datos.
     */
     protected $id = null;
     protected $nombre = null;
+    protected $codigo = null;
+    protected $profesor = null;
+    protected $fecha = null;
     protected $descripcion = null;
-    protected $precio = null;
-    protected $existencias = null;
-    protected $imagen = null;
-    protected $categoria = null;
-    protected $estado = null;
+   
 
-    // Constante para establecer la ruta de las imágenes.
-    const RUTA_IMAGEN = '../../images/productos/';
 
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
@@ -27,8 +24,10 @@ class ProductoHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_producto, imagen_producto, nombre_producto, descripcion_producto, precio_producto, nombre_categoria, estado_producto
+        $sql = 'SELECT id_comportamiento_estudiante, nombre_estudiante, codigo, nombre_profesor, fecha, descripcion_adicional
                 FROM producto
+                INNER JOIN categoria USING(id_categoria)
+                INNER JOIN categoria USING(id_categoria)
                 INNER JOIN categoria USING(id_categoria)
                 WHERE nombre_producto LIKE ? OR descripcion_producto LIKE ?
                 ORDER BY nombre_producto';
@@ -99,38 +98,4 @@ class ProductoHandler
         return Database::getRows($sql, $params);
     }
 
-    /*
-    *   Métodos para generar gráficos.
-    */
-    public function cantidadProductosCategoria()
-    {
-        $sql = 'SELECT nombre_categoria, COUNT(id_producto) cantidad
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY cantidad DESC LIMIT 5';
-        return Database::getRows($sql);
-    }
-
-    public function porcentajeProductosCategoria()
-    {
-        $sql = 'SELECT nombre_categoria, ROUND((COUNT(id_producto) * 100.0 / (SELECT COUNT(id_producto) FROM producto)), 2) porcentaje
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                GROUP BY nombre_categoria ORDER BY porcentaje DESC';
-        return Database::getRows($sql);
-    }
-
-    /*
-    *   Métodos para generar reportes.
-    */
-    public function productosCategoria()
-    {
-        $sql = 'SELECT nombre_producto, precio_producto, estado_producto
-                FROM producto
-                INNER JOIN categoria USING(id_categoria)
-                WHERE id_categoria = ?
-                ORDER BY nombre_producto';
-        $params = array($this->categoria);
-        return Database::getRows($sql, $params);
-    }
 }

@@ -1,162 +1,195 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('myForm');
-    const tableBody = document.getElementById('data');
-    const codigoSelect = document.getElementById('codigo');
-    const tipocodigoSelect = document.getElementById('tipocodigo');
-    let editingRow = null;
-    let deletingRow = null;
+// Constante para completar la ruta de la API.
+const CODIGO_API = 'services/admin/codigo.php';
+const ESTUDIANTE_API = 'services/admin/estudiante.php';
+const ASIGNAR_API = 'services/admin/asignar.php';
+const PROFESOR_API = 'services/admin/profesores.php';
 
-    const codigosPositivosEstudiantes = [
-        { codigo: 'POS001', descripcion: 'Incremento de ventas' },
-        { codigo: 'POS002', descripcion: 'Mejora en la satisfacción del cliente' },
-        { codigo: 'POS003', descripcion: 'Reducción de costos operativos' },
-        { codigo: 'POS004', descripcion: 'Implementación exitosa de nueva tecnología' },
-        { codigo: 'POS005', descripcion: 'Aumento en la eficiencia del proceso' },
-        { codigo: 'POS006', descripcion: 'Desarrollo de nuevos productos exitosos' },
-        { codigo: 'POS007', descripcion: 'Mejora en la retención de empleados' },
-        { codigo: 'POS008', descripcion: 'Expansión exitosa a nuevos mercados' },
-        { codigo: 'POS009', descripcion: 'Incremento en la productividad del equipo' },
-        { codigo: 'POS010', descripcion: 'Obtención de reconocimientos o premios' }
-    ];
+// Constante para establecer el formulario de buscar.
+const SEARCH_FORM = document.getElementById('searchForm');
+// Constantes para establecer los elementos de la tabla.
+const TABLE_BODY = document.getElementById('tableBody'),
+    ROWS_FOUND = document.getElementById('rowsFound');
+// Constantes para establecer los elementos del componente Modal.
+const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
+    MODAL_TITLE = document.getElementById('modalTitle');
+// Constantes para establecer los elementos del formulario de guardar.
+const SAVE_FORM = document.getElementById('saveForm'),
+    ID_CODIGO = document.getElementById('idCodigo'),
+    FECHA_CODIGO = document.getElementById('FechaCodigo'),
+    DESCRIPCION_CODIGO= document.getElementById('descripcionCodigo');
 
-    const codigosNegativosEstudiantes = [
-        { codigo: 'NEG001', descripcion: 'Falta de respeto hacia los compañeros' },
-        { codigo: 'NEG002', descripcion: 'Comportamiento disruptivo en clase' },
-        { codigo: 'NEG003', descripcion: 'Falta de cumplimiento de reglas' },
-        { codigo: 'NEG004', descripcion: 'Falta de entrega de tareas' },
-        { codigo: 'NEG005', descripcion: 'Actitud negativa hacia el aprendizaje' },
-        { codigo: 'NEG006', descripcion: 'Falta de participación en clase' },
-        { codigo: 'NEG007', descripcion: 'Uso inapropiado de dispositivos electrónicos' },
-        { codigo: 'NEG008', descripcion: 'Violación del código de honor' },
-        { codigo: 'NEG009', descripcion: 'Incumplimiento de la política de asistencia' },
-        { codigo: 'NEG010', descripcion: 'Plagio académico' }
-    ];
-
-    function obtenerDescripcion(codigo, tipoCodigo) {
-        const codigos = tipoCodigo === 'Positivo' ? codigosPositivosEstudiantes : codigosNegativosEstudiantes;
-        const codigoEncontrado = codigos.find(c => c.codigo === codigo);
-        return codigoEncontrado ? codigoEncontrado.descripcion : '';
-    }
-
-    function llenarCodigos(tipocodigo) {
-        codigoSelect.innerHTML = '<option value="">Seleccione el código</option>';
-        const codigos = tipocodigo === 'Positivo' ? codigosPositivosEstudiantes : codigosNegativosEstudiantes;
-        codigos.forEach(codigo => {
-            const option = document.createElement('option');
-            option.value = codigo.codigo;
-            option.textContent = codigo.descripcion;
-            codigoSelect.appendChild(option);
-        });
-    }
-
-    tipocodigoSelect.addEventListener('change', function () {
-        llenarCodigos(this.value);
-    });
-
-    form.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const grade = document.getElementById('grade').value;
-        const seccion = document.getElementById('seccion').value;
-        const carnet = document.getElementById('carnet').value;
-        const tipocodigo = document.getElementById('tipocodigo').value;
-        const codigo = codigoSelect.value;
-
-        if (name && grade && seccion && carnet && tipocodigo && codigo) {
-            if (editingRow) {
-                editingRow.cells[1].textContent = name;
-                editingRow.cells[2].textContent = grade;
-                editingRow.cells[3].textContent = seccion;
-                editingRow.cells[4].textContent = carnet;
-                editingRow.cells[5].textContent = tipocodigo;
-                editingRow.cells[6].textContent = obtenerDescripcion(codigo, tipocodigo);
-                editingRow.cells[7].innerHTML = `
-                    <button class="btn btn-info viewBtn">Ver</button>
-                    <button class="btn btn-warning editBtn">Editar</button>
-                    <button class="btn btn-danger deleteBtn">Eliminar</button>
-                `;
-                editingRow = null;
-            } else {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <td>${tableBody.children.length + 1}</td>
-                    <td>${name}</td>
-                    <td>${grade}</td>
-                    <td>${seccion}</td>
-                    <td>${carnet}</td>
-                    <td>${tipocodigo}</td>
-                    <td>${obtenerDescripcion(codigo, tipocodigo)}</td>
-                    <td>
-                        <button class="btn btn-info viewBtn">Ver</button>
-                        <button class="btn btn-warning editBtn">Editar</button>
-                        <button class="btn btn-danger deleteBtn">Eliminar</button>
-                    </td>
-                `;
-
-                tableBody.appendChild(newRow);
-            }
-
-            resetForm();
-
-            const modal = bootstrap.Modal.getInstance(document.getElementById('userForm'));
-            modal.hide();
-        } else {
-            alert('Por favor complete todos los campos.');
-        }
-    });
-
-    function resetForm() {
-        form.reset();
-        codigoSelect.innerHTML = '<option value="">Seleccione el código</option>';
-    }
-
-    tableBody.addEventListener('click', function (event) {
-        const target = event.target;
-
-        if (target.classList.contains('viewBtn')) {
-            const row = target.closest('tr');
-            const cells = row.cells;
-            document.getElementById('detailName').textContent = cells[1].textContent;
-            document.getElementById('detailGrade').textContent = cells[2].textContent;
-            document.getElementById('detailSeccion').textContent = cells[3].textContent;
-            document.getElementById('detailCarnet').textContent = cells[4].textContent;
-            document.getElementById('detailTipoCodigo').textContent = cells[5].textContent;
-            document.getElementById('detailCodigo').textContent = cells[6].textContent;
-            const detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
-            detailsModal.show();
-        }
-
-        if (target.classList.contains('editBtn')) {
-            const row = target.closest('tr');
-            const cells = row.cells;
-            document.getElementById('name').value = cells[1].textContent;
-            document.getElementById('grade').value = cells[2].textContent;
-            document.getElementById('seccion').value = cells[3].textContent;
-            document.getElementById('carnet').value = cells[4].textContent;
-            document.getElementById('tipocodigo').value = cells[5].textContent;
-            llenarCodigos(cells[5].textContent);
-            codigoSelect.value = cells[6].textContent;
-            editingRow = row;
-            const modal = new bootstrap.Modal(document.getElementById('userForm'));
-            modal.show();
-        }
-
-        if (target.classList.contains('deleteBtn')) {
-            const row = target.closest('tr');
-            deletingRow = row;
-            const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-            confirmDeleteModal.show();
-        }
-    });
-
-    document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
-        if (deletingRow) {
-            deletingRow.remove();
-            const confirmDeleteModal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
-            confirmDeleteModal.hide();
-            deletingRow = null;
-        }
-    });
-
+// Método del evento para cuando el documento ha cargado.
+document.addEventListener('DOMContentLoaded', () => {
+    // Llamada a la función para mostrar el encabezado y pie del documento.
+    loadTemplate();
+    // Se establece el título del contenido principal.
+    MAIN_TITLE.textContent = 'Agregar Comportamiento';
+    // Llamada a la función para llenar la tabla con los registros existentes.
+    fillTable();
 });
+
+// Método del evento para cuando se envía el formulario de buscar.
+SEARCH_FORM.addEventListener('submit', (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SEARCH_FORM);
+    // Llamada a la función para llenar la tabla con los resultados de la búsqueda.
+    fillTable(FORM);
+});
+
+// Método del evento para cuando se envía el formulario de guardar.
+SAVE_FORM.addEventListener('submit', async (event) => {
+    // Se evita recargar la página web después de enviar el formulario.
+    event.preventDefault();
+    // Se verifica la acción a realizar.
+    (ID_ESTUDIANTE.value) ? action = 'updateRow' : action = 'createRow';
+    // Constante tipo objeto con los datos del formulario.
+    const FORM = new FormData(SAVE_FORM);
+    // Petición para guardar los datos del formulario.
+    const DATA = await fetchData(CODIGO_API, action, FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se cierra la caja de diálogo.
+        SAVE_MODAL.hide();
+        // Se muestra un mensaje de éxito.
+        sweetAlert(1, DATA.message, true);
+        // Se carga nuevamente la tabla para visualizar los cambios.
+        fillTable();
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+});
+
+/*
+*   Función asíncrona para llenar la tabla con los registros disponibles.
+*   Parámetros: form (objeto opcional con los datos de búsqueda).
+*   Retorno: ninguno.
+*/
+const fillTable = async (form = null) => {
+    // Se inicializa el contenido de la tabla.
+    ROWS_FOUND.textContent = '';
+    TABLE_BODY.innerHTML = '';
+    // Se verifica la acción a realizar.
+    (form) ? action = 'searchRows' : action = 'readAll';
+    // Petición para obtener los registros disponibles.
+    const DATA = await fetchData(CODIGO_API, action, form);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
+        DATA.dataset.forEach(row => {
+            // Se crean y concatenan las filas de la tabla con los datos de cada registro.
+            TABLE_BODY.innerHTML += `
+                <tr>
+                    <td>${row.nombre_estudiante}</td>
+                    <td>${row.codigo}</td>
+                    <td>${row.nombre_profesor}</td>
+                    <td>${row.fecha}</td>
+                    <td>${row.descripcion_adicional}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_comportamiento_estudiante})">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_comportamiento_estudiante})">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        // Se muestra un mensaje de acuerdo con el resultado.
+        ROWS_FOUND.textContent = DATA.message;
+    } else {
+        sweetAlert(4, DATA.error, true);
+    }
+}
+
+/*
+*   Función para preparar el formulario al momento de insertar un registro.
+*   Parámetros: ninguno.
+*   Retorno: ninguno.
+*/
+const openCreate = () => {
+    // Se muestra la caja de diálogo con su título.
+    SAVE_MODAL.show();
+    MODAL_TITLE.textContent = 'Agregar Comportamiento';
+    // Se prepara el formulario.
+    SAVE_FORM.reset();
+    fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante');
+    fillSelect(ASIGNAR_API, 'readAll', 'TipoCodigo');
+    fillSelect(PROFESOR_API, 'readAll', 'NombreProfesor');
+}
+
+/*
+*   Función asíncrona para preparar el formulario al momento de actualizar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openUpdate = async (id) => {
+    // Se define un objeto con los datos del registro seleccionado.
+    const FORM = new FormData();
+    FORM.append('idCodigo', id);
+    // Petición para obtener los datos del registro solicitado.
+    const DATA = await fetchData(CODIGO_API, 'readOne', FORM);
+    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+    if (DATA.status) {
+        // Se muestra la caja de diálogo con su título.
+        SAVE_MODAL.show();
+        MODAL_TITLE.textContent = 'Actualizar Comportamiento';
+        // Se prepara el formulario.
+        SAVE_FORM.reset();
+
+        // Se inicializan los campos con los datos.
+        const ROW = DATA.dataset;
+        ID_CODIGO.value = ROW.id_comportamiento_estudiante;
+        FECHA_CODIGO.value = ROW.fecha;
+        DESCRIPCION_CODIGO.value = ROW.descripcion_adicional;
+        fillSelect(GRADO_API, 'readAll', 'nombreEstudiante', ROW.id_estudiante);
+        fillSelect(ASIGNAR_API, 'readAll', 'TipoCodigo', ROW.id_comportamiento);
+        fillSelect(PROFESOR_API, 'readAll', 'NombreProfesor', ROW.id_profesor);
+    } else {
+        sweetAlert(2, DATA.error, false);
+    }
+}
+
+/*
+*   Función asíncrona para eliminar un registro.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openDelete = async (id) => {
+    // Llamada a la función para mostrar un mensaje de confirmación, capturando la respuesta en una constante.
+    const RESPONSE = await confirmAction('¿Desea eliminar el comportamiento de forma permanente?');
+    // Se verifica la respuesta del mensaje.
+    if (RESPONSE) {
+        // Se define una constante tipo objeto con los datos del registro seleccionado.
+        const FORM = new FormData();
+        FORM.append('idEstudiante', id);
+        // Petición para eliminar el registro seleccionado.
+        const DATA = await fetchData(CODIGO_API, 'deleteRow', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            // Se muestra un mensaje de éxito.
+            await sweetAlert(1, DATA.message, true);
+            // Se carga nuevamente la tabla para visualizar los cambios.
+            fillTable();
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
+    }
+}
+
+/*
+*   Función para abrir un reporte automático de productos por categoría.
+*   Parámetros: ninguno.
+*   Retorno: ninguno.
+*/
+
+/*
+const openReport = () => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/productos.php`);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
+*/
