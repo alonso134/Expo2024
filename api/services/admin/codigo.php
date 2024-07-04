@@ -1,6 +1,6 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../models/data/codigo_handler.php');
+require_once('../../models/data/codigo_data.php');
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -27,25 +27,23 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$codigo->setNombre($_POST['nombreProducto']) or
-                    !$codigo->setDescripcion($_POST['descripcionProducto']) or
-                    !$codigo->setPrecio($_POST['precioProducto']) or
-                    !$codigo->setExistencias($_POST['existenciasProducto']) or
-                    !$codigo->setCategoria($_POST['categoriaProducto']) or
-                    !$codigo->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$codigo->setImagen($_FILES['imagenProducto'])
+                    !$codigo->setEstudiante($_POST['nombreEstudiante']) or
+                    !$codigo->setCodigo($_POST['TipoCodigo']) or
+                    !$codigo->setProfesor($_POST['NombreProfesor']) or
+                    !$codigo->setFecha($_POST['FechaCodigo']) or
+                    !$codigo->setDescripcion($_POST['descripcionCodigo']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->createRow()) {
+                    $result['error'] = $codigo->getDataError();
+                } elseif ($codigo->createRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto creado correctamente';
+                    $result['message'] = 'Comportamiento creado correctamente';
                 
                 } else {
-                    $result['error'] = 'Ocurrió un problema al crear el producto';
+                    $result['error'] = 'Ocurrió un problema al crear el Comportamiento';
                 }
                 break;
             case 'readAll':
-                if ($result['dataset'] = $producto->readAll()) {
+                if ($result['dataset'] = $codigo->readAll()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -53,63 +51,43 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$producto->setId($_POST['idProducto'])) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($result['dataset'] = $producto->readOne()) {
+                if (!$codigo->setId($_POST['idCodigo'])) {
+                    $result['error'] = $codigo->getDataError();
+                } elseif ($result['dataset'] = $codigo->readOne()) {
                     $result['status'] = 1;
                 } else {
-                    $result['error'] = 'Producto inexistente';
+                    $result['error'] = 'Comportamiento inexistente';
                 }
                 break;
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename() or
-                    !$producto->setNombre($_POST['nombreProducto']) or
-                    !$producto->setDescripcion($_POST['descripcionProducto']) or
-                    !$producto->setPrecio($_POST['precioProducto']) or
-                    !$producto->setCategoria($_POST['categoriaProducto']) or
-                    !$producto->setEstado(isset($_POST['estadoProducto']) ? 1 : 0) or
-                    !$producto->setImagen($_FILES['imagenProducto'], $producto->getFilename())
+                    !$codigo->setId($_POST['idCodigo']) or
+                    !$codigo->setEstudiante($_POST['nombreEstudiante']) or
+                    !$codigo->setCodigo($_POST['TipoCodigo']) or
+                    !$codigo->setProfesor($_POST['NombreProfesor']) or
+                    !$codigo->setFecha($_POST['FechaCodigo']) or
+                    !$codigo->setDescripcion($_POST['descripcionCodigo']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->updateRow()) {
+                    $result['error'] = $codigo->getDataError();
+                } elseif ($codigo->updateRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto modificado correctamente';
-                    // Se asigna el estado del archivo después de actualizar.
-                    $result['fileStatus'] = Validator::changeFile($_FILES['imagenProducto'], $producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['message'] = 'Comportamiento modificado correctamente';
                 } else {
-                    $result['error'] = 'Ocurrió un problema al modificar el producto';
+                    $result['error'] = 'Ocurrió un problema al modificar el Comportamiento';
                 }
                 break;
             case 'deleteRow':
                 if (
-                    !$producto->setId($_POST['idProducto']) or
-                    !$producto->setFilename()
+                    !$codigo->setId($_POST['idCodigo']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
-                } elseif ($producto->deleteRow()) {
+                    $result['error'] = $codigo->getDataError();
+                } elseif ($codigo->deleteRow()) {
                     $result['status'] = 1;
-                    $result['message'] = 'Producto eliminado correctamente';
-                    // Se asigna el estado del archivo después de eliminar.
-                    $result['fileStatus'] = Validator::deleteFile($producto::RUTA_IMAGEN, $producto->getFilename());
+                    $result['message'] = 'Comportamiento eliminado correctamente';
+
                 } else {
-                    $result['error'] = 'Ocurrió un problema al eliminar el producto';
-                }
-                break;
-            case 'cantidadProductosCategoria':
-                if ($result['dataset'] = $producto->cantidadProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
-                }
-                break;
-            case 'porcentajeProductosCategoria':
-                if ($result['dataset'] = $producto->porcentajeProductosCategoria()) {
-                    $result['status'] = 1;
-                } else {
-                    $result['error'] = 'No hay datos disponibles';
+                    $result['error'] = 'Ocurrió un problema al eliminar el Comportamiento';
                 }
                 break;
             default:
