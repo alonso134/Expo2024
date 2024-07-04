@@ -1,255 +1,149 @@
-<!doctype html>
+
+<!DOCTYPE html>
+<!-- Declaración del idioma para el documento -->
 <html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <title>Codigos</title>
-    <link rel="stylesheet" href="../../resources/css/style.css">
+    <!-- Título del documento -->
+    <title></title>
 
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/CECSL.png">
+
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../../resources/css/inicio.css">
 </head>
 
 <body>
 
-    <br><br><br><br>
-    <div class="row" class="container-fluid">
-
-
-        <br><br>
-        <form class="col-sm-12 col-md-6" id="searchForm">
-            <div class="row">
-                <div class="col-6">
-                    <input style="border-radius:30px;" type="search" class="form-control" name="search"
-                        placeholder="Buscar" required>
+    <br>    
+    
+    <main>
+        <!-- Título del contenido principal -->
+        <h3 id="mainTitle"></h3>
+        <div class="row">
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-6" id="searchForm">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="reset" class="btn btn-secondary" onclick="fillTable()">
+                            <i class="bi bi-x-square-fill"></i>
+                        </button>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-search"></i>
-                    </button>
-                    <button type="reset" class="btn btn-secondary" onclick="fillTable()">
-                        <i class="bi bi-x-square-fill"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-
-
-        <div class="col-sm-12 col-md-6 text-end">
-            <div class="col-12">
-
-                <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm"
-                    style="height: 40px;">
-                    <p>Nuevo</p>
+            </form>
+            <div class="col-sm-12 col-md-6 text-end">
+                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                <button type="button" class="btn btn-primary" onclick="openCreate()">
+                    <i class="bi bi-plus-square-fill"></i>
                 </button>
             </div>
-
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-striped table-hover mt-3 text-center table-bordered">
+        <!-- Tabla para mostrar los registros existentes -->
+        <table class="table table-hover">
+            <!-- Encabezado de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+            <thead>
+                <tr>
+                    <td colspan="3" id="rowsFound"></td>
+                </tr>
+                <tr>
+                    <th>ESTUDIANTE</th>
+                    <th>CODIGO</th>
+                    <th>PROFESOR</th>
+                    <th>FECHA</th>
+                    <th>DESCRIPCION</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+            <tbody id="tableBody"></tbody>
+        </table>
 
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Grado</th>
-                            <th>Seccion</th>
-                            <th>Carnet Estudiante</th>
-                            <th>Tipo de codigo</th>
-                            <th>Codigo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="data">
-                        <!-- Aquí se agregarán las filas dinámicamente -->
-                        <tr>
-                            <td>1</td>
-                            <td>Incremento de ventas</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Positivo</td>
-                            <td>POS001</td>
-                            <td>
-                                <button class="btn btn-info viewBtn">Ver</button>
-                                <button class="btn btn-warning editBtn">Editar</button>
-                                <button class="btn btn-danger deleteBtn">Eliminar</button>
-                            </td>
-                        </tr>
-                        <!-- Agrega el resto de los códigos de la misma manera -->
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
-        </section>
-
-
-        <!--Modal Form-->
-        <div class="modal fade" id="userForm">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
-
                     <div class="modal-header">
-                        <h4 class="modal-title">Crear Nuevo</h4>
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-
-                    <div class="modal-body">
-
-                        <form action="#" id="myForm">
-
-                            <div class="card">
-
-                                <div class="inputField">
-                                    <div>
-                                        <label for="name">Nombre</label>
-                                        <input type="text" name="" id="name" required>
-                                    </div>
-                                    <div>
-                                        <label for="city">Grado</label>
-                                        <input type="text" name="" id="grade" required>
-                                    </div>
-                                    <div>
-                                        <label for="city">Seccion</label>
-                                        <input type="text" name="" id="seccion" required>
-                                    </div>
-                                    <div>
-                                        <label for="phone">Carnet Estudiante</label>
-                                        <input type="text" name="" id="carnet" minlength="11" maxlength="11" required>
-                                    </div>
-                                    <div>
-                                        <label for="grade">Tipo de codigo</label>
-                                        <select id="tipocodigo" class="form-select" required>
-                                            <option value="">Seleccione el tipo de codigo</option>
-                                            <option value="Positivo">Positivo</option>
-                                            <option value="Negativo">Negativo</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label for="grade">Codigo</label>
-                                        <select id="codigo" class="form-select" required>
-                                            <option value="">Seleccione el código</option>
-                                            <!-- Opciones de códigos se agregarán dinámicamente mediante JavaScript -->
-                                        </select>
-                                    </div>
-                                </div>
+                    <!-- Formulario para guardar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row g-3">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="hidden" id="idCodigo" name="idCodigo">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="nombreEstudiante" class="form-label">Estudiante</label>
+                                <select id="nombreEstudiante" name="nombreEstudiante" class="form-select" required>
+                                </select>
                             </div>
-                        </form>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" form="myForm" class="btn btn-primary submit">Submit</button>
-                    </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="TipoCodigo" class="form-label">Codigo</label>
+                                <select id="TipoCodigo" name="TipoCodigo" class="form-select" required>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="NombreProfesor" class="form-label">Profesor</label>
+                                <select id="NombreProfesor" name="NombreProfesor" class="form-select" required>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="FechaCodigo" class="form-label">Fecha</label>
+                                <input type="date" id="FechaCodigo" name="FechaCodigo" class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="descripcionCodigo" class="form-label">Descpricion</label>
+                                <input id="descripcionCodigo" type="text" name="descripcionCodigo"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </main>
 
-        <!--Read Data Modal-->
-        <div class="modal fade" id="readData">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h4 class="modal-title"> Agregar código</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <form action="#" id="myForm">
-
-                            <div class="inputField">
-                                <div>
-                                    <label for="name">Nombre</label>
-                                    <input type="text" name="" id="showName" disabled>
-                                </div>
-                                <div>
-                                    <label for="age">Edad</label>
-                                    <input type="number" name="" id="showAge" disabled>
-                                </div>
-                                <div>
-                                    <label for="city">Grado/Sección</label>
-                                    <input type="text" name="" id="showCity" disabled>
-                                </div>
-                                <div>
-                                    <label for="email">Correo Estudiante</label>
-                                    <input type="email" name="" id="showEmail" disabled>
-                                </div>
-                                <div>
-                                    <label for="phone">Teléfono Estudiante</label>
-                                    <input type="text" name="" id="showPhone" minlength="11" maxlength="11" disabled>
-                                </div>
-                                <div>
-                                    <label for="post">Residencia</label>
-                                    <input type="text" name="" id="showPost" disabled>
-                                </div>
-                                <div>
-                                    <label for="sDate">Registro</label>
-                                    <input type="date" name="" id="showsDate" disabled>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <footer>
+        <div class="social-icons-container">
+            <a href="https://www.facebook.com" class="social-icons" target="_blank"><i class="bx bxl-facebook"></i></a>
+            <a href="https://www.twitter.com" class="social-icons" target="_blank"><i class="bx bxl-twitter"></i></a>
+            <a href="https://www.instagram.com" class="social-icons" target="_blank"><i class="bx bxl-instagram"></i></a>
+            <a href="https://www.linkedin.com" class="social-icons" target="_blank"><i class="bx bxl-linkedin"></i></a>
         </div>
+        <span class="copyright">2024 © - Desarrollado por el grupo de Software   </span>
+    </footer>
 
-<!-- Modal de Confirmación de Eliminación -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ¿Estás seguro de que deseas eliminar este registro?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Modal de Detalles -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailsModalLabel">Detalles del Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Nombre:</strong> <span id="detailName"></span></p>
-                <p><strong>Grado:</strong> <span id="detailGrade"></span></p>
-                <p><strong>Sección:</strong> <span id="detailSeccion"></span></p>
-                <p><strong>Carnet:</strong> <span id="detailCarnet"></span></p>
-                <p><strong>Tipo de Código:</strong> <span id="detailTipoCodigo"></span></p>
-                <p><strong>Código:</strong> <span id="detailCodigo"></span></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-    
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-        <script src="../../controllers/admin/codigos.js"></script>
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio privado -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/codigos.js"></script>
 </body>
 
 </html>
