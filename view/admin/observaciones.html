@@ -1,37 +1,136 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>Observaciones</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="../../resources/css/style.css">
-</head>
-<body>
-    
-      <div class="container"><br><br>
-        <p class="jajja">Pagia de Inicio</p>
-        <div class="row">
-            <button type="button" class="btn btnm-1 botono" onclick="abrirForm(0)">Asignar Observacion</button>
-            <table class="table table-bordered" id="tablaPacientes">
-                <thead>
-                    <tr class="maria">
-                        <td>ID</td>
-                        <td>Nombre</td>
-                        <td>Apellido</td>
-                        <td>Observacion</td>
-                        <td>Asignado Por</td>
-                        <td>Clase</td>
-                        <td>ACCIONES</td>
-                    </tr>
-                </thead>
-                <tbody id="dataPacientes" class="tbodyy">
+<!-- Declaración del idioma para el documento -->
+<html lang="es">
 
-                </tbody>
-            </table>
+<head>
+    <!-- Título del documento -->
+    <title></title>
+
+    <!-- Metadatos de la página web -->
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
+    <!-- Llamada al icono de la página web -->
+    <link type="image/png" rel="icon" href="../../resources/img/CECSL.png">
+
+    <!-- Llamada a las hojas de estilos del framework e iconos -->
+    
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../../resources/css/inicio.css">
+</head>
+
+<body>
+    <br>
+    
+    <!-- Contenido principal del documento -->
+    <main>
+        <!-- Título del contenido principal -->
+        <h3 id="mainTitle"></h3>
+        <div class="row">
+            <!-- Formulario de búsqueda -->
+            <form class="col-sm-12 col-md-6" id="searchForm">
+                <div class="row">
+                    <div class="col-6">
+                        <input type="search" class="form-control" name="search" placeholder="Buscar" required>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button type="reset" class="btn btn-secondary" onclick="fillTable()">
+                            <i class="bi bi-x-square-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-sm-12 col-md-6 text-end">
+                <!-- Botón para abrir una caja de diálogo al momento de crear un nuevo registro -->
+                <button type="button" class="btn btn-primary" onclick="openCreate()">
+                    <i class="bi bi-plus-square-fill"></i>
+                </button>
+                <!-- Botón para abrir un reporte en formato PDF -->
+                <button type="button" class="btn btn-warning" onclick="openReport()">
+                    <i class="bi bi-filetype-pdf"></i>
+                </button>
+            </div>
         </div>
-      </div>
-      <script src="../../controladores/admin/observaciones.js" type="text/javascript"></script>
+
+        <!-- Tabla para mostrar los registros existentes -->
+        <table class="table table-hover">
+            <!-- Cabeza de la tabla para mostrar la cantidad de registros y los títulos de las columnas -->
+            <thead>
+                <tr>
+                    <td colspan="6" id="rowsFound"></td>
+                </tr>
+                <tr>
+                    <th>ESTUDIANTE</th>
+                    <th>PROFESOR</th>
+                    <th>OBSERVACION</th>
+                    <th>FECHA</th>
+                    <th>ACCIONES</th>
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla para mostrar un registro por fila -->
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <!-- Componente Modal para guardar un registro -->
+        <div class="modal fade" id="saveModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalTitle"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- Formulario para crear o actualizar un registro -->
+                    <form id="saveForm">
+                        <div class="modal-body row g-3">
+                            <!-- Campo oculto para asignar el id del registro al momento de modificar -->
+                            <input type="number" class="d-none" id="idEstudiante" name="idEstudiante">
+                            <div class="col-sm-12 col-md-6">
+                                <label for="nombreEstudiante" class="form-label">Estudiante</label>
+                                <select id="nombreEstudiante" name="nombreEstudiante" class="form-select" required>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="nombreprofesor" class="form-label">Profesor</label>
+                                <select id="nombreprofesor" name="nombreprofesor" class="form-select" required>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-md-6">
+                                <label for="ObservacionEstudiante" class="form-label">Observacion</label>
+                                <input id="ObservacionEstudiante" type="text" name="ObservacionEstudiante"
+                                    class="form-control" required>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-4">
+                                <label for="fechaEstudiante" class="form-label">Fecha Registro</label>
+                                <input type="date" id="fechaEstudiante" name="fechaEstudiante" class="form-control" required>
+                            </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Llamada al framework y librería de mensajes -->
+    <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
+    <!-- Llamada al controlador general de la aplicación -->
+    <script type="text/javascript" src="../../controllers/utils/components.js"></script>
+    <!-- Llamada al controlador del sitio privado -->
+    <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
+    <!-- Llamada al controlador de la página web -->
+    <script type="text/javascript" src="../../controllers/admin/observacion.js"></script>
 </body>
+
 </html>
