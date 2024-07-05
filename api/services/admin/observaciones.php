@@ -12,6 +12,7 @@ if (isset($_GET['action'])) {
     $result = array('status' => 0, 'message' => null, 'dataset' => null, 'error' => null, 'exception' => null, 'fileStatus' => null);
     // Se verifica si existe una sesión iniciada como administrador, de lo contrario se finaliza el script con un mensaje de error.
     if (isset($_SESSION['idProfesor'])) {
+        $result['session'] = 1;
         // Se compara la acción a realizar cuando un administrador ha iniciado sesión.
         switch ($_GET['action']) {
             case 'searchRows':
@@ -28,7 +29,7 @@ if (isset($_GET['action'])) {
                 $_POST = Validator::validateForm($_POST);
                 if (
                     !$observaciones->setEstudiante($_POST['nombreEstudiante']) or
-                    !$observaciones->setprofesor($_POST['nombreprofesor']) or
+                    !$observaciones->setprofesor($_POST['nombreProfesor']) or
                     !$observaciones->setObservacion($_POST['ObservacionEstudiante']) or
                     !$observaciones->setfecha($_POST['fechaEstudiante'])
                  
@@ -50,7 +51,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$observaciones->setId($_POST['idEstudiante'])) {
+                if (!$observaciones->setId($_POST['idObservaciones'])) {
                     $result['error'] = $observaciones->getDataError();
                 } elseif ($result['dataset'] = $observaciones->readOne()) {
                     $result['status'] = 1;
@@ -61,8 +62,9 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
+                    !$observaciones->setId($_POST['idObservaciones']) or
                     !$observaciones->setEstudiante($_POST['nombreEstudiante']) or
-                    !$observaciones->setprofesor($_POST['nombreprofesor']) or
+                    !$observaciones->setprofesor($_POST['nombreProfesor']) or
                     !$observaciones->setObservacion($_POST['ObservacionEstudiante']) or
                     !$observaciones->setfecha($_POST['fechaEstudiante'])
                    
@@ -77,7 +79,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$observaciones->setId($_POST['idEstudiante']) 
+                    !$observaciones->setId($_POST['idObservaciones']) 
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($observaciones->deleteRow()) {

@@ -2,7 +2,7 @@
 // Se incluye la clase para validar los datos de entrada.
 require_once('../../helpers/validator.php');
 // Se incluye la clase padre.
-require_once('../../models/handler/observaciones_handler.php');
+require_once('../../models/handler/observarciones_handler.php');
 /*
  *  Clase para manejar el encapsulamiento de los datos de la tabla ESTUDIANTES.
  */
@@ -19,7 +19,7 @@ class ObservacionData extends ObservacionHandler
             $this->id = $value;
             return true;
         } else {
-            $this->data_error = 'El identificador de la categoría es incorrecto';
+            $this->data_error = 'El identificador de la observacion es incorrecto';
             return false;
         }
     }

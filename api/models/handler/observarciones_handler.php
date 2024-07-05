@@ -41,9 +41,10 @@ class ObservacionHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_observacion, id_estudiante, id_profesor, observacion, fecha
+        $sql = 'SELECT id_observacion, nombre_estudiante, nombre_profesor, observacion, fecha
                 FROM observaciones
                 INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN profesores USING(id_profesor)
                 ORDER BY nombre_estudiante';
         return Database::getRows($sql);
     }
@@ -73,18 +74,5 @@ class ObservacionHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
-
-    public function readEstudianteObservacion()
-    {
-        $sql = 'SELECT id_observacion,  id_estudiante, id_profesor, observacion, fecha
-                FROM observaciones
-                INNER JOIN estudiantes USING(id_estudiante)
-                WHERE is_estudiante = ?
-                ORDER BY nombre_estudainte';
-        $params = array($this->nombre);
-        return Database::getRows($sql, $params);
-    }
-
-
  
 }

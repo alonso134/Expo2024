@@ -52,10 +52,6 @@
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
-                <!-- Botón para abrir un reporte en formato PDF -->
-                <button type="button" class="btn btn-warning" onclick="openReport()">
-                    <i class="bi bi-filetype-pdf"></i>
-                </button>
             </div>
         </div>
 
@@ -91,15 +87,15 @@
                     <form id="saveForm">
                         <div class="modal-body row g-3">
                             <!-- Campo oculto para asignar el id del registro al momento de modificar -->
-                            <input type="number" class="d-none" id="idEstudiante" name="idEstudiante">
+                            <input type="number" class="d-none" id="idObservaciones" name="idObservaciones">
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreEstudiante" class="form-label">Estudiante</label>
                                 <select id="nombreEstudiante" name="nombreEstudiante" class="form-select" required>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
-                                <label for="nombreprofesor" class="form-label">Profesor</label>
-                                <select id="nombreprofesor" name="nombreprofesor" class="form-select" required>
+                                <label for="nombreProfesor" class="form-label">Profesor</label>
+                                <select id="nombreProfesor" name="nombreProfesor" class="form-select" required>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-6">
@@ -108,7 +104,7 @@
                                     class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-4">
-                                <label for="fechaEstudiante" class="form-label">Fecha Registro</label>
+                                <label for="fechaEstudiante" class="form-label">Fecha</label>
                                 <input type="date" id="fechaEstudiante" name="fechaEstudiante" class="form-control" required>
                             </div>
                             
