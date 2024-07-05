@@ -1,6 +1,7 @@
 <?php
 // Se incluye la clase del modelo.
-require_once('../../api/services/admin/notas.php');
+require_once('../../models/data/nota_data.php');
+
 
 // Se comprueba si existe una acción a realizar, de lo contrario se finaliza el script con un mensaje de error.
 if (isset($_GET['action'])) {
@@ -17,7 +18,7 @@ if (isset($_GET['action'])) {
             case 'searchRows':
                 if (!Validator::validateSearch($_POST['search'])) {
                     $result['error'] = Validator::getSearchError();
-                } elseif ($result['dataset'] = $notas->searchRows($_POST['search'])) {
+                } elseif ($result['dataset'] = $grado->searchRows()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' coincidencias';
                 } else {
@@ -27,11 +28,11 @@ if (isset($_GET['action'])) {
             case 'createRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$notas->setNombre($_POST['nombre']) or
-                    !$notas->setApellido($_POST['apellido']) or
-                    !$notas->setAnio($_POST['anio']) or
-                    !$notas->setMaterias($_POST['materias']) or
-                    !$notas->setNota($_POST['nota'])
+                    !$notas->setEstudiante($_POST['nombreEstudiante']) or
+                    !$notas->setMaterias($_POST['nombreMateria']) or
+                    !$notas->setNota($_POST['notasEstudiante']) or
+                    !$notas->setTrimestre($_POST['trimestreNota']) or
+                    !$notas->setFecha($_POST['fechaNota'])
                 ) {
                     $result['error'] = $notas->getDataError();
                 } elseif ($notas->createRow()) {
@@ -50,7 +51,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'readOne':
-                if (!$notas->setId($_POST['id'])) {
+                if (!$notas->setId($_POST['idNota'])) {
                     $result['error'] = $notas->getDataError();
                 } elseif ($result['dataset'] = $notas->readOne()) {
                     $result['status'] = 1;
@@ -61,12 +62,12 @@ if (isset($_GET['action'])) {
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (
-                    !$notas->setId($_POST['id']) or
-                    !$notas->setNombre($_POST['nombre']) or
-                    !$notas->setApellido($_POST['apellido']) or
-                    !$notas->setAnio($_POST['anio']) or
-                    !$notas->setMaterias($_POST['materias']) or
-                    !$notas->setNota($_POST['nota'])
+                    !$notas->setId($_POST['idNota']) or
+                    !$notas->setEstudiante($_POST['nombreEstudiante']) or
+                    !$notas->setMaterias($_POST['nombreMateria']) or
+                    !$notas->setNota($_POST['notasEstudiante']) or
+                    !$notas->setTrimestre($_POST['trimestreNota']) or
+                    !$notas->setFecha($_POST['fechaNota'])
                 ) {
                     $result['error'] = $notas->getDataError();
                 } elseif ($notas->updateRow()) {
@@ -77,7 +78,7 @@ if (isset($_GET['action'])) {
                 }
                 break;
             case 'deleteRow':
-                if (!$notas->setId($_POST['id'])) {
+                if (!$notas->setId($_POST['idNota'])) {
                     $result['error'] = $notas->getDataError();
                 } elseif ($notas->deleteRow()) {
                     $result['status'] = 1;
@@ -101,4 +102,4 @@ if (isset($_GET['action'])) {
 } else {
     print(json_encode('Recurso no disponible'));
 }
-?>
+
