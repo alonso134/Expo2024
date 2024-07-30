@@ -6,6 +6,6 @@ date_default_timezone_set('America/El_Salvador');
 // Constantes para establecer las credenciales de conexión con el servidor de bases de datos.
 define('SERVER', 'localhost');
 define('DATABASE', 'sge');
-define('USERNAME', 'Usuario'); //root
-define('PASSWORD', '017589978aA'); //
+define('USERNAME', 'root'); //root
+define('PASSWORD', ''); //
 ?>

@@ -17,6 +17,66 @@ class EstudianteHandler
     protected $nacimiento = null;
     protected $grado = null;
 
+
+    public function checkUser($correo, $password)
+    {
+        $sql = 'SELECT id_estudiante, correo_estudiante, clave_estudiante
+                FROM estudiantes
+                WHERE  correo_estudiante = ?';
+        $params = array($correo);
+        if (!($data = Database::getRow($sql, $params))) {
+            return false;
+        } elseif (password_verify($password, $data['clave_estudiante'])) {
+            $_SESSION['idEstudiante'] = $data['id_estudiante'];
+            $_SESSION['correoEstudiante'] = $data['correo_estudiante'];
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function checkPassword($password)
+    {
+        $sql = 'SELECT clave_estudiante
+                FROM estudiantes
+                WHERE id_estudiante = ?';
+        $params = array($_SESSION['idEstudiante']);
+        $data = Database::getRow($sql, $params);
+        // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
+        if (password_verify($password, $data['clave_estudiante'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function changePassword()
+    {
+        $sql = 'UPDATE estudiantes
+                SET clave_estudiante = ?
+                WHERE id_estudiante = ?';
+        $params = array($this->clave, $_SESSION['idEstudiante']);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function readProfile()
+    {
+        $sql = 'SELECT id_estudiante, nombre_estudiante, apellido_estudiante, correo_estudiante
+                FROM estudiantes
+                WHERE id_estudiante = ?';
+        $params = array($_SESSION['idEstudiante']);
+        return Database::getRow($sql, $params);
+    }
+
+    public function editProfile()
+    {
+        $sql = 'UPDATE estudiantes
+                SET nombre_estudiante = ?, apellido_estudiante = ?, correo_estudiante = ?
+                WHERE id_estudiante = ?';
+        $params = array($this->nombre, $this->apellido, $this->correo, $_SESSION['idEstudiante']);
+        return Database::executeRow($sql, $params);
+    }
+
     /*
     *   Métodos para realizar las operaciones SCRUD (search, create, read, update, and delete).
     */
@@ -75,16 +135,6 @@ class EstudianteHandler
         return Database::executeRow($sql, $params);
     }
 
-    public function readEstudianteGrado()
-    {
-        $sql = 'SELECT id_estudiante, nombre_estudiante, apellido_estudiante, correo_estudiante, fecha_de_nacimiento
-                FROM estudiantes
-                INNER JOIN grados USING(id_grado)
-                WHERE id_grado = ?
-                ORDER BY nombre_estudiante';
-        $params = array($this->grado);
-        return Database::getRows($sql, $params);
-    }
 
 
  
