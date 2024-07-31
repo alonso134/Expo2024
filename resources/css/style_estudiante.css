@@ -1,0 +1,245 @@
+/* Establece el color de fondo del cuerpo */
+body {
+    background-color: #babababa;
+}
+
+/* Alinea el texto del menú a la izquierda */
+.menu {
+    text-align: left;
+}
+
+/* Establece el color de fondo terciario del cuerpo */
+.bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: #284B63 !important;
+}
+
+/* Establece el color del texto del elemento de la marca de navegación */
+.navbar {
+    --bs-navbar-brand-color: rgb(255 255 255);
+}
+
+/* Alinea el contenido de la marca de navegación */
+.navbar-brand {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+/* Ajusta el tamaño de la imagen de la marca de navegación */
+.navbar-brand img {
+    width: 20%;
+    height: 20%;
+}
+
+/* Agrega espacio superior a los elementos del menú de navegación */
+.navbar-nav .nav-item {
+    margin-top: 10px;
+}
+
+/* Establece el color de fondo del icono del botón de alternancia de navegación */
+.navbar-toggler-icon {
+    background-color: rgb(255, 255, 255);
+}
+
+/* Establece el color de fondo del botón de alternancia de navegación */
+button.navbar-toggler {
+    background-color: white;
+    margin-left: auto; /* Mueve el botón hacia la derecha */
+}
+
+/* Ajusta el tamaño de la imagen */
+.img {
+    width: 90%;
+    height: 55%;
+}
+
+/* Contenedor circular */
+.circle-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 25%;
+}
+
+/* Estilo del círculo */
+.circle {
+    width: 150px;
+    height: 150px;
+    background-color: #0D1B2A;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Ajusta el tamaño de la imagen dentro del círculo */
+.circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Alinea el texto del elemento del menú de navegación */
+.nav-item {
+    text-align: center;
+    align-items: flex-start;
+}
+
+/* Clase de estilo para edición */
+.Editar {
+    text-align: center;
+    align-items: flex-start;
+    border-color: transparent;
+    border-radius: 0%;
+}
+
+/* Establece el color de fondo personalizado */
+.bg-custom-color {
+    background-color: #979797;
+}
+
+/* Estilos para la barra lateral de navegación */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #757575;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+/* Estilos para los enlaces de la barra lateral de navegación */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+/* Estilos para los enlaces de la barra lateral de navegación cuando se pasa el ratón por encima */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Estilos para el botón de cerrar la barra lateral de navegación */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    left: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Estilos para el área principal */
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+/* Estilos para el submenú desplegable */
+.dropdown-submenu {
+    position: relative;
+}
+
+/* Estilos para el menú desplegable dentro del submenú */
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+footer {
+    background-color: #415a77;
+    
+  }
+
+  .bg-body-tertiary {
+    --bs-bg-opacity: 1;
+    background-color: #0D1B2A !important;
+}
+
+.navbar {
+    --bs-navbar-brand-color: rgb(255 255 255);
+}
+
+.navbar-brand {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.navbar-brand img {
+    width: 20%;
+    height: 20%;
+}
+
+.navbar-nav .nav-item {
+    margin-top: 10px;
+}
+
+.navbar-toggler-icon {
+    background-color: rgb(255, 255, 255);
+}
+
+button.navbar-toggler {
+    background-color: white;
+    margin-left: auto; /* Mueve el botón hacia la derecha */
+    
+}
+.nav-link i{
+    color: white;
+    font-size: 1.0em;
+    transition: 0.3s;
+    font-size: 1.5em;
+}
+.nav-link:hover i{
+color: gray;
+}
+
+.nav-links{
+    color: white;
+    font-size: 1.5em;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.nav-links:hover{
+    color: gray; 
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link-text{
+    color: white;
+    font-size: 1.5em;
+    transition: 0.3s;
+    text-decoration: none;
+    font-family: "Inter Tight", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 723;
+    font-style: normal;
+}
+
+.nav-link-text:hover{
+   color: gray;
+}
+
+.textdescubre{
+    color: #373737;
+    font-size: 1.5em;
+    transition: 0.3s;
+    text-decoration: none;
+    font-family: "Inter Tight", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 723;
+    font-style: normal;
+    text-align: center;
+}

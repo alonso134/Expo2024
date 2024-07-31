@@ -1,0 +1,596 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    height: 100%;
+    background: white;
+    
+}
+.form-signin {
+  max-width: 330px;
+  padding: 1rem;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.bd-placeholder-img {
+  font-size: 1.125rem;
+  text-anchor: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
+
+.b-example-divider {
+  width: 100%;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, .1);
+  border: solid rgba(0, 0, 0, .15);
+  border-width: 1px 0;
+  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 100vh;
+}
+
+.bi {
+  vertical-align: -.125em;
+  fill: currentColor;
+}
+
+.nav-scroller {
+  position: relative;
+  z-index: 2;
+  height: 2.75rem;
+  overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 1rem;
+  margin-top: -1px;
+  overflow-x: auto;
+  text-align: center;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.btn-bd-primary {
+  --bd-violet-bg: #712cf9;
+  --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+  --bs-btn-font-weight: 600;
+  --bs-btn-color: var(--bs-white);
+  --bs-btn-bg: var(--bd-violet-bg);
+  --bs-btn-border-color: var(--bd-violet-bg);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #6528e0;
+  --bs-btn-hover-border-color: #6528e0;
+  --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+  --bs-btn-active-bg: #5a23c8;
+  --bs-btn-active-border-color: #5a23c8;
+}
+
+.bd-mode-toggle {
+  z-index: 1500;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+  display: block !important;
+}
+.tequiero{
+  background-color: #0e2270;
+  color: white;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+.barra{
+  font-family: Arial, Helvetica, sans-serif;
+  width: 10%;
+  height: 5%;
+  position: fixed;
+  transition: .4s all;
+  z-index: 1;
+}
+
+.barra ul{
+  padding: 0px;
+  text-align: center;
+  
+}
+
+.barra li{
+  transition: .3s all;
+  width:60px ;
+  height: 58px;
+}
+.barra a{
+  text-decoration: none;
+  list-style: none;
+  transition: .3s all;
+  font-size: 0px;
+  padding: 0px;
+}
+.ojo{
+  
+  margin-right: 6px;
+}
+.barra h6{
+  text-align: center;
+  color: white;
+  padding: 7px;
+  padding-bottom: 7px;
+  font-size: 0px;
+}
+.barra img{
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.barra:hover{
+  width: 20%;
+  height: 100%;
+  background-color: #284b63;
+}
+.barra:hover h6{
+  padding: 15px;
+  font-size: 30px;
+}
+.barra:hover a{
+  font-size: 20px;
+  color: white;
+  display: block;
+  padding: 20px;
+}
+.barra:hover img{
+  height: 0px;
+}
+.barra:hover li{
+  border-top: 1px solid black;
+  width: 100%;
+}
+.barra:hover ul:last-of-type{
+  border-bottom: 1px solid black;
+}
+.barra:hover a:hover{
+  font-size: 25px;
+  padding: 30px 0px;
+  background-color: #284b63;
+}
+.gatito{
+  margin-left: 11%;
+  background-color: #2882C3;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  margin-right: -130px;
+  transition: all 300ms;
+}
+.gatito:hover{
+  transform: scale(1.20);
+}
+.gatitoo{
+  margin-left: 13%;
+  background-color: #BC0D0D;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  margin-right: 55px;
+  transition: all 300ms;
+}
+.gatitoo:hover{
+  transform: scale(1.20);
+}
+.gatitooo{
+  margin-left: -20px;
+  background-color: #0C9500;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  transition: all 300ms;
+}
+.gatitooo:hover{
+  transform: scale(1.20);
+}
+.gatitouno{
+  margin-left: 140px;
+  background-color: #E5A01A;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  margin-right: 55px;
+  transition: all 300ms;
+}
+.gatitouno:hover{
+  transform: scale(1.20);
+}
+.gatitodos{
+  margin-left: -20px;
+  background-color: #86298E;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  margin-right: 60px;
+  transition: all 300ms;
+}
+.gatitodos:hover{
+  transform: scale(1.20);
+}
+.gatitotres{
+  margin-left: -20px;
+  background-color: #284B63;
+  height: 100px;
+  width: 310px;
+  margin-top: 30px;
+  margin-right: 60px;
+  margin-bottom: 4%;
+  transition: all 300ms;
+}
+.gatitotres:hover{
+  transform: scale(1.20);
+}
+
+.header{
+  position: absolute;
+}
+.estudia{
+  height: 50px;
+  width: 50px;
+}
+.hambre{
+  margin-right: 115px;
+  width: 40px ;
+  height: 50px;
+}
+.sese{
+  color: white;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.vermas{
+  text-align: center;
+  background-color: #1771B2;
+  color: white;
+}
+.vermasone{
+  text-align: center;
+  background-color: #8E2812;
+  color: white;
+}
+.vermastwo{
+  text-align: center;
+  background-color: #135219;
+  color: white;
+}
+.vermastres{
+  text-align: center;
+  background-color: #B97918;
+  color: white;
+}
+.vermascautro{
+  text-align: center;
+  background-color: #48103C;
+  color: white;
+}
+.vermascinco{
+  text-align: center;
+  background-color: #0B2639;
+  color: white;
+}
+
+.todo{
+  display: flex;
+}
+
+.titulo{
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  text-align: center;
+  font-size: 30px;
+}
+
+footer{
+  width: 100%;
+  height: 195px;
+  bottom: 0;
+  left: 0;
+  padding: 2rem 8%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.logo{
+  height: 80px;
+  margin-bottom: 1rem;
+}
+.social-icons-container, .footer-menu-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.social-icons{
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  border: 1px solid white;
+  background-position: center;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  margin: 1rem;
+}
+
+.social-icon:hover{
+  background-color: black;
+  filter: invert(1);
+}
+.social-icons:nth-of-type(1){
+  background-image: url(../imagenes/fa.png);
+}
+.social-icons:nth-of-type(2){
+  background-image: url(../imagenes/ins.png);
+}
+.social-icons:nth-of-type(3){
+  background-image: url(../imagenes/twitter.png);
+}
+.social-icons:nth-of-type(4){
+  background-image: url(../imagenes/tiktak.png);
+}
+.footer-menu-container{
+  list-style-type: none;
+  color: white;
+  font-size: 18px;
+}
+.menu-item{
+  margin: 1rem 1.5rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.menu-item:hover{
+  opacity: 1;
+}
+.copyright{
+  color:white ;
+  opacity: 0.3;
+  text-align: center;
+}
+.tituliestu{
+  margin-left: 130px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 20px;
+  margin-bottom: 3%;
+}
+.margenestu{
+  background-color: #284B63;
+  color: white;
+  height: 50px;
+  width: 80%;
+  margin-left: 130px;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 25px;
+}
+.marge{
+  
+  background-color: #284B63;
+  color: white;
+  height: 35px;
+  width: 80%;
+  margin-left: 130px;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 25px;
+}
+.laimgestu{
+  margin-right: 15px;
+  margin-left: 9px;
+}
+.todoasis{
+  text-align: center;
+  color: #0B2639;
+}
+.divasistencia{
+  background-color: #4EA9AE;
+  height: 120px;
+  
+}
+.asistenciaestu{
+  color: #0D0C0C;
+}
+.todogrado{
+  text-align: center;
+  color:#0B2639 ;
+  
+}
+.divgrado{
+  background-color: #4EA9AE;
+  height: 120px;
+}
+
+.gradoestu{
+  color: #0D0C0C;
+}
+.todoinscripcion{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divinscripcioin{
+  background-color: #4EA9AE;
+  height: 120px;
+}
+.divcompo{
+  background-color: #4EA9AE;
+  height: 180px;
+  width: 350px;
+  margin-left: 270px;
+}
+.insestu{
+  color: #0D0C0C;
+}
+.todoconducta{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divconducta{
+  background-color:#4EA9AE ;
+  height: 120px;
+  margin-right: -115px;
+}
+.conductaestu{
+  color: #0D0C0C;
+}
+
+.todonotas{
+  text-align: center;
+  color: #0D0C0C;
+}
+.divnotas{
+  background-color:#4EA9AE ;
+  height: 120px;
+  margin-bottom: 2%;
+}
+.notasestu{
+  color: #0D0C0C;
+}
+.siquesi{
+  margin-left: 160px;
+  margin-bottom: 3%;
+}
+.volviste{
+  background-color: #D9D9D9;
+  margin-left: 26px;
+  width: 65px ;
+  height: 30px;
+  font-size: 20px;
+}
+.Volver{
+  color: #0D0C0C;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.divpromate{
+  margin-top: 190px;
+  margin-left: -530px;
+  margin-bottom: 4%;
+}
+.divasigasis{
+  margin-left: 310px;
+}
+
+
+.modal-header{
+  background: #284B63;
+  color: #fff;
+}
+
+.modal-body form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0;
+}
+
+.modal-body form .imgholder{
+  width: 200px;
+  height: 200px;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.imgholder .upload{
+  position: absolute;
+  bottom: 0;
+  left: 10;
+  width: 100%;
+  height: 100px;
+  background: rgba(0,0,0,0.3);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.upload i{
+  color: #fff;
+  font-size: 35px;
+}
+
+.imgholder:hover .upload{
+  display: flex;
+}
+
+.imgholder .upload input{
+  display: none;
+}
+
+.modal-body form .inputField{
+  flex-basis: 68%;
+  border-left: 5px groove rgb(5, 83, 18);
+  padding-left: 20px;
+}
+
+form .inputField > div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form .inputField > div label{
+  font-size: 20px;
+  font-weight: 500;
+}
+
+#userForm form .inputField > div label::after{
+  content: "*";
+  color: #4EA9AE;
+}
+
+form .inputField > div input{
+  width: 75%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid #284B63;
+}
+
+.modal-footer .submit{
+  font-size: 18px;
+}
+
+
+#readData form .inputField > div input{
+  color: #000;
+  font-size: 18px;
+}
+
+	
