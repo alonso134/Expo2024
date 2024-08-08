@@ -15,6 +15,10 @@ class ProfesorHandler
     protected $correo = null;
     protected $alias = null;
     protected $clave = null;
+    protected $telefono = null;
+    protected $dui = null;
+    protected $nacimiento = null;
+    protected $direccion = null;
 
     /*
      *  Métodos para gestionar la cuenta del Profesor.
