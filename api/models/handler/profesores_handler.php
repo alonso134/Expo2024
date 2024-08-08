@@ -98,11 +98,12 @@ class ProfesorHandler
 
     public function createRow()
     {
-        $sql = 'INSERT INTO profesores(nombre_profesor, apellido_profesor, correo_profesor, alias_profesor, clave_profesor)
-                VALUES(?, ?, ?, ?, ?)';
-        $params = array($this->nombre, $this->apellido, $this->correo, $this->alias, $this->clave);
+        $sql = 'INSERT INTO profesores(nombre_profesor, apellido_profesor, correo_profesor, dui_profesor, telefono_profesor, nacimiento_profesor, direccion_profesor, alias_profesor, clave_profesor)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
+        $params = array($this->nombre, $this->apellido, $this->correo, $this->dui, $this->telefono, $this->nacimiento, $this->direccion, $this->clave);
         return Database::executeRow($sql, $params);
     }
+
 
     public function readAll()
     {
