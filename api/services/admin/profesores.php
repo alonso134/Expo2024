@@ -61,28 +61,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Profesor inexistente';
                 }
                 break;
-                case 'signUpMovil':
-                    $_POST = Validator::validateForm($_POST);
-                if (
-                        !$profesor->setNombre($_POST['nombreCliente']) or
-                        !$profesor->setApellido($_POST['apellidoCliente']) or
-                        !$profesor->setCorreo($_POST['correoCliente']) or
-                        !$profesor->setDireccion($_POST['direccionCliente']) or
-                        !$profesor->setDUI($_POST['duiCliente']) or
-                        !$profesor->setNacimiento($_POST['nacimientoCliente']) or
-                        !$profesor->setTelefono($_POST['telefonoCliente']) or
-                        !$profesor->setClave($_POST['claveCliente'])
-                    ) {
-                        $result['error'] = $profesor->getDataError();
-                    } elseif ($_POST['claveCliente'] != $_POST['confirmarClave']) {
-                        $result['error'] = 'Contraseñas diferentes';
-                    } elseif ($profesor->createRow()) {
-                        $result['status'] = 1;
-                        $result['message'] = 'Cuenta registrada correctamente';
-                    } else {
-                        $result['error'] = 'Ocurrió un problema al registrar la cuenta';
-                    }
-                    break;
+            
             case 'updateRow':
                 $_POST = Validator::validateForm($_POST);
                 if (

@@ -92,55 +92,6 @@ class ProfesorData extends ProfesorHandler
         }
     }
 
-
-    public function setTelefono($value)
-    {
-        if (Validator::validatePhone($value)) {
-            $this->telefono = $value;
-            return true;
-        } else {
-            $this->data_error = 'El teléfono debe tener el formato (2, 6, 7)###-####';
-            return false;
-        }
-    }
-
-    public function setDUI($value)
-    {
-        if (!Validator::validateDUI($value)) {
-            $this->data_error = 'El DUI debe tener el formato ########-#';
-            return false;
-        }
-         else {
-            $this->dui = $value;
-            return true;
-        }
-    }
-
-    public function setNacimiento($value)
-    {
-        if (Validator::validateDate($value)) {
-            $this->nacimiento = $value;
-            return true;
-        } else {
-            $this->data_error = 'La fecha de nacimiento es incorrecta';
-            return false;
-        }
-    }
-
-    public function setDireccion($value, $min = 2, $max = 250)
-    {
-        if (!Validator::validateString($value)) {
-            $this->data_error = 'La dirección contiene caracteres prohibidos';
-            return false;
-        } elseif(Validator::validateLength($value, $min, $max)) {
-            $this->direccion = $value;
-            return true;
-        } else {
-            $this->data_error = 'La dirección debe tener una longitud entre ' . $min . ' y ' . $max;
-            return false;
-        }
-    }
-
     // Método para obtener el error de los datos.
     public function getDataError()
     {
