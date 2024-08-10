@@ -43,6 +43,16 @@ class Validator
         return self::$search_error;
     }
 
+
+    public static function validateTime($value)
+    {
+        if(preg_match('/^(\d{2}):(\d{2})$/', $value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /*
     *   Método para sanear todos los campos de un formulario (quitar los espacios en blanco al principio y al final).
     *   Parámetros: $fields (arreglo con los campos del formulario).

@@ -1,7 +1,5 @@
 // Constantes para completar las rutas de la API.
-const LLEGADA_API = 'services/admin/llegadatarde.php';
-const MATERIAS_API = 'services/admin/materias.php';
-const ESTUDIANTE_API = 'services/admin/estudiante.php';
+const LLEGADATARDEINS_API = 'services/admin/tardeins.php';
 const PROFESOR_API = 'services/admin/profesores.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
@@ -13,20 +11,18 @@ const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
-    ID_NOTA = document.getElementById('idNota'),
-    NOMBRE_ESTUDIANTE = document.getElementById('nombreEstudiante'),
-    MATERIA_ESTUDIANTE = document.getElementById('nombreMateria'),
-    PROFE_ESTUDIANTE = document.getElementById('NombreProfesor'),
-    HORA_ESTUDIANTE = document.getElementById('notasEstudiante'),
-    FECHA_ESTUDIANTE = document.getElementById('fechaNota');
-
+    ID_LLEGADA = document.getElementById('idAusencia'),
+    FECHA_ASISTENCIA = document.getElementById('fechaAsistencia'),
+    HORA_ASISTENCIA = document.getElementById('notasEstudiante'),
+    PROFE_ASISTENCIA = document.getElementById('NombreProfesor'),
+    ESTADO_ASISTENCIA = document.getElementById('estadoAusencia');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', () => {
     // Llamada a la función para mostrar el encabezado y pie del documento.
     loadTemplate();
     // Se establece el título del contenido principal.
-    MAIN_TITLE.textContent = 'Gestionar Llegadas Tardes';
+    MAIN_TITLE.textContent = 'Gestionar LLegadas tarde a la Institución';
     // Llamada a la función para llenar la tabla con los registros existentes.
     fillTable();
 });
@@ -46,11 +42,11 @@ SAVE_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
     // Se verifica la acción a realizar.
-    (ID_NOTA.value) ? action = 'updateRow' : action = 'createRow';
+    (ID_LLEGADA.value) ? action = 'updateRow' : action = 'createRow';
     // Constante tipo objeto con los datos del formulario.
     const FORM = new FormData(SAVE_FORM);
     // Petición para guardar los datos del formulario.
-    const DATA = await fetchData(LLEGADA_API, action, FORM);
+    const DATA = await fetchData(LLEGADATARDEINS_API, action, FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se cierra la caja de diálogo.
@@ -76,24 +72,25 @@ const fillTable = async (form = null) => {
     // Se verifica la acción a realizar.
     (form) ? action = 'searchRows' : action = 'readAll';
     // Petición para obtener los registros disponibles.
-    const DATA = await fetchData(LLEGADA_API, action, form);
+    const DATA = await fetchData(LLEGADATARDEINS_API, action, form);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se recorre el conjunto de registros (dataset) fila por fila a través del objeto row.
         DATA.dataset.forEach(row => {
+            // Se establece un icono para el estado del producto.
+            (row.estado) ? icon = 'bi bi-eye-fill' : icon = 'bi bi-eye-slash-fill';
             // Se crean y concatenan las filas de la tabla con los datos de cada registro.
             TABLE_BODY.innerHTML += `
                 <tr>
-                    <td>${row.nombre_estudiante}</td>
-                    <td>${row.nombre}</td>
-                    <td>${row.nombre_profesor}</td>
-                    <td>${row.hora}</td>
                     <td>${row.fecha}</td>
+                    <td>${row.hora}</td>
+                    <td>${row.nombre_profesor}</td>
+                    <td><i class="${icon}"></i></td>
                     <td>
-                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_llegada})">
+                        <button type="button" class="btn btn-info" onclick="openUpdate(${row.id_llegada_tarde_institucion})">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_llegada})">
+                        <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_llegada_tarde_institucion})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </td>
@@ -115,14 +112,12 @@ const fillTable = async (form = null) => {
 const openCreate = () => {
     // Se muestra la caja de diálogo con su título.
     SAVE_MODAL.show();
-    MODAL_TITLE.textContent = 'Agregar Llegadas Tardias';
+    MODAL_TITLE.textContent = 'Gestionar Llegadas';
     // Se prepara el formulario.
     SAVE_FORM.reset();
-    fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante');
-    fillSelect(MATERIAS_API, 'readAll', 'nombreMateria');
+
     fillSelect(PROFESOR_API, 'readAll', 'NombreProfesor');
 }
-
 
 /*
 *   Función asíncrona para preparar el formulario al momento de actualizar un registro.
@@ -132,23 +127,22 @@ const openCreate = () => {
 const openUpdate = async (id) => {
     // Se define un objeto con los datos del registro seleccionado.
     const FORM = new FormData();
-    FORM.append('idNota', id);
+    FORM.append('idAusencia', id);
     // Petición para obtener los datos del registro solicitado.
-    const DATA = await fetchData(LLEGADA_API, 'readOne', FORM);
+    const DATA = await fetchData(LLEGADATARDEINS_API, 'readOne', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
         // Se muestra la caja de diálogo con su título.
         SAVE_MODAL.show();
-        MODAL_TITLE.textContent = 'Actualizar Llegadas';
+        MODAL_TITLE.textContent = 'Actualizar llegada';
         // Se prepara el formulario.
-        SAVE_FORM.reset();        
+        SAVE_FORM.reset();
         // Se inicializan los campos con los datos.
         const ROW = DATA.dataset;
-        ID_NOTA.value = ROW.id_llegada;
-        HORA_ESTUDIANTE.value = ROW.hora;
-        FECHA_ESTUDIANTE.value = ROW.fecha;
-        fillSelect(MATERIAS_API, 'readAll', 'nombreMateria', ROW.id_materia);
-        fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante', ROW.id_estudiante);
+        ID_LLEGADA.value = ROW.id_llegada_tarde_institucion;
+        FECHA_ASISTENCIA.value = ROW.fecha;
+        HORA_ASISTENCIA.value = ROW.hora;
+        ESTADO_ASISTENCIA.checked = ROW.estado;
         fillSelect(PROFESOR_API, 'readAll', 'NombreProfesor', ROW.id_profesor);
     } else {
         sweetAlert(2, DATA.error, false);
@@ -167,9 +161,9 @@ const openDelete = async (id) => {
     if (RESPONSE) {
         // Se define una constante tipo objeto con los datos del registro seleccionado.
         const FORM = new FormData();
-        FORM.append('idNota', id);
+        FORM.append('idAusencia', id);
         // Petición para eliminar el registro seleccionado.
-        const DATA = await fetchData(LLEGADA_API, 'deleteRow', FORM);
+        const DATA = await fetchData(LLEGADATARDEINS_API, 'deleteRow', FORM);
         // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
         if (DATA.status) {
             // Se muestra un mensaje de éxito.
