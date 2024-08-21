@@ -50,7 +50,35 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen estudiantes registrados';
                 }
                 break;
-            case 'readOne':
+                case 'readEstudainteCodigos':
+                    if ($result['dataset'] = $estudiantes->readEstudainteCodigos()) {
+                          $result['status'] = 1;
+                    } else {
+                          $result['error'] = 'No hay datos disponibles';
+                    }
+                    break;
+                    case 'readEstudainteNota':
+                        if ($result['dataset'] = $estudiantes->readEstudainteNota()) {
+                              $result['status'] = 1;
+                        } else {
+                              $result['error'] = 'No hay datos disponibles';
+                        }
+                        break;
+                        case 'readEstudainteAusencia':
+                            if ($result['dataset'] = $estudiantes->readEstudainteAusencia()) {
+                                  $result['status'] = 1;
+                            } else {
+                                  $result['error'] = 'No hay datos disponibles';
+                            }
+                            break;
+                            case 'readEstudainteLlegadas':
+                                if ($result['dataset'] = $estudiantes->readEstudainteLlegadas()) {
+                                      $result['status'] = 1;
+                                } else {
+                                      $result['error'] = 'No hay datos disponibles';
+                                }
+                                break;
+                case 'readOne':
                 if (!$estudiantes->setId($_POST['idEstudiante'])) {
                     $result['error'] = $estudiantes->getDataError();
                 } elseif ($result['dataset'] = $estudiantes->readOne()) {
@@ -80,7 +108,7 @@ if (isset($_GET['action'])) {
                 if (
                     !$estudiantes->setId($_POST['idEstudiante']) 
                 ) {
-                    $result['error'] = $producto->getDataError();
+                    $result['error'] = $estudiantes->getDataError();
                 } elseif ($estudiantes->deleteRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Estudiante eliminado correctamente';

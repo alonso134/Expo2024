@@ -135,7 +135,41 @@ class EstudianteHandler
         return Database::executeRow($sql, $params);
     }
 
+    public function readEstudainteCodigos()
+    {
+        $sql = 'SELECT nombre_estudiante, COUNT(id_estudiante) total
+                FROM observaciones
+                INNER JOIN estudiantes USING(id_estudiante)
+                GROUP BY nombre_estudiante ORDER BY total DESC LIMIT 5';
+            return Database::getRows($sql);
+    }
 
+    public function readEstudainteNota()
+    {
+        $sql = 'SELECT nombre_estudiante,nota, COUNT(id_estudiante) total
+                FROM notas
+                INNER JOIN estudiantes USING(id_estudiante)
+                GROUP BY nombre_estudiante ORDER BY total DESC LIMIT 5';
+            return Database::getRows($sql);
+    }
 
+    public function readEstudainteAusencia()
+    {
+        $sql = 'SELECT nombre_estudiante, COUNT(id_estudiante) total
+                FROM ausencias
+                INNER JOIN estudiantes USING(id_estudiante)
+                GROUP BY nombre_estudiante ORDER BY total DESC LIMIT 7';
+            return Database::getRows($sql);
+    }
+
+    public function readEstudainteLlegadas()
+    {
+        $sql = 'SELECT nombre_estudiante,COUNT(id_estudiante) total
+                FROM llegadas_tarde
+                INNER JOIN estudiantes USING(id_estudiante)
+                GROUP BY nombre_estudiante ORDER BY total DESC LIMIT 20';
+            return Database::getRows($sql);
+    }
+    
  
 }
