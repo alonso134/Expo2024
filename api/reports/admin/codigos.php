@@ -44,5 +44,5 @@ if ($dataCodigos = $codigo->readAll()) {
     // Se llama implícitamente al método footer() y se envía el documento al navegador web.
     $pdf->output('I', 'codigos.pdf');
 } else {
-    print('No hay alumnos para mostrar');
+    print('No hay codigos para mostrar');
 }
