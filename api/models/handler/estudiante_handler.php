@@ -144,6 +144,8 @@ class EstudianteHandler
             return Database::getRows($sql);
     }
 
+    // Esta mostrando la cantidad de notas que se han ingresado a un estudiante, no esta mostrando los estudiantes con mejores notas
+    // AVG(nota) en vez de COUNT()
     public function readEstudainteNota()
     {
         $sql = 'SELECT nombre_estudiante,nota, COUNT(id_estudiante) total

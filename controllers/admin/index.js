@@ -32,15 +32,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 SIGNUP_FORM.addEventListener('submit', async (event) => {
     // Se evita recargar la página web después de enviar el formulario.
     event.preventDefault();
-    // Constante tipo objeto con los datos del formulario.
-    const FORM = new FormData(SIGNUP_FORM);
-    // Petición para registrar el primer usuario del sitio privado.
-    const DATA = await fetchData(USER_API, 'signUp', FORM);
-    // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
-    if (DATA.status) {
-        sweetAlert(1, DATA.message, true, 'index.html');
+    // Petición para consultar los usuarios registrados.
+    const DATA = await fetchData(USER_API, 'readUsers');
+    // Se comprueba si existe una sesión, de lo contrario se sigue con el flujo normal.
+    if (DATA.session) {
+        // Se direcciona a la página web de bienvenida.
+        location.href = 'inicio.html';
+    } else if (DATA.status) {
+        // Se direcciona a la página web de bienvenida.
+        location.href = 'index.html';
     } else {
-        sweetAlert(2, DATA.error, false);
+        // Constante tipo objeto con los datos del formulario.
+        const FORM = new FormData(SIGNUP_FORM);
+        // Petición para registrar el primer usuario del sitio privado.
+        const DATA = await fetchData(USER_API, 'signUp', FORM);
+        // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+        if (DATA.status) {
+            sweetAlert(1, DATA.message, true, 'index.html');
+        } else {
+            sweetAlert(2, DATA.error, false);
+        }
     }
 });
 

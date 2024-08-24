@@ -120,6 +120,7 @@ const openCreate = () => {
     SAVE_FORM.reset();
     fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante');
     fillSelect(MATERIAS_API, 'readAll', 'nombreMateria');
+    fillSelect(NOTAS_API, 'readAll', 'trimestreNota');
 }
 
 
@@ -147,6 +148,7 @@ const openUpdate = async (id) => {
         TRIMESTRE_ESTUDIANTE.value = ROW.trimestre;
         fillSelect(MATERIAS_API, 'readAll', 'nombreMateria', ROW.id_materia);
         fillSelect(ESTUDIANTE_API, 'readAll', 'nombreEstudiante', ROW.id_estudiante);
+        fillSelect(NOTAS_API, 'readAll', 'trimestreNota', ROW.id_nota);
     } else {
         sweetAlert(2, DATA.error, false);
     }
