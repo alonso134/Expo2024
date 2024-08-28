@@ -43,6 +43,10 @@
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
+                <!-- Botón para abrir un reporte en formato PDF -->
+                <button type="button" class="btn btn-warning" onclick="openReport()">
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+                 </button>
             </div>
         </div>
         <table class="table table-hover">
@@ -90,11 +94,7 @@
                                 <label for="trimestreNota" class="form-label">trimestre</label>
                                 <input id="trimestreNota" name="trimestreNota" class="form-control" required>
                             </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="trimestreNota" class="form-label">trimestre</label>
-                                <select id="trimestreNota" name="trimestreNota" class="form-select" required>
-                                </select>
-                            </div>
+                        
                             <div class="col-sm-12 col-md-6">
                                 <label for="fechaNota" class="form-label">Fecha</label>
                                 <input type="date" id="fechaNota" name="fechaNota" class="form-control" required>

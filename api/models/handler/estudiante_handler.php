@@ -109,6 +109,18 @@ class EstudianteHandler
         return Database::getRows($sql);
     }
 
+    
+    public function estudiantePorMateria()
+    {
+        $sql = 'SELECT id_estudiante, CONCAT(nombre_estudiante , " " , apellido_estudiante) AS estudiante, correo_estudiante, clave_estudiante, fecha_de_nacimiento, nombre
+                FROM estudiantes
+                INNER JOIN grados USING(id_grado)
+                WHERE id_grado = ?
+                ORDER BY nombre_estudiante';
+        $params = array($this->grado);
+        return Database::getRows($sql,$params);
+    }
+
     public function readOne()
     {
         $sql = 'SELECT id_estudiante, nombre_estudiante, apellido_estudiante, correo_estudiante, fecha_de_nacimiento, id_grado

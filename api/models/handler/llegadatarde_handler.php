@@ -53,6 +53,19 @@ class LlegadaHandler
                 ORDER BY nombre';
         return Database::getRows($sql);
     }
+    
+    public function llegadasTardePorEstudiante()
+    {
+        $sql = 'SELECT id_llegada, CONCAT(nombre_estudiante , " " , apellido_estudiante) AS estudiante, nombre, fecha, hora, nombre_profesor
+                FROM llegadas_tarde
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN materias USING(id_materia)
+                INNER JOIN profesores
+                WHERE id_estudiante = ?
+                ORDER BY nombre';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
+    }
 
     public function readOne()
     {

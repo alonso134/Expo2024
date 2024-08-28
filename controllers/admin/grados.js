@@ -86,6 +86,9 @@ const fillTable = async (form = null) => {
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_grado})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        <button type="button" class="btn btn-warning" onclick="openReportP(${row.id_grado})">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -163,4 +166,18 @@ const openDelete = async (id) => {
             sweetAlert(2, DATA.error, false);
         }
     }
+}
+
+/*
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportP = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/estudiantes_grado.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('id', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
 }

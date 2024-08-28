@@ -328,7 +328,7 @@ ALTER TABLE `comportamiento`
 --
 ALTER TABLE `comportamiento_estudiante`
   ADD PRIMARY KEY (`id_comportamiento_estudiante`),
-  ADD UNIQUE KEY `id_profesor` (`id_profesor`),
+  ADD FOREIGN KEY `id_profesor` (`id_profesor`),
   ADD KEY `id_estudiante` (`id_estudiante`),
   ADD KEY `id_comportamiento` (`id_comportamiento`);
 

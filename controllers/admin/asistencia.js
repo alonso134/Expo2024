@@ -92,6 +92,9 @@ const fillTable = async (form = null) => {
                         <button type="button" class="btn btn-danger" onclick="openDelete(${row.id_asistencia})">
                             <i class="bi bi-trash-fill"></i>
                         </button>
+                        <button type="button" class="btn btn-warning" onclick="openReportP(${row.id_estudiante})">
+                            <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -173,4 +176,13 @@ const openDelete = async (id) => {
             sweetAlert(2, DATA.error, false);
         }
     }
+
+}
+const openReportP = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/asistencia.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('id', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
 }

@@ -17,13 +17,13 @@ if ($dataCodigos = $codigo->readAll()) {
     $pdf->startReport('Listado de codigos');
 
     // Se establece un color de relleno para los encabezados.
-    $pdf->setFillColor(13, 27, 42);
+    $pdf->setFillColor(3, 8, 108);
     // Se establece la fuente para los encabezados.
     $pdf->setFont('Arial', 'B', 12);
     $pdf->setTextColor(255, 255, 255); // Color de texto blanco para los encabezados
 
     // Se imprimen las celdas con los encabezados.
-    $pdf->cell(40, 10, 'Codigo', 1, 0, 'C', 1);
+    $pdf->cell(80, 10, 'Codigo', 1, 0, 'C', 1);
     $pdf->cell(100, 10, 'Descripcion', 1, 1, 'C', 1);
 
     // Se establece la fuente para los datos.
@@ -35,7 +35,7 @@ if ($dataCodigos = $codigo->readAll()) {
     foreach ($dataCodigos as $rowCodigos) {
         // Se imprimen las celdas con los datos.
         $pdf->setFillColor($fill ? 230 : 255); // Color de relleno gris claro y blanco alternante
-        $pdf->cell(40, 10, $pdf->encodeString($rowCodigos['codigo']), 1, 0, 'C', $fill);
+        $pdf->cell(80, 10, $pdf->encodeString($rowCodigos['codigo']), 1, 0, 'C', $fill);
         $pdf->cell(100, 10, $pdf->encodeString($rowCodigos['descripcion']), 1, 1, 'L', $fill);
         // Alternar color de relleno
         $fill = !$fill;

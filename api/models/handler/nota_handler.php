@@ -75,5 +75,15 @@ class NotasHandler
         return Database::executeRow($sql, $params);
     }
 
- 
+    public function notasPorMateria()
+    {
+        $sql = 'SELECT id_nota, nombre_estudiante, nombre, nota, trimestre, fecha_calificacion
+                FROM notas
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN materias USING(id_materia)
+                WHERE id_materia = ?
+                ORDER BY nombre_estudiante';
+        $params = array($this->materias);
+        return Database::getRows($sql, $params);
+    }
 }

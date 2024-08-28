@@ -53,6 +53,19 @@ class CodigoHandler
                 ORDER BY nombre_estudiante';
         return Database::getRows($sql);
     }
+    
+    public function codigosPorEstudiantes()
+    {
+        $sql = 'SELECT id_comportamiento_estudiante, CONCAT(nombre_estudiante , " " , apellido_estudiante) AS estudiante, codigo, nombre_profesor, fecha, descripcion_adicional
+                FROM comportamiento_estudiante
+                 INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN comportamiento USING(id_comportamiento )
+                INNER JOIN profesores USING(id_profesor)
+                WHERE id_estudiante = ?
+                ORDER BY nombre_estudiante';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
+    }
 
     public function readOne()
     {

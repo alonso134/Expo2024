@@ -17,7 +17,7 @@ if ($dataEstudiantes = $estudiantes->readAll()) {
     $pdf->startReport('Listado de Estudiantes');
 
     // Se establece un color de relleno para los encabezados.
-    $pdf->setFillColor(13, 27, 42);
+    $pdf->setFillColor(3, 8, 108);
     // Se establece la fuente para los encabezados.
     $pdf->setFont('Arial', 'B', 11);
     $pdf->setTextColor(255, 255, 255); // Color de texto blanco para los encabezados

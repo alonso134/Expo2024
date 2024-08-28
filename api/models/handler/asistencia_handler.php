@@ -23,7 +23,7 @@ class AsistenciaHandler
     public function searchRows()
     {
         $value = '%' . Validator::getSearchValue() . '%';
-        $sql = 'SELECT id_asistencia, nombre_estudiante, fecha, nombre_profesor, estado
+        $sql = 'SELECT id_asistencia, nombre_estudiante, fecha, nombre_profesor, estado, id_estudiante
                 FROM asistencia
                 INNER JOIN estudiantes USING(id_estudiante)
                 INNER JOIN profesores USING(id_profesor)
@@ -43,7 +43,7 @@ class AsistenciaHandler
 
     public function readAll()
     {
-        $sql = 'SELECT id_asistencia, nombre_estudiante, fecha, nombre_profesor, estado
+        $sql = 'SELECT id_asistencia, nombre_estudiante, fecha, nombre_profesor, estado, id_estudiante
                 FROM asistencia
                  INNER JOIN estudiantes USING(id_estudiante)
                 INNER JOIN profesores USING(id_profesor)
@@ -75,6 +75,18 @@ class AsistenciaHandler
                 WHERE id_asistencia = ?';
         $params = array($this->id);
         return Database::executeRow($sql, $params);
+    }
+
+    public function asistenciasEstudiantes()
+    {
+        $sql = 'SELECT id_asistencia, nombre_estudiante, fecha, nombre_profesor, estado
+                FROM asistencia
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN profesores USING(id_profesor)
+                WHERE id_estudiante = ?
+                ORDER BY nombre_estudiante';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
     }
 
 
