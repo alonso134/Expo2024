@@ -1,4 +1,6 @@
 <?php
+use Phpml\Regression\LeastSquares;
+require('C:/xampp/htdocs/Expo2024/vendor/autoload.php');
 // Se incluye la clase para trabajar con la base de datos.
 require_once('../../helpers/database.php');
 /*
@@ -108,5 +110,90 @@ class CodigoHandler
         return Database::executeRow($sql, $params);
     }
 
-
+    public function predictCodigosEnTresMeses()
+    {
+        // Configurar la localización en español
+        setlocale(LC_TIME, 'es_ES.UTF-8');
+    
+        // Mapa de traducción de meses
+        $monthNames = [
+            1 => 'enero',
+            2 => 'febrero',
+            3 => 'marzo',
+            4 => 'abril',
+            5 => 'mayo',
+            6 => 'junio',
+            7 => 'julio',
+            8 => 'agosto',
+            9 => 'septiembre',
+            10 => 'octubre',
+            11 => 'noviembre',
+            12 => 'diciembre'
+        ];
+    
+        // Consulta para obtener los códigos de comportamiento en el último año
+        $sql = 'SELECT fecha, COUNT(*) AS cantidad
+                FROM comportamiento_estudiante
+                WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+                GROUP BY DATE_FORMAT(fecha, "%Y-%m")';
+    
+        $rows = Database::getRows($sql);
+    
+        if (empty($rows)) {
+            return [];
+        }
+    
+        // Agrupar los datos por mes
+        $monthlyData = [];
+        foreach ($rows as $row) {
+            $date = new DateTime($row['fecha']);
+            $month = (int) $date->format('m');
+            $year = $date->format('Y');
+            $monthName = $monthNames[$month];
+            $key = "$monthName de $year";
+    
+            if (!isset($monthlyData[$key])) {
+                $monthlyData[$key] = 0;
+            }
+            $monthlyData[$key] += $row['cantidad'];
+        }
+    
+        // Predecir el número de códigos para los próximos 3 meses
+        $predictions = [];
+        $dates = array_keys($monthlyData);
+        $values = array_values($monthlyData);
+    
+        // Si hay suficientes datos, hacer una predicción
+        if (count($dates) > 1) {
+            $regression = new LeastSquares();
+            $regression->train(array_map(function ($i) {
+                return [$i];
+            }, range(1, count($values))), $values);
+    
+            $currentMonth = count($values) + 1;
+    
+            for ($i = 1; $i <= 3; $i++) {
+                $predictedCount = $regression->predict([$currentMonth]);
+                $currentMonth++;
+    
+                // Convertir a formato de mes en español
+                $dateTime = new DateTime();
+                $dateTime->setDate((int) date('Y'), (int) date('m') + $i, 1);
+                $month = (int) $dateTime->format('m');
+                $year = $dateTime->format('Y');
+                $monthName = $monthNames[$month];
+                $date = "$monthName de $year";
+    
+                $predictions[] = [
+                    'fecha' => $date,
+                    'cantidad_predicha' => round($predictedCount)
+                ];
+            }
+        } else {
+            throw new Exception("Datos insuficientes para la predicción.");
+        }
+    
+        return $predictions;
+    }
+    
 }

@@ -108,6 +108,9 @@ const fillTable = async (form = null) => {
                         <button type="button" class="btn btn-warning" onclick="openGraphic(${row.id_estudiante})">
                             <i class="bi bi-bar-chart"></i>
                         </button>
+                        <button type="button" class="btn btn-warning" onclick="openReportPredictivo(${row.id_estudiante})">
+                             <i class="bi bi-file-earmark-text-fill"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -223,6 +226,19 @@ const openReportP = (id) => {
     window.open(PATH.href);
 }
 
+/*
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportPredictivo = (id) => {
+    // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
+    const PATH = new URL(`${SERVER_URL}reports/admin/predictivo_estudiante_nota.php`);
+    // Se agrega un parámetro a la ruta con el valor del registro seleccionado.
+    PATH.searchParams.append('id', id);
+    // Se abre el reporte en una nueva pestaña.
+    window.open(PATH.href);
+}
 
 /*
 *   Función para abrir la gráfica al momento.

@@ -179,17 +179,15 @@ const openDelete = async (id) => {
     }
 }
 
-/*
-*   Función para abrir un reporte automático de productos por categoría.
-*   Parámetros: ninguno.
-*   Retorno: ninguno.
-*/
 
 /*
-const openReport = () => {
+*   Función para abrir un reporte parametrizado.
+*   Parámetros: id (identificador del registro seleccionado).
+*   Retorno: ninguno.
+*/
+const openReportPredictivo = () => {
     // Se declara una constante tipo objeto con la ruta específica del reporte en el servidor.
-    const PATH = new URL(`${SERVER_URL}reports/admin/productos.php`);
+    const PATH = new URL(`${SERVER_URL}reports/admin/predictivo_codigos.php`);
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }
-*/
