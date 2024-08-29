@@ -1,6 +1,10 @@
 // Constantes para completar las rutas de la API.
 const ESTUDIANTE_API = 'services/admin/estudiante.php';
 const GRADO_API = 'services/admin/grado.php';
+const CODIGO_API = 'services/admin/codigo.php';
+const NOTA_API = 'services/admin/notas.php';
+const TARDE_API = 'services/admin/llegadatarde.php';
+const OBSERVACION_API = 'services/admin/observaciones.php';
 // Constante para establecer el formulario de buscar.
 const SEARCH_FORM = document.getElementById('searchForm');
 // Constantes para establecer el contenido de la tabla.
@@ -9,6 +13,9 @@ const TABLE_BODY = document.getElementById('tableBody'),
 // Constantes para establecer los elementos del componente Modal.
 const SAVE_MODAL = new bootstrap.Modal('#saveModal'),
     MODAL_TITLE = document.getElementById('modalTitle');
+// Constantes para establecer los elementos del componente Modal.
+const GRAPHIC_MODAL = new bootstrap.Modal('#graphicModal'),
+    MODAL_TITLE2 = document.getElementById('modalTitle1');
 // Constantes para establecer los elementos del formulario de guardar.
 const SAVE_FORM = document.getElementById('saveForm'),
     ID_ESTUDIANTE = document.getElementById('idEstudiante'),
@@ -97,6 +104,9 @@ const fillTable = async (form = null) => {
                         </button>
                         <button type="button" class="btn btn-warning" onclick="openReportP(${row.id_estudiante})">
                             <i class="bi bi-file-earmark-pdf-fill"></i>
+                        </button>
+                        <button type="button" class="btn btn-warning" onclick="openGraphic(${row.id_estudiante})">
+                            <i class="bi bi-bar-chart"></i>
                         </button>
                     </td>
                 </tr>
@@ -212,3 +222,261 @@ const openReportP = (id) => {
     // Se abre el reporte en una nueva pestaña.
     window.open(PATH.href);
 }
+
+
+/*
+*   Función para abrir la gráfica al momento.
+*   Parámetros: id.
+*   Retorno: ninguno.
+*/
+const openGraphic = (id) => {
+    // Se muestra la caja de diálogo con su título.
+    GRAPHIC_MODAL.show();
+    MODAL_TITLE2.textContent = 'Gráficos de datos de estudiantes, de los ultimos tres meses';
+    const FORM = new FormData();
+    FORM.append('estudiante', id);
+    cargarGraficaLlegadaTarde(FORM);
+    cargarGraficaConducta(FORM);
+    cargarGraficaNotas(FORM);
+    cargarGraficaObservacion(FORM);
+}
+
+let chartInstance1 = null;
+let chartInstance2 = null;
+let chartInstance3 = null;
+let chartInstance4 = null;
+
+// Función para cargar la gráfica lineal
+const cargarGraficaLlegadaTarde = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(TARDE_API, 'llegadasTardePorEstudiante', FORM);
+        if (DATA.status) {
+            let fecha = [];
+            let numero = [];
+            DATA.dataset.forEach(row => {
+                fecha.push(row.fecha);
+                numero.push(row.id);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('llegadasTarde').parentElement;
+            canvasContainer.innerHTML = '<canvas id="llegadasTarde"></canvas> <div id="error_tarde"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico lineal.
+            chartInstance1 = lineGraphWithFill('llegadasTarde', fecha, numero, 'Llegadas tarde por estudiante', 'Gráfica de llegadas tarde por estudiante ');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('llegadasTarde').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_tarde"></div> <canvas id="llegadasTarde"></canvas>';
+            
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_tarde');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance1 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+    }
+}
+// Función para cargar la gráfica lineal
+const cargarGraficaConducta = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(CODIGO_API, 'codigosPorEstudiantes', FORM);
+        if (DATA.status) {
+            let fecha = [];
+            let numero = [];
+            DATA.dataset.forEach(row => {
+                fecha.push(row.fecha);
+                numero.push(row.id);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('codigos').parentElement;
+            canvasContainer.innerHTML = '<canvas id="codigos"></canvas> <div id="error_codigos"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico lineal.
+            chartInstance2 = lineGraphWithFill('codigos', fecha, numero, 'Códigos por estudiante', 'Gráfica de codigos por estudiante ');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('codigos').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_codigos"></div> <canvas id="codigos"></canvas>';
+            
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_codigos');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance2 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+    }
+}
+
+// Función para cargar la gráfica lineal
+const cargarGraficaNotas = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(NOTA_API, 'notasPorEstudiante', FORM);
+        if (DATA.status) {
+            let materia = [];
+            let nota = [];
+            DATA.dataset.forEach(row => {
+                materia.push(row.materia);
+                nota.push(row.promedio_nota);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('notas').parentElement;
+            canvasContainer.innerHTML = '<canvas id="notas"></canvas> <div id="error_notas"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico barras.
+            chartInstance2 = barGraph1('notas', materia, nota, 'Promedios por estudiante', 'Gráfica de promedio de notas por estudiante ');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('notas').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_notas"></div> <canvas id="notas"></canvas>';
+            
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_notas');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance2 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+    }
+}
+
+// Función para cargar la gráfica lineal
+const cargarGraficaObservacion = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(OBSERVACION_API, 'observacionesPorEstudiante', FORM);
+        if (DATA.status) {
+            let fecha = [];
+            let numero = [];
+            let observaciones = [];
+            DATA.dataset.forEach(row => {
+                fecha.push(row.fecha);
+                numero.push(row.id);
+                observaciones.push(row.fecha);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('observaciones').parentElement;
+            canvasContainer.innerHTML = '<canvas id="observaciones"></canvas> <div id="error_observaciones"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico lineal.
+            chartInstance2 = lineGraphWithFill('observaciones', fecha, numero, observaciones, 'Gráfica de observaciones por estudiante', 'Gráfica de observaciones por estudiante ');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance2) {
+                chartInstance2.destroy();
+                chartInstance2 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('observaciones').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_observaciones"></div> <canvas id="observaciones"></canvas>';
+            
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_observaciones');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance2 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+    }
+}
+
+

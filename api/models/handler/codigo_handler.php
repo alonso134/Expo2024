@@ -66,6 +66,21 @@ class CodigoHandler
         $params = array($this->estudiante);
         return Database::getRows($sql, $params);
     }
+    
+    public function codigosPorEstudiantesGrafica()
+    {
+        $sql = 'SELECT COUNT(id_comportamiento_estudiante) AS id, 
+                CONCAT(nombre_estudiante , " " , apellido_estudiante) AS estudiante, fecha
+                FROM comportamiento_estudiante
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN comportamiento USING(id_comportamiento )
+                INNER JOIN profesores USING(id_profesor)
+                WHERE id_estudiante = ? AND fecha >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+                GROUP BY estudiante, fecha
+                ORDER BY fecha, estudiante;';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
+    }
 
     public function readOne()
     {

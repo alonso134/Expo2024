@@ -16,7 +16,7 @@
     <link type="image/png" rel="icon" href="../../resources/img/CECSL.png">
 
     <!-- Llamada a las hojas de estilos del framework e iconos -->
-    
+
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -25,7 +25,7 @@
 
 <body>
     <br>
-    
+
     <!-- Contenido principal del documento -->
     <main>
         <!-- Título del contenido principal -->
@@ -52,7 +52,7 @@
                 <button type="button" class="btn btn-primary" onclick="openCreate()">
                     <i class="bi bi-plus-square-fill"></i>
                 </button>
-                   <!-- Botón para abrir un reporte en formato PDF -->
+                <!-- Botón para abrir un reporte en formato PDF -->
                 <button type="button" class="btn btn-warning" onclick="openReport()">
                     <i class="bi bi-file-earmark-pdf-fill"></i>
                 </button>
@@ -100,18 +100,18 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="apellidoEstudiante" class="form-label">Apellido</label>
-                                <input id="apellidoEstudiante" type="text" name="apellidoEstudiante" class="form-control"
-                                    required>
+                                <input id="apellidoEstudiante" type="text" name="apellidoEstudiante"
+                                    class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="correoEstudiante" class="form-label">correo</label>
-                                <input id="correoEstudiante" type="text" name="correoEstudiante"
-                                    class="form-control" required>
+                                <input id="correoEstudiante" type="text" name="correoEstudiante" class="form-control"
+                                    required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="claveEstudiante" class="form-label">Contraseña</label>
-                                <input id="claveEstudiante" type="password" name="claveEstudiante"
-                                    class="form-control" required>
+                                <input id="claveEstudiante" type="password" name="claveEstudiante" class="form-control"
+                                    required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
@@ -120,7 +120,8 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-4">
                                 <label for="nacimientoEstudiante" class="form-label">Nacimiento</label>
-                                <input type="date" id="nacimientoEstudiante" name="nacimientoEstudiante" class="form-control" required>
+                                <input type="date" id="nacimientoEstudiante" name="nacimientoEstudiante"
+                                    class="form-control" required>
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <label for="nombreGrado" class="form-label">Grado</label>
@@ -135,8 +136,57 @@
                 </div>
             </div>
         </div>
+
+
+
+        <!-- Componente Modal para ver la gráfica de barras -->
+        <div class="modal fade" id="graphicModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="modalTitle1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header text-dark">
+                        <h1 class="modal-title fs-5" id="modalTitle1"></h1>
+                        <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="row justify-content-center">
+                        <!-- Contenedor de la gráfica -->
+                        <div class="col-md-9 col-sm-9">
+                            <div class="container-fluid">
+                                <canvas id="notas"></canvas>
+                                <div id="error_notas"></div>
+                            </div>
+                        </div>
+                        <!-- Contenedor de la gráfica -->
+                        <div class="col-md-9 col-sm-9">
+                            <div class="container-fluid">
+                                <canvas id="llegadasTarde"></canvas>
+                                <div id="error_tarde"></div>
+                            </div>
+                        </div>
+                        <!-- Contenedor de la gráfica -->
+                        <div class="col-md-9 col-sm-9">
+                            <div class="container-fluid">
+                                <canvas id="codigos"></canvas>
+                                <div id="error_codigos"></div>
+                            </div>
+                        </div>
+                        <!-- Contenedor de la gráfica -->
+                        <div class="col-md-9 col-sm-9">
+                            <div class="container-fluid">
+                                <canvas id="observaciones"></canvas>
+                                <div id="error_observaciones"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- Importación de la librería para generar los gráficos. Para más información https://www.chartjs.org/ -->
+    <script type="text/javascript" src="../../resources/js/chart.umd.min.js"></script>
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>

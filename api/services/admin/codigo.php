@@ -31,19 +31,29 @@ if (isset($_GET['action'])) {
                     !$codigo->setCodigo($_POST['TipoCodigo']) or
                     !$codigo->setProfesor($_POST['NombreProfesor']) or
                     !$codigo->setFecha($_POST['FechaCodigo']) or
-                    !$codigo->setDescripcion($_POST['descripcionCodigo']) 
+                    !$codigo->setDescripcion($_POST['descripcionCodigo'])
                 ) {
                     $result['error'] = $codigo->getDataError();
                 } elseif ($codigo->createRow()) {
                     $result['status'] = 1;
                     $result['message'] = 'Comportamiento creado correctamente';
-                
+
                 } else {
                     $result['error'] = 'Ocurrió un problema al crear el Comportamiento';
                 }
                 break;
             case 'readAll':
                 if ($result['dataset'] = $codigo->readAll()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen comportamientos registrados';
+                }
+                break;
+            case 'codigosPorEstudiantes':
+                if (!$codigo->setEstudiante($_POST['estudiante'])) {
+                    $result['error'] = $codigo->getDataError();
+                } elseif ($result['dataset'] = $codigo->codigosPorEstudiantesGrafica()) {
                     $result['status'] = 1;
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
@@ -67,7 +77,7 @@ if (isset($_GET['action'])) {
                     !$codigo->setCodigo($_POST['TipoCodigo']) or
                     !$codigo->setProfesor($_POST['NombreProfesor']) or
                     !$codigo->setFecha($_POST['FechaCodigo']) or
-                    !$codigo->setDescripcion($_POST['descripcionCodigo']) 
+                    !$codigo->setDescripcion($_POST['descripcionCodigo'])
                 ) {
                     $result['error'] = $codigo->getDataError();
                 } elseif ($codigo->updateRow()) {
@@ -79,7 +89,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$codigo->setId($_POST['idCodigo']) 
+                    !$codigo->setId($_POST['idCodigo'])
                 ) {
                     $result['error'] = $codigo->getDataError();
                 } elseif ($codigo->deleteRow()) {
@@ -98,10 +108,10 @@ if (isset($_GET['action'])) {
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('Content-type: application/json; charset=utf-8');
         // Se imprime el resultado en formato JSON y se retorna al controlador.
-        print(json_encode($result));
+        print (json_encode($result));
     } else {
-        print(json_encode('Acceso denegado'));
+        print (json_encode('Acceso denegado'));
     }
 } else {
-    print(json_encode('Recurso no disponible'));
+    print (json_encode('Recurso no disponible'));
 }

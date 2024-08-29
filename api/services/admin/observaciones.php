@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
                     !$observaciones->setprofesor($_POST['nombreProfesor']) or
                     !$observaciones->setObservacion($_POST['ObservacionEstudiante']) or
                     !$observaciones->setfecha($_POST['fechaEstudiante'])
-                 
+
                 ) {
                     $result['error'] = $observaciones->getDataError();
                 } elseif ($observaciones->createRow()) {
@@ -48,6 +48,16 @@ if (isset($_GET['action'])) {
                     $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
                 } else {
                     $result['error'] = 'No existen observaciones registrados';
+                }
+                break;
+            case 'observacionesPorEstudiante':
+                if (!$observaciones->setEstudiante($_POST['estudiante'])) {
+                    $result['error'] = $observaciones->getDataError();
+                } elseif ($result['dataset'] = $observaciones->ObservacionesPorEstudiantesGrafica()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen observaciones registradas';
                 }
                 break;
             case 'readOne':
@@ -67,7 +77,7 @@ if (isset($_GET['action'])) {
                     !$observaciones->setprofesor($_POST['nombreProfesor']) or
                     !$observaciones->setObservacion($_POST['ObservacionEstudiante']) or
                     !$observaciones->setfecha($_POST['fechaEstudiante'])
-                   
+
                 ) {
                     $result['error'] = $observaciones->getDataError();
                 } elseif ($observaciones->updateRow()) {
@@ -79,7 +89,7 @@ if (isset($_GET['action'])) {
                 break;
             case 'deleteRow':
                 if (
-                    !$observaciones->setId($_POST['idObservaciones']) 
+                    !$observaciones->setId($_POST['idObservaciones'])
                 ) {
                     $result['error'] = $producto->getDataError();
                 } elseif ($observaciones->deleteRow()) {
@@ -97,10 +107,10 @@ if (isset($_GET['action'])) {
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('Content-type: application/json; charset=utf-8');
         // Se imprime el resultado en formato JSON y se retorna al controlador.
-        print(json_encode($result));
+        print (json_encode($result));
     } else {
-        print(json_encode('Acceso denegado'));
+        print (json_encode('Acceso denegado'));
     }
 } else {
-    print(json_encode('Recurso no disponible'));
+    print (json_encode('Recurso no disponible'));
 }

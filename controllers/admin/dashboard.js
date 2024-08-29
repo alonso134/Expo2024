@@ -51,7 +51,7 @@ const graficoBarrasCategorias = async () => {
                   total.push(row.total);
             });
             // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-            barGraph('chart1', estudiante, total, 'Porcentaje de observaciones del estudiante', 'Top 5 alumnos con mas observaciones asignadas');
+            barGraph('chart1', estudiante, total, 'Porcentaje de observaciones del estudiante', 'Cantidad de estudiantes con observaciones');
       } else {
             document.getElementById('chart1').remove();
             console.log(DATA.error);
@@ -73,7 +73,7 @@ const graficoBarrasCategoriasNota = async () => {
                   totalnota.push(row.total);
             });
             // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-            pieGraph('chart2', estudiante, totalnota, 'Top 5 alumnos con las notas mas altas del instituto', 'Top 5 alumnos con las notas mas altas del instituto');
+            pieGraph('chart2', estudiante, totalnota, 'Cantidad de notas registradas por alumnos', 'Cantidad de notas registradas por alumnos');
       } else {
             document.getElementById('chart2').remove();
             console.log(DATA.error);
@@ -95,7 +95,7 @@ const graficoBarrasCategoriasAusncias = async () => {
                   totalcodigo.push(row.total);
             });
             // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-            dougnuthGraph('chart3', estudiante, totalcodigo, 'Top 7 de alumnos con mas ausencias registradas', 'Top 7 de alumnos con mas ausencias registradas');
+            dougnuthGraph('chart3', estudiante, totalcodigo, 'alumnos con ausencias registradas', 'alumnos con ausencias registradas');
       } else {
             document.getElementById('chart3').remove();
             console.log(DATA.error);
@@ -119,7 +119,7 @@ const graficoBarrasCategoriascodigos = async () => {
                   totalkodigo.push(row.total);
             });
             // Llamada a la función para generar y mostrar un gráfico de barras. Se encuentra en el archivo components.js
-            lineGraph('chart4', estudiante, totalkodigo, 'Cantidad de llegada tarde del alumno', 'Total de estudiantes con mas llegadas tarde Registradas');
+            lineGraph('chart4', estudiante, totalkodigo, 'Cantidad de llegada tarde del alumno', 'Total de estudiantes con  llegadas tarde Registradas');
       } else {
             document.getElementById('chart4').remove();
             console.log(DATA.error);

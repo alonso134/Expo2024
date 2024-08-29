@@ -67,6 +67,20 @@ class LlegadaHandler
         return Database::getRows($sql, $params);
     }
 
+    public function llegadasTardePorEstudianteGrafica()
+    {
+        $sql = 'SELECT COUNT(id_llegada) AS id, CONCAT(nombre_estudiante , " " , apellido_estudiante) AS estudiante, fecha
+                FROM llegadas_tarde
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN materias USING(id_materia)
+                INNER JOIN profesores
+                WHERE id_estudiante = ? AND fecha >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+                GROUP BY estudiante, fecha
+                ORDER BY fecha, estudiante';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
+    }
+
     public function readOne()
     {
         $sql = 'SELECT id_llegada, id_estudiante, id_materia, fecha, hora, id_profesor

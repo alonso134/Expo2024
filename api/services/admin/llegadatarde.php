@@ -50,6 +50,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen Llegadas Tarde registradas';
                 }
                 break;
+            case 'llegadasTardePorEstudiante':
+                if (!$llegada->setEstudiante($_POST['estudiante'])) {
+                    $result['error'] = $llegada->getDataError();
+                } elseif ($result['dataset'] = $llegada->llegadasTardePorEstudianteGrafica()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen Llegadas Tarde registradas';
+                }
+                break;
             case 'readOne':
                 if (!$llegada->setId($_POST['idNota'])) {
                     $result['error'] = $llegada->getDataError();
@@ -94,11 +104,11 @@ if (isset($_GET['action'])) {
         // Se indica el tipo de contenido a mostrar y su respectivo conjunto de caracteres.
         header('Content-type: application/json; charset=utf-8');
         // Se imprime el resultado en formato JSON y se retorna al controlador.
-        print(json_encode($result));
+        print (json_encode($result));
     } else {
-        print(json_encode('Acceso denegado'));
+        print (json_encode('Acceso denegado'));
     }
 } else {
-    print(json_encode('Recurso no disponible'));
+    print (json_encode('Recurso no disponible'));
 }
 

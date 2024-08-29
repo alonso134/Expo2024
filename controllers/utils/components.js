@@ -241,6 +241,42 @@ const lineGraph = (canvas, xAxis, yAxis, legend, title) => {
     });
 }
 
+
+const lineGraphWithFill = (canvas, xAxis, yAxis, legend, title) => {
+    // Se declara un arreglo para guardar códigos de colores en formato hexadecimal.
+    let colors = [];
+    // Se generan códigos hexadecimales de 6 cifras de acuerdo con el número de datos a mostrar y se agregan al arreglo.
+    xAxis.forEach(() => {
+        colors.push('#' + (Math.random().toString(16)).substring(2, 8));
+    });
+    // Se crea una instancia para generar el gráfico con los datos recibidos.
+    new Chart(document.getElementById(canvas), {
+        type: 'line',
+        data: {
+            labels: xAxis,
+            datasets: [{
+                label: legend,
+                data: yAxis,
+                borderColor: 'rgba(2, 8, 135, 1)',
+                backgroundColor: 'rgba(2, 8, 135, 0.4)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: title
+                },
+                legend: {
+                    display: false
+                },
+            }
+        }
+    });
+}
+
 /*
 *   Función asíncrona para cerrar la sesión del usuario.
 *   Parámetros: ninguno.
@@ -290,4 +326,138 @@ const fetchData = async (filename, action, form = null) => {
         // Se muestra un mensaje en la consola del navegador web cuando ocurre un problema.
         console.log(error);
     }
+}
+
+
+let Bargraph1 = null;
+
+const barGraph1 = (canvas, xAxis, yAxis, legend, title) => {
+    const generateGradient = (ctx, color) => {
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, color.replace('0.8)', '0.4)'));
+        return gradient;
+    };
+
+    const colors = xAxis.map(() => `hsla(${Math.floor(Math.random() * 360)}, 70%, 60%, 0.8)`);
+
+    if (Bargraph1) {
+        Bargraph1.destroy();
+    }
+
+    const ctx = document.getElementById(canvas).getContext('2d');
+
+    Bargraph1 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: xAxis,
+            datasets: [{
+                label: legend,
+                data: yAxis,
+                backgroundColor: colors.map(color => generateGradient(ctx, color)),
+                borderColor: colors.map(color => color.replace('0.8)', '1)')),
+                borderWidth: 2,
+                borderRadius: 10,
+                borderSkipped: false,
+                hoverBackgroundColor: colors.map(color => color.replace('0.8)', '0.9)')),
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                title: {
+                    display: false,
+                    text: title,
+                    font: {
+                        size: 24,
+                        weight: 'bold',
+                        family: "'Poppins', sans-serif"
+                    },
+                    padding: {
+                        top: 20,
+                        bottom: 30
+                    },
+                    color: '#333'
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        boxWidth: 15,
+                        padding: 15,
+                        font: {
+                            size: 14,
+                            family: "'Poppins', sans-serif"
+                        },
+                        usePointStyle: true,
+                        pointStyle: 'rectRounded'
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    titleFont: {
+                        size: 16,
+                        family: "'Poppins', sans-serif"
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: "'Poppins', sans-serif"
+                    },
+                    padding: 12,
+                    cornerRadius: 6,
+                    callbacks: {
+                        label: (context) => `${context.dataset.label}: ${context.parsed.y}`
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        font: {
+                            size: 12,
+                            family: "'Poppins', sans-serif"
+                        },
+                        color: '#666'
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    border: {
+                        dash: [4,4]
+                    }
+                },
+                x: {
+                    ticks: {
+                        font: {
+                            size: 12,
+                            family: "'Poppins', sans-serif"
+                        },
+                        color: '#666'
+                    },
+                    grid: {
+                        display: false
+                    }
+                }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeOutQuart'
+            },
+            hover: {
+                mode: 'index',
+                intersect: false
+            },
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 0,
+                    bottom: 10
+                }
+            }
+        }
+    });
 }

@@ -74,5 +74,20 @@ class ObservacionHandler
         $params = array($this->id);
         return Database::executeRow($sql, $params);
     }
+
+    public function ObservacionesPorEstudiantesGrafica()
+    {
+        $sql = 'SELECT COUNT(id_observacion) as id, nombre_estudiante, observacion, fecha
+                FROM observaciones
+                INNER JOIN estudiantes USING(id_estudiante)
+                INNER JOIN profesores USING(id_profesor)
+                WHERE id_estudiante = ? AND fecha >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+                GROUP BY nombre_estudiante, fecha
+                ORDER BY fecha, nombre_estudiante';
+        $params = array($this->nombre);
+        return Database::getRows($sql, $params);
+    }
+
+
  
 }
