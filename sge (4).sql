@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2024 a las 08:52:18
+-- Tiempo de generación: 29-08-2024 a las 14:08:41
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `asistencia` (
 
 INSERT INTO `asistencia` (`id_asistencia`, `id_estudiante`, `fecha`, `id_profesor`, `estado`) VALUES
 (1, 8, '2024-07-09', 1, 'asistio'),
-(3, 9, '2024-07-09', 1, 'asistio');
+(3, 9, '2024-07-09', 1, 'asistio'),
+(4, 5, '2024-02-20', 1, 'asistio');
 
 -- --------------------------------------------------------
 
@@ -56,6 +57,13 @@ CREATE TABLE `ausencias` (
   `id_profesor` int(11) NOT NULL,
   `estado_justificacion` enum('injustificada','justificada') DEFAULT 'injustificada'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ausencias`
+--
+
+INSERT INTO `ausencias` (`id_ausencia`, `id_estudiante`, `fecha`, `id_profesor`, `estado_justificacion`) VALUES
+(1, 5, '2020-02-20', 1, 'injustificada');
 
 -- --------------------------------------------------------
 
@@ -76,7 +84,8 @@ CREATE TABLE `comportamiento` (
 INSERT INTO `comportamiento` (`id_comportamiento`, `codigo`, `descripcion`) VALUES
 (1, 'falta leve', 'Llegar tarde a clase'),
 (5, 'falta grave', 'Uso inapropiado del teléfono móvil en clase'),
-(7, 'falta muy grave', 'Vandalismo en las instalaciones escolares');
+(7, 'falta muy grave', 'Vandalismo en las instalaciones escolares'),
+(15, 'falta muy grave', 'papa oso come en clase');
 
 -- --------------------------------------------------------
 
@@ -98,7 +107,13 @@ CREATE TABLE `comportamiento_estudiante` (
 --
 
 INSERT INTO `comportamiento_estudiante` (`id_comportamiento_estudiante`, `id_estudiante`, `id_comportamiento`, `id_profesor`, `fecha`, `descripcion_adicional`) VALUES
-(1, 8, 1, 1, '2020-02-20', 'holi');
+(1, 8, 1, 1, '2020-02-20', 'holi'),
+(3, 8, 1, 1, '2024-08-27', 'Pelo largo'),
+(4, 8, 5, 1, '2024-08-28', 'Le pego a Tamayo'),
+(5, 7, 7, 1, '2024-08-15', 'papa oso come en clase'),
+(6, 1, 5, 1, '2024-02-21', 'Se escapa de clase'),
+(7, 9, 1, 1, '2024-03-20', 'No hizo la tarea'),
+(8, 7, 1, 1, '2024-05-16', 'No hizo la tarea');
 
 -- --------------------------------------------------------
 
@@ -132,7 +147,8 @@ INSERT INTO `estudiantes` (`id_estudiante`, `nombre_estudiante`, `apellido_estud
 (8, 'David', 'García', 'david.garcia@example.com', 'clave6789', '2006-01-20', 7, '2024-06-29 12:00:00'),
 (9, 'Isabel', 'Sánchez', 'isabel.sanchez@example.com', 'clave1122', '2005-04-14', 8, '2024-06-29 12:00:00'),
 (10, 'Miguel', 'Fernández', 'miguel.fernandez@example.com', 'clave3344', '2007-12-05', 9, '2024-06-29 12:00:00'),
-(11, 'Sofía', 'Jiménez', 'sofia.jimenez@example.com', 'clave5566', '2006-06-17', 1, '2024-06-29 12:00:00');
+(11, 'Sofía', 'Jiménez', 'sofia.jimenez@example.com', 'clave5566', '2006-06-17', 1, '2024-06-29 12:00:00'),
+(12, 'alonso', 'moreno', 'fernando@gmail.com', '$2y$10$TTdXya.F33x5B/oMfLIZvOWDYmS1FgYkhk5IM2jhtdZ32luWgyeru', '2020-02-20', 11, '2024-08-28 22:26:32');
 
 -- --------------------------------------------------------
 
@@ -197,6 +213,19 @@ CREATE TABLE `llegadas_tarde` (
   `id_profesor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `llegadas_tarde`
+--
+
+INSERT INTO `llegadas_tarde` (`id_llegada`, `id_estudiante`, `fecha`, `hora`, `id_materia`, `id_profesor`) VALUES
+(2, 8, '2024-08-27', '00:00:08', 1, 1),
+(3, 8, '2024-08-28', '00:00:08', 2, 1),
+(4, 8, '2024-08-28', '00:00:08', 1, 1),
+(5, 8, '2024-08-28', '08:06:05', 6, 1),
+(6, 8, '2024-02-20', '07:20:42', 1, 1),
+(7, 8, '2024-08-21', '09:23:05', 2, 1),
+(8, 7, '2024-08-28', '03:27:51', 5, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -210,6 +239,13 @@ CREATE TABLE `llegadas_tarde_institucion` (
   `id_profesor` int(11) NOT NULL,
   `estado` enum('justificado','injustificado') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `llegadas_tarde_institucion`
+--
+
+INSERT INTO `llegadas_tarde_institucion` (`id_llegada_tarde_institucion`, `fecha`, `hora`, `id_profesor`, `estado`) VALUES
+(1, '2020-02-20', '12:00:00', 1, 'justificado');
 
 -- --------------------------------------------------------
 
@@ -229,7 +265,12 @@ CREATE TABLE `materias` (
 --
 
 INSERT INTO `materias` (`id_materia`, `nombre`, `descripcion`, `id_profesor`) VALUES
-(1, 'Ciencias', 'nose xd', 1);
+(1, 'Ciencias', 'nose xd', 1),
+(2, 'Matematicas', 'es mate', 1),
+(3, 'Sociales', 'es sociales', 1),
+(4, 'Lenguaje', 'es lenguaje', 1),
+(5, 'informatica', 'programar en word', 1),
+(6, 'informatica', 'programar en word', 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +292,19 @@ CREATE TABLE `notas` (
 --
 
 INSERT INTO `notas` (`id_nota`, `id_estudiante`, `id_materia`, `nota`, `trimestre`, `fecha_calificacion`) VALUES
-(1, 2, 1, 9.00, 'primer trimestre', '2024-07-08');
+(1, 2, 1, 9.00, 'primer trimestre', '2024-07-08'),
+(3, 3, 2, 8.00, 'primer trimestre', '2024-08-27'),
+(4, 1, 2, 8.00, 'primer trimestre', '2024-08-27'),
+(5, 8, 1, 7.00, 'primer trimestre', '2024-08-27'),
+(6, 8, 1, 9.00, 'primer trimestre', '2024-08-28'),
+(7, 8, 1, 9.00, 'primer trimestre', '2024-08-26'),
+(8, 8, 2, 9.00, 'primer trimestre', '2024-08-28'),
+(9, 8, 4, 10.00, 'primer trimestre', '2024-08-28'),
+(10, 8, 3, 5.00, 'primer trimestre', '2024-08-26'),
+(11, 8, 2, 7.00, 'primer trimestre', '2024-08-27'),
+(12, 8, 4, 7.00, 'primer trimestre', '2024-08-21'),
+(13, 8, 3, 10.00, 'primer trimestre', '2024-08-27'),
+(14, 8, 4, 9.00, 'primer trimestre', '2024-08-23');
 
 -- --------------------------------------------------------
 
@@ -273,7 +326,9 @@ CREATE TABLE `observaciones` (
 
 INSERT INTO `observaciones` (`id_observacion`, `id_estudiante`, `id_profesor`, `fecha`, `observacion`) VALUES
 (1, 8, 1, '2024-07-02', 'estuvo durmiendo durante hora clase'),
-(3, 5, 1, '2000-02-20', 'hola');
+(3, 5, 1, '2000-02-20', 'hola'),
+(4, 5, 1, '2024-02-20', 'llego tarde'),
+(5, 8, 1, '2024-08-28', 'Le cromo el rifle a Indu');
 
 -- --------------------------------------------------------
 
@@ -295,7 +350,7 @@ CREATE TABLE `profesores` (
 --
 
 INSERT INTO `profesores` (`id_profesor`, `nombre_profesor`, `apellido_profesor`, `correo_profesor`, `alias_profesor`, `clave_profesor`) VALUES
-(1, 'fernando', 'moreno', 'fa3528028@gmail.com', 'maycol', '$2y$10$lnsHlH6LmbC0ITR39KpqmeVK3niMNPyQ72Gcw5mzME1GioWPffAFK');
+(1, 'alonso', 'moreno', 'fa3528028@gmail.com', 'alonso', '$2y$10$lnsHlH6LmbC0ITR39KpqmeVK3niMNPyQ72Gcw5mzME1GioWPffAFK');
 
 --
 -- Índices para tablas volcadas
@@ -328,9 +383,9 @@ ALTER TABLE `comportamiento`
 --
 ALTER TABLE `comportamiento_estudiante`
   ADD PRIMARY KEY (`id_comportamiento_estudiante`),
-  ADD FOREIGN KEY `id_profesor` (`id_profesor`),
   ADD KEY `id_estudiante` (`id_estudiante`),
-  ADD KEY `id_comportamiento` (`id_comportamiento`);
+  ADD KEY `id_comportamiento` (`id_comportamiento`),
+  ADD KEY `id_profesor` (`id_profesor`) USING BTREE;
 
 --
 -- Indices de la tabla `estudiantes`
@@ -408,31 +463,31 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_asistencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `ausencias`
 --
 ALTER TABLE `ausencias`
-  MODIFY `id_ausencia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ausencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `comportamiento`
 --
 ALTER TABLE `comportamiento`
-  MODIFY `id_comportamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_comportamiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `comportamiento_estudiante`
 --
 ALTER TABLE `comportamiento_estudiante`
-  MODIFY `id_comportamiento_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comportamiento_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `grados`
@@ -450,31 +505,31 @@ ALTER TABLE `inscripcion`
 -- AUTO_INCREMENT de la tabla `llegadas_tarde`
 --
 ALTER TABLE `llegadas_tarde`
-  MODIFY `id_llegada` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_llegada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `llegadas_tarde_institucion`
 --
 ALTER TABLE `llegadas_tarde_institucion`
-  MODIFY `id_llegada_tarde_institucion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_llegada_tarde_institucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `notas`
 --
 ALTER TABLE `notas`
-  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `observaciones`
 --
 ALTER TABLE `observaciones`
-  MODIFY `id_observacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_observacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
