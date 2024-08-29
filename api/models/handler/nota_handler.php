@@ -86,12 +86,27 @@ class NotasHandler
         $params = array($this->materias);
         return Database::getRows($sql, $params);
     }
-
     
     public function notasPorEstudiante()
     {
         $sql = 'SELECT CONCAT(nombre_estudiante, " ", apellido_estudiante) AS estudiante, 
         nombre AS materia, AVG(nota) AS promedio_nota
+        FROM notas
+        INNER JOIN estudiantes USING(id_estudiante)
+        INNER JOIN materias USING(id_materia)
+        WHERE id_estudiante = ? 
+        AND fecha_calificacion >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+        GROUP BY estudiante, materia
+        ORDER BY estudiante, materia;
+        ';
+        $params = array($this->estudiante);
+        return Database::getRows($sql, $params);
+    }
+    
+    public function notasPorEstudiantePrediccion()
+    {
+        $sql = 'SELECT CONCAT(nombre_estudiante, " ", apellido_estudiante) AS estudiante, 
+        nombre AS materia, AVG(nota) AS promedio_nota, trimestre, fecha_calificacion
         FROM notas
         INNER JOIN estudiantes USING(id_estudiante)
         INNER JOIN materias USING(id_materia)

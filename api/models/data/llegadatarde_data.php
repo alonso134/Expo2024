@@ -8,7 +8,7 @@ require_once('../../models/handler/llegadatarde_handler.php');
  */
 class LlegadaData extends LlegadaHandler
 {
-  
+
     private $data_error = null;
     /*
      *  Métodos para validar y establecer los datos.
@@ -60,17 +60,12 @@ class LlegadaData extends LlegadaHandler
 
     public function setHora($value)
     {
-        if (Validator::validateMoney($value)) {
-            $this->hora = $value;
-            return true;
-        } else {
-            $this->data_error = 'la nota debe ser un valor numérico';
-            return false;
-        }
+        $this->hora = $value;
+        return true;
     }
 
 
-    
+
     public function setFecha($value)
     {
         if (Validator::validateDate($value)) {
