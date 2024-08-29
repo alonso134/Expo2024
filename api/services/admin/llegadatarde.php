@@ -60,6 +60,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen Llegadas Tarde registradas';
                 }
                 break;
+            case 'predictLlegadasTardeSiguienteMes':
+                if (!$llegada->setEstudiante($_POST['estudiante'])) {
+                    $result['error'] = $llegada->getDataError();
+                } elseif ($result['dataset'] = $llegada->predictLlegadasTardeSiguienteMes()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen Llegadas Tarde registradas';
+                }
+                break;
             case 'readOne':
                 if (!$llegada->setId($_POST['idNota'])) {
                     $result['error'] = $llegada->getDataError();

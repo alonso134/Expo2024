@@ -60,6 +60,16 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'No existen notas registradas';
                 }
                 break;
+            case 'predictNotasPromedioPorEstudianteSiguienteSemana':
+                if (!$notas->setEstudiante($_POST['estudiante'])) {
+                    $result['error'] = $notas->getDataError();
+                } elseif ($result['dataset'] = $notas->predictNotasPromedioPorEstudianteSiguienteSemana()) {
+                    $result['status'] = 1;
+                    $result['message'] = 'Existen ' . count($result['dataset']) . ' registros';
+                } else {
+                    $result['error'] = 'No existen notas registradas';
+                }
+                break;
             case 'readOne':
                 if (!$notas->setId($_POST['idNota'])) {
                     $result['error'] = $notas->getDataError();

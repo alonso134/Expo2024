@@ -239,6 +239,8 @@ const openGraphic = (id) => {
     cargarGraficaConducta(FORM);
     cargarGraficaNotas(FORM);
     cargarGraficaObservacion(FORM);
+    cargarGraficaPredictiva(FORM);
+    cargarGraficaPredictiva2(FORM);
 }
 
 let chartInstance1 = null;
@@ -281,7 +283,7 @@ const cargarGraficaLlegadaTarde = async (FORM) => {
             // Restablecer el canvas en caso de que sea necesario
             const canvasContainer = document.getElementById('llegadasTarde').parentElement;
             canvasContainer.innerHTML = ' <div id="error_tarde"></div> <canvas id="llegadasTarde"></canvas>';
-            
+
             // Restablecer o crear el contenedor
             errorContainer = document.getElementById('error_tarde');
             errorContainer.innerHTML += '';
@@ -338,7 +340,7 @@ const cargarGraficaConducta = async (FORM) => {
             // Restablecer el canvas en caso de que sea necesario
             const canvasContainer = document.getElementById('codigos').parentElement;
             canvasContainer.innerHTML = ' <div id="error_codigos"></div> <canvas id="codigos"></canvas>';
-            
+
             // Restablecer o crear el contenedor
             errorContainer = document.getElementById('error_codigos');
             errorContainer.innerHTML += '';
@@ -396,7 +398,7 @@ const cargarGraficaNotas = async (FORM) => {
             // Restablecer el canvas en caso de que sea necesario
             const canvasContainer = document.getElementById('notas').parentElement;
             canvasContainer.innerHTML = ' <div id="error_notas"></div> <canvas id="notas"></canvas>';
-            
+
             // Restablecer o crear el contenedor
             errorContainer = document.getElementById('error_notas');
             errorContainer.innerHTML += '';
@@ -456,7 +458,7 @@ const cargarGraficaObservacion = async (FORM) => {
             // Restablecer el canvas en caso de que sea necesario
             const canvasContainer = document.getElementById('observaciones').parentElement;
             canvasContainer.innerHTML = ' <div id="error_observaciones"></div> <canvas id="observaciones"></canvas>';
-            
+
             // Restablecer o crear el contenedor
             errorContainer = document.getElementById('error_observaciones');
             errorContainer.innerHTML += '';
@@ -480,3 +482,172 @@ const cargarGraficaObservacion = async (FORM) => {
 }
 
 
+// Función para cargar la gráfica lineal
+const cargarGraficaPredictiva = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(NOTA_API, 'predictNotasPromedioPorEstudianteSiguienteSemana', FORM);
+        if (DATA.status) {
+            let fecha = [];
+            let numero = [];
+            DATA.dataset.forEach(row => {
+                fecha.push(row.fecha);
+                numero.push(row.promedio);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('prediccion').parentElement;
+            canvasContainer.innerHTML = '<canvas id="prediccion"></canvas> <div id="error_prediccion"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico lineal.
+            chartInstance1 = lineGraphWithFill('prediccion', fecha, numero, 'Prediccion de notas promedio del estudiante', 'Gráfica de notas promedios por estudiante para la siguiente semana');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('prediccion').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_prediccion"></div> <canvas id="prediccion"></canvas>';
+
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_prediccion');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance1 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+        // Destruir la instancia existente del gráfico si existe
+        if (chartInstance2) {
+            chartInstance2.destroy();
+            chartInstance2 = null; // Asegúrate de restablecer la referencia
+        }
+        // Restablecer el canvas en caso de que sea necesario
+        const canvasContainer = document.getElementById('prediccion').parentElement;
+        canvasContainer.innerHTML = ' <div id="error_prediccion"></div> <canvas id="prediccion"></canvas>';
+
+        // Restablecer o crear el contenedor
+        errorContainer = document.getElementById('error_prediccion');
+        errorContainer.innerHTML += '';
+        const tablaHtml = `
+        <div class="col-md-12 row d-flex text-center justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p class="text-primary">No hay datos suficientes para mostrar la gráfica predictiva</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        errorContainer.innerHTML += tablaHtml;
+        chartInstance2 = null;
+    }
+}
+
+// Función para cargar la gráfica lineal
+const cargarGraficaPredictiva2 = async (FORM) => {
+    try {
+        // Mandamos la peticion a la API para traernos la informacion correspondiente.
+        const DATA = await fetchData(TARDE_API, 'predictLlegadasTardeSiguienteMes', FORM);
+        if (DATA.status) {
+            let fecha = [];
+            let numero = [];
+            DATA.dataset.forEach(row => {
+                fecha.push(row.fecha);
+                numero.push(row.llegadas_tarde);
+            });
+
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('prediccion2').parentElement;
+            canvasContainer.innerHTML = '<canvas id="prediccion2"></canvas> <div id="error_prediccion2"></div>';
+
+            // Llamada a la función para generar y mostrar un gráfico lineal.
+            chartInstance1 = lineGraphWithFill('prediccion2', fecha, numero, 'Prediccion de llegadas tarde del estudiante', 'Gráfica de llegadas tarde por estudiante para la siguiente semana');
+        } else {
+            console.log(DATA.error);
+            // Destruir la instancia existente del gráfico si existe
+            if (chartInstance1) {
+                chartInstance1.destroy();
+                chartInstance1 = null; // Asegúrate de restablecer la referencia
+            }
+            // Restablecer el canvas en caso de que sea necesario
+            const canvasContainer = document.getElementById('prediccion2').parentElement;
+            canvasContainer.innerHTML = ' <div id="error_prediccion2"></div> <canvas id="prediccion2"></canvas>';
+
+            // Restablecer o crear el contenedor
+            errorContainer = document.getElementById('error_prediccion2');
+            errorContainer.innerHTML += '';
+            const tablaHtml = `
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                           <p class="text-primary">${DATA.error} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            errorContainer.innerHTML += tablaHtml;
+            chartInstance1 = null;
+        }
+    } catch (error) {
+        console.log('Error:', error);
+        // Destruir la instancia existente del gráfico si existe
+        if (chartInstance2) {
+            chartInstance2.destroy();
+            chartInstance2 = null; // Asegúrate de restablecer la referencia
+        }
+        // Restablecer el canvas en caso de que sea necesario
+        const canvasContainer = document.getElementById('prediccion2').parentElement;
+        canvasContainer.innerHTML = ' <div id="error_prediccion2"></div> <canvas id="prediccion2"></canvas>';
+
+        // Restablecer o crear el contenedor
+        errorContainer = document.getElementById('error_prediccion2');
+        errorContainer.innerHTML += '';
+        const tablaHtml = `
+        <div class="col-md-12 row d-flex text-center justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <p class="text-primary">No hay datos suficientes para mostrar la gráfica predictiva</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+        errorContainer.innerHTML += tablaHtml;
+        chartInstance2 = null;
+    }
+}
