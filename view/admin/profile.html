@@ -51,47 +51,12 @@
         </form>
         <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
         <div class="text-center p-3">
-            <button type="button" class="btn btn-secondary" onclick="openPassword()">
-                <i class="bi bi-shield-lock"></i> Cambiar contraseña
-            </button>
+            
         </div>
         <!-- Componente Modal para mostrar el formulario de cambio de contraseña -->
         <div class="modal fade" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="modalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
-                <!-- Contenido del componente Modal -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalTitle">Cambiar contraseña</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- Formulario para actualizar contraseña -->
-                    <form id="passwordForm">
-                        <div class="modal-body row g-3">
-                            <div class="col-sm-12 col-md-6 offset-md-3">
-                                <label for="claveActual" class="form-label">Contraseña actual</label>
-                                <input id="claveActual" type="password" name="claveActual" class="form-control"
-                                    required>
-                            </div>
-                            <div class="col-12 text-center">
-                                <span>CONTRASEÑA NUEVA</span>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="claveNueva" class="form-label">Contraseña</label>
-                                <input id="claveNueva" type="password" name="claveNueva" class="form-control" required>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
-                                <input id="confirmarClave" type="password" name="confirmarClave" class="form-control"
-                                    required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="reset" class="btn btn-secondary">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </main>
