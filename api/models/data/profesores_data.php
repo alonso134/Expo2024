@@ -81,9 +81,9 @@ class ProfesorData extends ProfesorHandler
         }
     }
 
-    public function setClave($value)
+    public function setClave($value, $alias)
     {
-        if (Validator::validatePassword($value)) {
+        if (Validator::validatePassword($value, $alias)) {
             $this->clave = password_hash($value, PASSWORD_DEFAULT);
             return true;
         } else {
@@ -96,5 +96,9 @@ class ProfesorData extends ProfesorHandler
     public function getDataError()
     {
         return $this->data_error;
+    }
+
+    public function getAlias(){
+        return $this->alias;
     }
 }

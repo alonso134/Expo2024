@@ -32,7 +32,7 @@ if (isset($_GET['action'])) {
                     !$profesor->setApellido($_POST['apellidoProfesor']) or
                     !$profesor->setCorreo($_POST['correoProfesor']) or
                     !$profesor->setAlias($_POST['aliasProfesor']) or
-                    !$profesor->setClave($_POST['claveProfesor'])
+                    !$profesor->setClave($_POST['claveProfesor'], $_POST['aliasProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($_POST['claveProfesor'] != $_POST['confirmarClave']) {
@@ -136,7 +136,7 @@ if (isset($_GET['action'])) {
                     $result['error'] = 'Contraseña actual incorrecta';
                 } elseif ($_POST['claveNueva'] != $_POST['confirmarClave']) {
                     $result['profesor'] = 'Confirmación de contraseña diferente';
-                } elseif (!$profesor->setClave($_POST['claveNueva'])) {
+                } elseif (!$profesor->setClave($_POST['claveNueva'], $profesor->getAlias())) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($profesor->changePassword()) {
                     $result['status'] = 1;
@@ -166,7 +166,7 @@ if (isset($_GET['action'])) {
                     !$profesor->setApellido($_POST['apellidoProfesor']) or
                     !$profesor->setCorreo($_POST['correoProfesor']) or
                     !$profesor->setAlias($_POST['aliasProfesor']) or
-                    !$profesor->setClave($_POST['claveProfesor'])
+                    !$profesor->setClave($_POST['claveProfesor'], $_POST['aliasProfesor'])
                 ) {
                     $result['error'] = $profesor->getDataError();
                 } elseif ($_POST['claveProfesor'] != $_POST['confirmarClave']) {

@@ -38,13 +38,14 @@ class ProfesorHandler
 
     public function checkPassword($password)
     {
-        $sql = 'SELECT clave_profesor
+        $sql = 'SELECT clave_profesor, alias_profesor
                 FROM profesores
                 WHERE id_profesor = ?';
         $params = array($_SESSION['idProfesor']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
         if (password_verify($password, $data['clave_profesor'])) {
+            $this->alias = $data['alias_profesor'];
             return true;
         } else {
             return false;
