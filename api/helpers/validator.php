@@ -222,7 +222,7 @@ class Validator
     *   Parámetros: $value (dato a validar).
     *   Retorno: booleano (true si el valor es correcto o false en caso contrario).
     */
-    public static function validatePassword($value, $alias)
+    public static function validatePassword($value, $correo = '')
     {
             // Se verifica la longitud mínima.
             if (strlen($value) < 8) {
@@ -243,17 +243,79 @@ class Validator
             } elseif (!preg_match('/[a-z]/', $value)) {
                 self::$password_error = 'Clave debe contener al menos una letra en minúsculas';
                 return false;
-            } elseif (strlen(strripos($value, $alias)) > 0) {
+            } /*elseif (strlen(strripos($value, $correo)) > 0) {
                 self::$password_error = 'Clave contiene datos del alias ';
                 return false;
-            } elseif (preg_match('/[A-Z]/', $value)) {
+            } */elseif (preg_match('/[A-Z]/', $value)) {
                 return true;
             } else {
                 self::$password_error = 'Clave debe contener al menos una letra en mayusculas';
                 return false;
             }
     }
+ /* 
+     public static function validatePassword($password, $userData = [])
+    {
+        // Reiniciar el error de la contraseña
+        self::$password_error = null;
+    
+        // Verificar longitud de la contraseña (mínimo 8 y máximo 72 caracteres)
+        if (strlen($password) < 8) {
+            self::$password_error = 'La contraseña debe tener al menos 8 caracteres.';
+            return false;
+        } elseif (strlen($password) > 72) {
+            self::$password_error = 'La contraseña no debe exceder los 72 caracteres.';
+            return false;
+        }
+    
+        // Verificar que no haya espacios en blanco
+        if (preg_match('/\s/', $password)) {
+            self::$password_error = 'La contraseña no debe contener espacios en blanco.';
+            return false;
+        }
+    
+        // Verificar que contenga al menos una letra, un número y un carácter especial
+        if (!preg_match('/[A-Za-z]/', $password) ||
+            !preg_match('/[0-9]/', $password) ||
+            !preg_match('/[\W_]/', $password)) {
+            self::$password_error = 'La contraseña debe incluir al menos una letra, un número y un carácter especial.';
+            return false;
+        }
+    
+        // Verificar que no contenga datos del usuario (correo y nombre)
+        foreach ($userData as $data) {
+            if (stripos($password, $data) !== false) {
+                self::$password_error = 'La contraseña no debe contener información personal del usuario.';
+                return false;
+            }
+        }
+        
+    
+        // Si pasa todas las verificaciones, la contraseña es válida
+        return true;
+    }
+    
+ */
+    
 
+    // Función para validar cerrado de sesión en 5 minutos
+    public static function validateSessionTime()
+    {
+        //Tiempo en segundos para dar vida a la sesión.
+        $inactivo = 300; //Tiempo en segundos.
+
+        //Calculamos tiempo de vida inactivo.
+        $vida_session = time() - $_SESSION['tiempo'];
+
+        //Compraración para redirigir página, si la vida de sesión sea mayor a el tiempo insertado en inactivo.
+        if ($vida_session > $inactivo) {
+            session_destroy();
+            exit();
+        } else { // si no ha caducado la sesion, actualizamos
+            $_SESSION['tiempo'] = time();
+            return true;
+        }
+    }
  
     /*
     *   Método para validar el formato del DUI (Documento Único de Identidad).
@@ -369,5 +431,14 @@ class Validator
         } else {
             return false;
         }
+    }
+    public static function generateRandomString($length = 24) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[mt_rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

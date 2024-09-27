@@ -34,8 +34,7 @@
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <label for="apellidoProfesor" class="form-label">Apellido</label>
-                <input id="apellidoProfesor" type="text" name="apellidoProfesor" class="form-control"
-                    required>
+                <input id="apellidoProfesor" type="text" name="apellidoProfesor" class="form-control" required>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                 <label for="correoProfesor" class="form-label">Correo</label>
@@ -50,15 +49,38 @@
             </div>
         </form>
         <!-- Contenedor con enlace para abrir la caja de diálogo del formulario de cambiar constraseña -->
-        <div class="text-center p-3">
-            
-        </div>
-        <!-- Componente Modal para mostrar el formulario de cambio de contraseña -->
-        <div class="modal fade" id="passwordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="modalTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="text-center p-3" style="width: 100%; max-width: 600px;">
+                <h3>Cambiar contraseña</h3>
+                <form id="saveForm">
+                    <div class="row g-3">
+                        <div class="col-sm-12 mb-3">
+                            <label for="claveActual" class="form-label fw-semibold">Contraseña actual</label>
+                            <input id="claveActual" type="password" name="claveActual" class="form-control"
+                                placeholder="Ingresa su clave actual" autocomplete="off" required>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="claveNueva" class="form-label fw-semibold">Contraseña nueva</label>
+                            <input id="claveNueva" type="password" name="claveNueva"
+                                class="form-control" placeholder="Ingresa la clave nueva" autocomplete="off" required>
+                        </div>
+                        <div class="col-sm-12 mb-3">
+                            <label for="confirmarClave" class="form-label fw-semibold">Repetir contraseña</label>
+                            <input id="confirmarClave" type="password" name="confirmarClave"
+                                class="form-control" placeholder="Confirme la clave" autocomplete="off" required>
+                        </div>
+                        <div class="col-sm-12 text-center">
+                            <button type="submit" class="btn btn-outline-primary">Guardar</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+        
+
+        
+        
+        
     </main>
     <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->

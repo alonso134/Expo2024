@@ -14,7 +14,7 @@
     <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
-    
+
 </head>
 
 <body>
@@ -24,40 +24,49 @@
         <h3 id="mainTitle"></h3>
         <img src="../../resources/img/school.png" class="mx-auto d-block" width="200">
         <br>
-        
+
         <!-- Formulario para iniciar sesión -->
         <form class="d-none" id="loginForm">
             <div class="row g-3">
                 <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-                    <label for="alias" class="form-label">Alias</label>
-                    <input id="alias" type="text" name="alias" class="form-control" required>
+                    <label for="correo" class="form-label">Correo</label>
+                    <input id="correo" type="email" name="correo" class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
                     <label for="clave" class="form-label">Contraseña</label>
                     <input id="clave" type="password" name="clave" class="form-control" required>
+                </div>
+                <div class="form-links botones">
+                    <a class="h6" href="recuperacion_clave.html">¿Olvidaste tu contraseña?</a>
+
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Enviar</button>
                 </div>
             </div>
         </form>
+        <!-- Contenedor de verificación adicional, oculto inicialmente -->
+        <form class="d-none" id="doubleCheckContainer">
+            <label class="text-start" for="verificacion">Verificación adicional:</label>
+            <input type="text" id="verificacion" name="verificacion" class="form-control"
+                placeholder="Código de verificación" maxlength="8" pattern="\d{1,8}">
+            <div class="invalid-feedback">Por favor ingresa el código de verificación.</div>
+            <button type="button" id="verifyButton" class="btn btn-secondary mt-2">Verificar</button>
+        </form>
         <!-- Formulario para crear el primer Profesor -->
         <form class="d-none" id="signupForm">
             <div class="row g-3">
                 <div class="col-sm-12 col-md-6">
                     <label for="nombreProfesor" class="form-label">Nombre</label>
-                    <input id="nombreProfesor" type="text" name="nombreProfesor" class="form-control"
-                        required>
+                    <input id="nombreProfesor" type="text" name="nombreProfesor" class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <label for="apellidoProfesor" class="form-label">Apellido</label>
-                    <input id="apellidoProfesor" type="text" name="apellidoProfesor" class="form-control"
-                        required>
+                    <input id="apellidoProfesor" type="text" name="apellidoProfesor" class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <label for="correoProfesor" class="form-label">Correo</label>
-                    <input id="correoProfesor" type="email" name="correoProfesor" class="form-control"
-                        required>
+                    <input id="correoProfesor" type="email" name="correoProfesor" class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <label for="aliasProfesor" class="form-label">Alias</label>
@@ -65,8 +74,7 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <label for="claveProfesor" class="form-label">Contraseña</label>
-                    <input id="claveProfesor" type="password" name="claveProfesor" class="form-control"
-                        required>
+                    <input id="claveProfesor" type="password" name="claveProfesor" class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6">
                     <label for="confirmarClave" class="form-label">Confirmar contraseña</label>
@@ -74,11 +82,13 @@
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <label for="duiCliente" class="form-label">DUI</label>
-                    <input type="text" id="duiCliente" name="duiCliente" placeholder="00000000-0" class="form-control" required>
+                    <input type="text" id="duiCliente" name="duiCliente" placeholder="00000000-0" class="form-control"
+                        required>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4 offset-lg-2">
                     <label for="telefonoCliente" class="form-label">Teléfono</label>
-                    <input type="text" id="telefonoCliente" name="telefonoCliente" placeholder="0000-0000" class="form-control" required>
+                    <input type="text" id="telefonoCliente" name="telefonoCliente" placeholder="0000-0000"
+                        class="form-control" required>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <label for="nacimientoCliente" class="form-label">Nacimiento</label>
@@ -91,7 +101,7 @@
             </div>
         </form>
     </main>
-   <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
+    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
     <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>

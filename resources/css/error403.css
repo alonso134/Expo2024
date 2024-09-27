@@ -1,0 +1,68 @@
+/* Estilos principales para la página de error 403 */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.error-container {
+    text-align: center;
+}
+
+h4 {
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.reload-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.reload-btn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.reload-btn i {
+    margin-left: 10px;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -15,49 +15,167 @@ class ProfesorHandler
     protected $correo = null;
     protected $alias = null;
     protected $clave = null;
+    protected $condicion = null;
 
     /*
      *  Métodos para gestionar la cuenta del Profesor.
      */
     public function checkUser($username, $password)
     {
-        $sql = 'SELECT id_profesor, alias_profesor, clave_profesor
+        $sql = 'SELECT id_profesor, alias_profesor, clave_profesor,
+                correo_profesor, intentos_fallidos,fecha_cambio_clave, 
+                bloqueado_hasta
                 FROM profesores
-                WHERE  alias_profesor = ?';
+                WHERE  correo_profesor = ?';
         $params = array($username);
-        if (!($data = Database::getRow($sql, $params))) {
-            return false;
-        } elseif (password_verify($password, $data['clave_profesor'])) {
-            $_SESSION['idProfesor'] = $data['id_profesor'];
-            $_SESSION['aliasProfesor'] = $data['alias_profesor'];
-            return true;
-        } else {
-            return false;
+        $data = Database::getRow($sql, $params);
+
+        if (!$data) {
+            return false;  
         }
+
+        // Comprobar si la cuenta está bloqueada
+        if ($data['bloqueado_hasta'] && strtotime($data['bloqueado_hasta']) > time()) {
+            return 'bloqueado';  
+        }
+
+        // Verificar la contraseña
+        if (password_verify($password, $data['clave_profesor'])) {
+            // Restablecer intentos fallidos si el login es correcto
+            $sql = 'UPDATE profesores SET intentos_fallidos = 0, bloqueado_hasta = NULL WHERE id_profesor = ?';
+            $params = array($data['id_profesor']);
+            Database::executeRow($sql, $params);
+
+            // Comprobar si la contraseña ha expirado
+            $fechaCambio = strtotime($data['fecha_cambio_clave']);
+            $fechaLimite = $fechaCambio + (90 * 24 * 60 * 60); // 90 días en segundos
+
+            if (time() > $fechaLimite) {
+                return 'expirada';  
+            }
+
+            // Retornar información del usuario en vez de asignar sesión
+            return [
+                'id_usuario' => $data['id_profesor'],
+                'correo_electronico' => $data['correo_profesor'],
+                'alias' =>$data['alias_profesor']
+            ];
+        } else {
+            // Incrementar intentos fallidos
+            $intentos_fallidos = $data['intentos_fallidos'] + 1;
+            $bloqueado_hasta = null;
+
+            // Si alcanza el límite de 3 intentos fallidos, bloquear la cuenta
+            if ($intentos_fallidos >= 4) {
+                $bloqueado_hasta = date('Y-m-d H:i:s', strtotime('+24 hours'));  
+            }
+
+            // Actualizar intentos fallidos y posible bloqueo
+            $sql = 'UPDATE profesores SET intentos_fallidos = ?, bloqueado_hasta = ? WHERE id_profesor = ?';
+            $params = array($intentos_fallidos, $bloqueado_hasta, $data['id_profesor']);
+            Database::executeRow($sql, $params);
+
+            // Mostrar mensaje si la cuenta ha sido bloqueada
+            if ($bloqueado_hasta) {
+                return 'bloqueado';  
+            }
+
+            return false;  
+        }
+    }
+
+    public function verifyExistingEmail()
+    {
+        $sql = 'SELECT COUNT(*) as count
+                FROM profesores
+                WHERE correo_profesor = ?';
+        $params = array($this->correo);
+        $result = Database::getRow($sql, $params);
+
+        if ($result['count'] > 0) {
+            return true; // Hay resultados
+        } else {
+            return false; // No hay resultados
+        }
+    }
+    
+    public function verifyCode($inputCode)
+    {
+        if (isset($_SESSION['verification_code'])) {
+            $storedCode = $_SESSION['verification_code']['code'];
+            $expirationTime = $_SESSION['verification_code']['expiration_time'];
+
+            // Verificar si el código ha expirado
+            if (time() > $expirationTime) {
+                unset($_SESSION['verification_code']);
+                return 'expired'; // El código ha expirado
+            }
+
+            // Verificar si el código proporcionado coincide con el almacenado
+            if ($inputCode == $storedCode) {
+                return true; // El código es correcto
+            } else {
+                return false; // El código es incorrecto
+            }
+        }
+
+        return false; // No se encontró el código en la sesión
     }
 
     public function checkPassword($password)
     {
-        $sql = 'SELECT clave_profesor, alias_profesor
+        $sql = 'SELECT clave_profesor, alias_profesor, correo_profesor
                 FROM profesores
                 WHERE id_profesor = ?';
         $params = array($_SESSION['idProfesor']);
         $data = Database::getRow($sql, $params);
         // Se verifica si la contraseña coincide con el hash almacenado en la base de datos.
         if (password_verify($password, $data['clave_profesor'])) {
-            $this->alias = $data['alias_profesor'];
+            $this->alias = $data['correo_profesor'];
             return true;
         } else {
             return false;
         }
     }
-
+    public function readUserByEmail($correo)
+    {
+        $sql = 'SELECT alias_profesor
+        FROM profesores
+        WHERE correo_profesor = ?';
+        $params = array($correo);
+        return Database::getRow($sql, $params);
+    }
+    public function readEmailByAlias($alias)
+    {
+        $sql = 'SELECT correo_profesor
+        FROM profesores
+        WHERE alias_profesor = ?';
+        $params = array($alias);
+        return Database::getRow($sql, $params);
+    }
     public function changePassword()
     {
         $sql = 'UPDATE profesores
                 SET clave_profesor = ?
                 WHERE id_profesor = ?';
         $params = array($this->clave, $_SESSION['idProfesor']);
+        return Database::executeRow($sql, $params);
+    }
+
+    public function getPasswordHash($correo)
+    {
+        $sql = 'SELECT clave_profesor FROM profesores WHERE correo_profesor = ?';
+        $params = array($correo);
+        $data = Database::getRow($sql, $params);
+        print_r($correo);
+        return $data['clave_profesor'];
+    }
+
+    
+    public function changePasswordFromEmail()
+    {
+        $sql = 'UPDATE profesores SET clave_profesor = ? WHERE correo_profesor = ?';
+        $params = array($this->clave, $_SESSION['usuario_correo_vcc']['correo']);
         return Database::executeRow($sql, $params);
     }
 

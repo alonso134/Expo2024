@@ -4,10 +4,8 @@ const PROFILE_FORM = document.getElementById('profileForm'),
     APELLIDO_ADMINISTRADOR = document.getElementById('apellidoProfesor'),
     CORREO_ADMINISTRADOR = document.getElementById('correoProfesor'),
     ALIAS_ADMINISTRADOR = document.getElementById('aliasProfesor');
-// Constante para establecer la modal de cambiar contraseña.
-const PASSWORD_MODAL = new bootstrap.Modal('#passwordModal');
 // Constante para establecer el formulario de cambiar contraseña.
-const PASSWORD_FORM = document.getElementById('passwordForm');
+const PASSWORD_FORM = document.getElementById('saveForm');
 
 // Método del evento para cuando el documento ha cargado.
 document.addEventListener('DOMContentLoaded', async () => {
@@ -56,8 +54,6 @@ PASSWORD_FORM.addEventListener('submit', async (event) => {
     const DATA = await fetchData(USER_API, 'changePassword', FORM);
     // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
     if (DATA.status) {
-        // Se cierra la caja de diálogo.
-        PASSWORD_MODAL.hide();
         // Se muestra un mensaje de éxito.
         sweetAlert(1, DATA.message, true);
     } else {

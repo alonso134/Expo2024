@@ -1,0 +1,87 @@
+/* Fondo blanco y diseño centrado */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor del formulario */
+.form-box {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Estilos del título y texto */
+h1 {
+    font-size: 2rem;
+    color: #0072ff;
+    font-weight: 600;
+}
+
+h6 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Estilos para el campo de entrada del código */
+.input-group-text {
+    background-color: #0072ff;
+    color: white;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.form-control {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 0 5px 5px 0;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #0072ff;
+    box-shadow: none;
+}
+
+/* Estilos para el botón */
+button {
+    background-color: #0072ff;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #005fcc;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+button:active {
+    box-shadow: 0 4px #004c8f;
+    transform: translateY(2px);
+}
+
+/* Imagen de recuperación */
+img {
+    display: block;
+    margin: 0 auto;
+}
