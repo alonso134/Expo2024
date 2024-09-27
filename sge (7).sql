@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-08-2024 a las 14:08:41
+-- Tiempo de generación: 27-09-2024 a las 14:05:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -63,7 +63,8 @@ CREATE TABLE `ausencias` (
 --
 
 INSERT INTO `ausencias` (`id_ausencia`, `id_estudiante`, `fecha`, `id_profesor`, `estado_justificacion`) VALUES
-(1, 5, '2020-02-20', 1, 'injustificada');
+(1, 5, '2020-02-20', 1, 'injustificada'),
+(2, 8, '2024-04-08', 2, 'justificada');
 
 -- --------------------------------------------------------
 
@@ -245,7 +246,8 @@ CREATE TABLE `llegadas_tarde_institucion` (
 --
 
 INSERT INTO `llegadas_tarde_institucion` (`id_llegada_tarde_institucion`, `fecha`, `hora`, `id_profesor`, `estado`) VALUES
-(1, '2020-02-20', '12:00:00', 1, 'justificado');
+(1, '2020-02-20', '12:00:00', 1, 'justificado'),
+(2, '2024-04-08', '16:53:09', 2, 'injustificado');
 
 -- --------------------------------------------------------
 
@@ -342,15 +344,19 @@ CREATE TABLE `profesores` (
   `apellido_profesor` varchar(60) NOT NULL,
   `correo_profesor` varchar(100) NOT NULL,
   `alias_profesor` varchar(25) NOT NULL,
-  `clave_profesor` varchar(100) NOT NULL
+  `clave_profesor` varchar(100) NOT NULL,
+  `fecha_cambio_clave` datetime DEFAULT NULL,
+  `intentos_fallidos` int(11) NOT NULL,
+  `bloqueado_hasta` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`id_profesor`, `nombre_profesor`, `apellido_profesor`, `correo_profesor`, `alias_profesor`, `clave_profesor`) VALUES
-(1, 'alonso', 'moreno', 'fa3528028@gmail.com', 'alonso', '$2y$10$lnsHlH6LmbC0ITR39KpqmeVK3niMNPyQ72Gcw5mzME1GioWPffAFK');
+INSERT INTO `profesores` (`id_profesor`, `nombre_profesor`, `apellido_profesor`, `correo_profesor`, `alias_profesor`, `clave_profesor`, `fecha_cambio_clave`, `intentos_fallidos`, `bloqueado_hasta`) VALUES
+(1, 'alonso', 'moreno', 'fa3528028@gmail.com', 'alonso', '$2y$10$GNYPp0qmYkxIXx2cWubate.tiLhsbsChK4hPAU9uS/vtPdUu8OD8e', '2024-09-26 23:04:15', 0, NULL),
+(2, 'cesar', 'andres', 'cesar@gmail.com', 'cesar12', '$2y$10$oKan4lMxvXiLSpzQ/E0wQuxhnBBtaIPy4WWGIfhdKCwiptR91rfzi', NULL, 0, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -409,15 +415,6 @@ ALTER TABLE `inscripcion`
   ADD KEY `id_materia` (`id_materia`);
 
 --
--- Indices de la tabla `llegadas_tarde`
---
-ALTER TABLE `llegadas_tarde`
-  ADD PRIMARY KEY (`id_llegada`),
-  ADD KEY `id_estudiante` (`id_estudiante`),
-  ADD KEY `id_materia` (`id_materia`),
-  ADD KEY `id_profesor` (`id_profesor`);
-
---
 -- Indices de la tabla `llegadas_tarde_institucion`
 --
 ALTER TABLE `llegadas_tarde_institucion`
@@ -469,7 +466,7 @@ ALTER TABLE `asistencia`
 -- AUTO_INCREMENT de la tabla `ausencias`
 --
 ALTER TABLE `ausencias`
-  MODIFY `id_ausencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ausencia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `comportamiento`
@@ -502,16 +499,10 @@ ALTER TABLE `inscripcion`
   MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `llegadas_tarde`
---
-ALTER TABLE `llegadas_tarde`
-  MODIFY `id_llegada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT de la tabla `llegadas_tarde_institucion`
 --
 ALTER TABLE `llegadas_tarde_institucion`
-  MODIFY `id_llegada_tarde_institucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_llegada_tarde_institucion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `materias`
@@ -535,7 +526,7 @@ ALTER TABLE `observaciones`
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_profesor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -575,14 +566,6 @@ ALTER TABLE `estudiantes`
 ALTER TABLE `inscripcion`
   ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
   ADD CONSTRAINT `inscripcion_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`);
-
---
--- Filtros para la tabla `llegadas_tarde`
---
-ALTER TABLE `llegadas_tarde`
-  ADD CONSTRAINT `llegadas_tarde_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`),
-  ADD CONSTRAINT `llegadas_tarde_ibfk_2` FOREIGN KEY (`id_materia`) REFERENCES `materias` (`id_materia`),
-  ADD CONSTRAINT `llegadas_tarde_ibfk_3` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
 
 --
 -- Filtros para la tabla `llegadas_tarde_institucion`
