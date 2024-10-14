@@ -95,7 +95,7 @@ function sendEmail($to, $subject, $body) {
         $mail->Port = 587;
 
         // Configuración del remitente y destinatario
-        $mail->setFrom('fernandola017589978@gmail.com', 'Mailer');
+        $mail->setFrom('fernandola017589978@gmail.com', 'SGE');
         $mail->addAddress($to);
 
         // Configuración del contenido del correo
