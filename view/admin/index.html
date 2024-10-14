@@ -1,31 +1,21 @@
 <!DOCTYPE html>
-<!-- Declaración del idioma para el documento -->
 <html lang="es">
 
 <head>
-    <!-- Título del documento -->
     <title></title>
-    <!-- Metadatos de la página web -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- IMPORTACIÓN DE RECURSOS EXTERNOS -->
-    <!-- Llamada al icono de la página web -->
     <link type="image/png" rel="icon" href="../../resources/img/CECSL.png">
-    <!-- Llamada a las hojas de estilos del framework e iconos -->
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="../../resources/css/bootstrap-icons.min.css">
-
 </head>
 
 <body>
-    <!-- Contenido principal del documento -->
     <main>
-        <!-- Título del contenido principal -->
         <h3 id="mainTitle"></h3>
         <img src="../../resources/img/school.png" class="mx-auto d-block" width="200">
         <br>
 
-        <!-- Formulario para iniciar sesión -->
         <form class="d-none" id="loginForm">
             <div class="row g-3">
                 <div class="col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
@@ -38,14 +28,31 @@
                 </div>
                 <div class="form-links botones">
                     <a class="h6" href="recuperacion_clave.html">¿Olvidaste tu contraseña?</a>
-
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary"><i class="bi bi-send"></i> Enviar</button>
                 </div>
             </div>
         </form>
-        <!-- Contenedor de verificación adicional, oculto inicialmente -->
+
+        <div class="text-center mt-3">
+            <!-- Botón para abrir el manual de usuario -->
+            <a href="../../resources/pdf/Centro%20Escolar%20Catolico%20San%20Luis%20-%20SGE%20San%20Luis.pdf" target="_blank" class="btn btn-info">
+                <i class="bi bi-file-earmark-pdf"></i> Manual de Usuario
+            </a>
+        </div>
+        <div class="text-center mt-3">
+            <!-- Botón para abrir el manual técnico -->
+            <div class="text-center mt-3">
+                <!-- Botón para abrir el manual técnico -->
+                <a href="../../resources/pdf/Centro%20Escolar%20Catolico%20San%20Luis%20-%20SGE%20San%20Luis%20Manual%20Tecnico.docx.pdf" target="_blank" class="btn btn-info">
+                    <i class="bi bi-file-earmark-pdf"></i> Manual Técnico
+                </a>
+            </div>
+                     
+        </div>
+        
+
         <form class="d-none" id="doubleCheckContainer">
             <label class="text-start" for="verificacion">Verificación adicional:</label>
             <input type="text" id="verificacion" name="verificacion" class="form-control"
@@ -53,7 +60,7 @@
             <div class="invalid-feedback">Por favor ingresa el código de verificación.</div>
             <button type="button" id="verifyButton" class="btn btn-secondary mt-2">Verificar</button>
         </form>
-        <!-- Formulario para crear el primer Profesor -->
+
         <form class="d-none" id="signupForm">
             <div class="row g-3">
                 <div class="col-sm-12 col-md-6">
@@ -101,15 +108,10 @@
             </div>
         </form>
     </main>
-    <!-- IMPORTACIÓN DE ARCHIVOS JAVASCRIPT -->
-    <!-- Llamada al framework y librería de mensajes -->
     <script type="text/javascript" src="../../resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="../../resources/js/sweetalert.min.js"></script>
-    <!-- Llamada al controlador general de la aplicación -->
     <script type="text/javascript" src="../../controllers/utils/components.js"></script>
-    <!-- Llamada al controlador del sitio privado -->
     <script type="text/javascript" src="../../controllers/utils/admin.js"></script>
-    <!-- Llamada al controlador de la página web -->
     <script type="text/javascript" src="../../controllers/admin/index.js"></script>
 </body>
 
